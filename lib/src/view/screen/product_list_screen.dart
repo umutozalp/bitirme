@@ -73,13 +73,13 @@ class ProductListScreen extends StatelessWidget {
                 child: Row(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 20),
+                      padding: const EdgeInsets.only(left: 12),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            '30% OFF DURING \nCOVID 19',
+                            'Yılbaşına özel %30 \nİNDİRİM',
                             style: Theme.of(context).textTheme.displaySmall?.copyWith(
                                   color: Colors.white,
                                 ),
@@ -96,7 +96,7 @@ class ProductListScreen extends StatelessWidget {
                               ),
                             ),
                             child: Text(
-                              "Get Now",
+                              "Hemen Al",
                               style: TextStyle(
                                 color: AppData.recommendedProducts[index].buttonTextColor!,
                               ),
@@ -126,19 +126,9 @@ class ProductListScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            "Top categories",
+            "Kategoriler\n",
             style: Theme.of(context).textTheme.headlineMedium,
           ),
-          TextButton(
-            onPressed: () {},
-            style: TextButton.styleFrom(foregroundColor: AppColor.darkOrange),
-            child: Text(
-              "SEE ALL",
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: Colors.deepOrange.withOpacity(0.7),
-                  ),
-            ),
-          )
         ],
       ),
     );

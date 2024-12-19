@@ -1,4 +1,5 @@
 import 'package:bitirme/service/auth.dart';
+import 'package:bitirme/src/view/screen/profile_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -48,7 +49,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xff6a11cb), Color(0xff2575fc)],
+            colors: [Color(0xffd32020), Color(0x5f5137c7)],
           ),
         ),
         child: Center(
@@ -136,6 +137,10 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                       onPressed: () {
                         if (isLogin) {
                           singIn();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ProfileScreen()),
+                          );
                         } else {
                           createUser();
                         }

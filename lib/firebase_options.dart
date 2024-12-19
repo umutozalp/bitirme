@@ -41,48 +41,48 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyA-VUlRVXFnU6wAXn_F1SpTBo5PQqp8oek',
-    appId: '1:113100959619:web:3522ef1b2bf5cf4c7550b6',
-    messagingSenderId: '113100959619',
-    projectId: 'bitirme-e0272',
-    authDomain: 'bitirme-e0272.firebaseapp.com',
-    storageBucket: 'bitirme-e0272.firebasestorage.app',
-    measurementId: 'G-FMTV8MGE5F',
+    apiKey: 'AIzaSyD0Ltw7EM3dH9s9dzvsgi4kuRiBsxP-FPc',
+    appId: '1:964801260122:web:74646afc01276e3c8ac663',
+    messagingSenderId: '964801260122',
+    projectId: 'bitirme-8a234',
+    authDomain: 'bitirme-8a234.firebaseapp.com',
+    storageBucket: 'bitirme-8a234.firebasestorage.app',
+    measurementId: 'G-N2QCJGFPNG',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDmo64_TcfWaW4zkqlHI6P8v9hldh1poVg',
-    appId: '1:113100959619:android:b0a3ffc621a1cd167550b6',
-    messagingSenderId: '113100959619',
-    projectId: 'bitirme-e0272',
-    storageBucket: 'bitirme-e0272.firebasestorage.app',
+    apiKey: 'AIzaSyCwY_GdEV36smrdLRToVyQq7FXxmG4Ezqw',
+    appId: '1:964801260122:android:edcbd4fdcc6499308ac663',
+    messagingSenderId: '964801260122',
+    projectId: 'bitirme-8a234',
+    storageBucket: 'bitirme-8a234.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDYOXt1Jtz5aNjcg7zJJ_wb4H61BIqR6iI',
-    appId: '1:113100959619:ios:f1feb0ce6a28a2a17550b6',
-    messagingSenderId: '113100959619',
-    projectId: 'bitirme-e0272',
-    storageBucket: 'bitirme-e0272.firebasestorage.app',
+    apiKey: 'AIzaSyBfXKdBvXHDRdsAYmyTOn59TvWIOZAtxc0',
+    appId: '1:964801260122:ios:4b6dcaed8dea0dcc8ac663',
+    messagingSenderId: '964801260122',
+    projectId: 'bitirme-8a234',
+    storageBucket: 'bitirme-8a234.firebasestorage.app',
     iosBundleId: 'com.example.bitirme',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDYOXt1Jtz5aNjcg7zJJ_wb4H61BIqR6iI',
-    appId: '1:113100959619:ios:f1feb0ce6a28a2a17550b6',
-    messagingSenderId: '113100959619',
-    projectId: 'bitirme-e0272',
-    storageBucket: 'bitirme-e0272.firebasestorage.app',
+    apiKey: 'AIzaSyBfXKdBvXHDRdsAYmyTOn59TvWIOZAtxc0',
+    appId: '1:964801260122:ios:4b6dcaed8dea0dcc8ac663',
+    messagingSenderId: '964801260122',
+    projectId: 'bitirme-8a234',
+    storageBucket: 'bitirme-8a234.firebasestorage.app',
     iosBundleId: 'com.example.bitirme',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyA-VUlRVXFnU6wAXn_F1SpTBo5PQqp8oek',
-    appId: '1:113100959619:web:d499c6d5913632cb7550b6',
-    messagingSenderId: '113100959619',
-    projectId: 'bitirme-e0272',
-    authDomain: 'bitirme-e0272.firebaseapp.com',
-    storageBucket: 'bitirme-e0272.firebasestorage.app',
-    measurementId: 'G-VDYQ33M65C',
+    apiKey: 'AIzaSyD0Ltw7EM3dH9s9dzvsgi4kuRiBsxP-FPc',
+    appId: '1:964801260122:web:ae1b046b727e38a68ac663',
+    messagingSenderId: '964801260122',
+    projectId: 'bitirme-8a234',
+    authDomain: 'bitirme-8a234.firebaseapp.com',
+    storageBucket: 'bitirme-8a234.firebasestorage.app',
+    measurementId: 'G-1N8YVR2G1L',
   );
 }

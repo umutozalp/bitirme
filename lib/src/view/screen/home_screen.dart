@@ -7,6 +7,7 @@ import 'package:bitirme/src/view/screen/favorite_screen.dart';
 import 'package:bitirme/src/view/screen/product_list_screen.dart';
 import 'package:bitirme/src/view/animation/page_transition_switcher_wrapper.dart';
 
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
