@@ -1,6 +1,7 @@
 import 'package:bitirme/service/auth.dart';
+import 'package:bitirme/src/view/screen/home_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:bitirme/src/view/screen/login_register_page.dart';
+import 'package:bitirme/src/view/screen/login_page.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -59,7 +60,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           onPressed: () async {
             await Auth().signOut();
             Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => const LoginRegisterPage()),
+              MaterialPageRoute(builder: (context) => const HomeScreen()),
             );
           },
           label: const Text("Çıkış Yap"),

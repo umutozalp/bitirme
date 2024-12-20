@@ -1,7 +1,9 @@
 import 'package:bitirme/service/auth.dart';
 import 'package:bitirme/src/view/screen/profile_screen.dart';
+import 'package:bitirme/src/view/screen/register_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class LoginRegisterPage extends StatefulWidget {
   const LoginRegisterPage({super.key});
@@ -14,7 +16,6 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  bool isLogin = true;
   String? errorMessage;
 
   Future<void> createUser() async {
@@ -49,18 +50,26 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color(0xffd32020), Color(0x5f5137c7)],
+            colors: [Color.fromRGBO(31,170,216,1.0), Color.fromRGBO(34,191,154,1.0)],
           ),
         ),
         child: Center(
           child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
+
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Logo veya Başlık
+                  Padding(
+                    padding: const EdgeInsets.only(bottom:0), // Gerekirse biraz boşluk ekleyin
+                    child: Image.asset(
+                      "assets/images/modo1.png", // Fotoğrafınızın yolu
+                      width: 200, // İhtiyaç duyduğunuz boyut
+                      height: 200, // İhtiyaç duyduğunuz boyut
+                    ),
+                  ),
                   const Text(
                     "Hoşgeldiniz!",
                     style: TextStyle(
@@ -134,19 +143,17 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      onPressed: () {
-                        if (isLogin) {
-                          singIn();
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => ProfileScreen()),
-                          );
-                        } else {
-                          createUser();
-                        }
+                      // ŞART BLOĞU EKLENECEK
+                      onPressed: () async {
+                        await singIn();
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProfileScreen()),
+                        );
                       },
                       child: Text(
-                        isLogin ? "Giriş Yap" : "Kayıt ol",
+                        "Giriş Yap",
                         style: const TextStyle(fontSize: 18),
                       ),
                     ),
@@ -157,13 +164,11 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                   GestureDetector(
                     onTap: () {
                       setState(() {
-                        isLogin = !isLogin;
+                        showRegisterModal(context);
                       });
                     },
                     child: Text(
-                      isLogin
-                          ? "Hesabınız yok mu? Kayıt Olun!"
-                          : "Zaten hesabınız var mı? Giriş yapın!",
+                      "Hesap Oluşturun!",
                       style: const TextStyle(
                         color: Colors.white,
                         decoration: TextDecoration.underline,
