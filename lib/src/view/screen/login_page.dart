@@ -1,9 +1,13 @@
 import 'package:bitirme/service/auth.dart';
 import 'package:bitirme/src/view/screen/home_screen.dart';
 import 'package:bitirme/src/view/screen/register_page.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
+import 'package:sign_in_button/sign_in_button.dart'; // sign_in_button paketini import ettik
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:email_validator/email_validator.dart';
+import 'package:password_field_validator/password_field_validator.dart';
 
 class LoginRegisterPage extends StatefulWidget {
   const LoginRegisterPage({super.key});
@@ -15,26 +19,77 @@ class LoginRegisterPage extends StatefulWidget {
 class _LoginRegisterPageState extends State<LoginRegisterPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-
   String? errorMessage;
-  bool _obscurePassword = true; // Şifrenin gizlenip gösterilmesi için boolean
+  bool _obscurePassword = true;
+
+  // Google ile giriş fonksiyonu
+  Future<void> signInWithGoogle() async {
+    final GoogleSignIn _googleSignIn = GoogleSignIn();
+    try {
+      // Google ile giriş
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      if (googleUser == null) {
+        setState(() {
+          errorMessage = "Google ile giriş yapılamadı.";
+        });
+        return;
+      }
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      // Firebase'e giriş yap
+      final userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+      if (userCredential.user != null) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen()),
+        );
+      }
+    } catch (error) {
+      setState(() {
+        errorMessage = "Google ile giriş yapılamadı: $error";
+      });
+    }
+  }
 
   Future<void> createUser() async {
     try {
       await Auth().createUser(
-          email: emailController.text, password: passwordController.text);
+        email: emailController.text,
+        password: passwordController.text,
+      );
     } on FirebaseAuthException catch (e) {
       setState(() {
         errorMessage = e.message;
       });
     }
   }
-
-  Future<void> singIn() async {
+  Future<void> signIn() async {
+    if (!EmailValidator.validate(emailController.text)) {
+      setState(() {
+        errorMessage = "Geçerli bir email adresi giriniz.";
+      });
+      Future.delayed(const Duration(seconds: 3), () {
+        setState(() {
+          errorMessage = null;
+        });
+      });
+      return;
+    }
     try {
       await Auth().signIn(
-          email: emailController.text, password: passwordController.text);
-      print(Auth().currentUser!.uid);
+        email: emailController.text,
+        password: passwordController.text,
+      );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
     } on FirebaseAuthException catch (e) {
       setState(() {
         errorMessage = e.message;
@@ -51,7 +106,10 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Color.fromRGBO(31,170,216,1.0), Color.fromRGBO(34,191,154,1.0)],
+            colors: [
+              Color.fromRGBO(31, 170, 216, 1.0),
+              Color.fromRGBO(34, 191, 154, 1.0)
+            ],
           ),
         ),
         child: Center(
@@ -63,11 +121,11 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 0), // Gerekirse biraz boşluk ekleyin
+                    padding: const EdgeInsets.only(bottom: 0),
                     child: Image.asset(
-                      "assets/images/modo1.png", // Fotoğrafınızın yolu
-                      width: 200, // İhtiyaç duyduğunuz boyut
-                      height: 200, // İhtiyaç duyduğunuz boyut
+                      "assets/images/modo1.png",
+                      width: 200,
+                      height: 200,
                     ),
                   ),
                   const Text(
@@ -82,6 +140,9 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
 
                   // Email Input
                   TextField(
+                    inputFormatters: [
+                      FilteringTextInputFormatter.deny(RegExp(r'\s')),
+                    ],
                     controller: emailController,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
@@ -98,10 +159,13 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                   ),
                   const SizedBox(height: 20),
 
-                  // Password Input with Show/Hide Toggle
+                  // Password Input
                   TextField(
+                    inputFormatters: [
+                      FilteringTextInputFormatter.deny(RegExp(r'\s')),
+                    ],
                     controller: passwordController,
-                    obscureText: _obscurePassword, // Şifreyi gizle/göster
+                    obscureText: _obscurePassword,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.key, color: Colors.white),
@@ -115,18 +179,20 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                       ),
                       suffixIcon: IconButton(
                         icon: Icon(
-                          _obscurePassword ? Icons.visibility_off : Icons.visibility, // Göz simgesi
+                          _obscurePassword
+                              ? Icons.visibility_off
+                              : Icons.visibility,
                           color: Colors.white,
                         ),
                         onPressed: () {
                           setState(() {
-                            _obscurePassword = !_obscurePassword; // Şifreyi göster/gizle
+                            _obscurePassword = !_obscurePassword;
                           });
                         },
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
 
                   // Hata mesajı
                   if (errorMessage != null)
@@ -141,10 +207,17 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                         style: const TextStyle(color: Colors.white),
                       ),
                     ),
+                  const SizedBox(height: 10),
 
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: Text("Şifremi Unuttum",style: TextStyle(decoration: TextDecoration.underline,decorationThickness: 2  ),),
+                    ),
+                  ),
                   const SizedBox(height: 20),
-
-                  // Login/Register Button
+                  // Login Button
                   SizedBox(
                     width: double.infinity,
                     height: 50,
@@ -156,40 +229,76 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      // ŞART BLOĞU EKLENECEK
                       onPressed: () async {
-                        await singIn();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => HomeScreen()),
-                        );
+                        await signIn();
                       },
-                      child: Text(
+                      child: const Text(
                         "Giriş Yap",
-                        style: const TextStyle(fontSize: 18, color: Colors.black),
+                        style: TextStyle(fontSize: 18, color: Colors.black),
                       ),
                     ),
                   ),
+
+                  const SizedBox(height: 20),
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Divider(
+                          color: Colors.black54, // Çizgi rengi
+                          thickness: 2, // Çizgi kalınlığı
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Text(
+                          'Veya Google ile oturum açın', // Çizgi arasındaki yazı
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ),
+                      Expanded(
+                        child: Divider(
+                          color: Colors.black54, // Çizgi rengi
+                          thickness: 2, // Çizgi kalınlığı
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  FloatingActionButton(
+                    onPressed: () {
+                      signInWithGoogle();
+                    },
+                    child: Image.asset('assets/images/google.png'),
+                  ),
+
                   const SizedBox(height: 20),
 
-                  // Toggle Login/Register Text
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (BuildContext context) => RegisterPage()),
-                        );
-                      });
-                    },
-                    child: Text(
-                      "Hesap Oluşturun!",
-                      style: const TextStyle(
-                        color: Colors.white,
-                        decoration: TextDecoration.underline,
+                  // Toggle Register Text
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Hesabınız yok mu? "),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) => RegisterPage()),
+                          );
+                        },
+                        child: const Text(
+                          "Hesap Oluşturun!",
+                          style: TextStyle(
+                            color: Colors.red,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
+
+
                   ),
                 ],
               ),

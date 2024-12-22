@@ -1,6 +1,8 @@
+import 'package:bitirme/service/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
+import 'package:flutter/services.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -16,7 +18,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Kayıt Ol"),
+        title: Text("Kayıt Ol",style: TextStyle(fontSize: 23, fontWeight: FontWeight.w600, color: Colors.white),),
         backgroundColor: Colors.blue,
       ),
       body: Padding(
@@ -41,7 +43,10 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(height: 15),
                 // E-posta TextField
                 TextField(
-                  keyboardType: TextInputType.emailAddress,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.deny(RegExp(r'\s')),
+                  ],
+                  maxLength:30,
                   controller: emailController,
                   decoration: InputDecoration(
                     labelText: "E-posta",
@@ -59,6 +64,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(height: 20),
                 // Şifre TextField
                 TextField(
+                  inputFormatters: [
+                    FilteringTextInputFormatter.deny(RegExp(r'\s')),
+                  ],
                   obscureText: true,
                   controller: passwordController,
                   decoration: InputDecoration(
@@ -97,7 +105,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   },
                 ),
                 SizedBox(height: 20),
-                const SizedBox(height: 100),
+                const SizedBox(height: 10),
                 Center(
                   child: ElevatedButton(
                     onPressed: () {
@@ -105,23 +113,25 @@ class _RegisterPageState extends State<RegisterPage> {
                         // E-posta ve şifre geçerliyse işlemi yap
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text("Kullanıcı başarıyla oluşturuldu!"),
+                            content: Text("Kullanıcı başarıyla oluşturuldu!",),
+                            backgroundColor: Colors.green,
+                            duration:Duration(seconds: 2),
                           ),
                         );
+                        Auth().createUser(email: emailController.text, password: passwordController.text);
                       } else {
                         // E-posta veya şifre geçersizse SnackBar göster
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text("Geçersiz e-posta adresi veya şifre"),
+                            backgroundColor: Colors.red,
+                            duration:Duration(seconds: 2),
                           ),
                         );
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromRGBO(150, 85, 80, 50.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
+                      backgroundColor: Colors.blueAccent,
                       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 40),
                     ),
                     child: const Text(

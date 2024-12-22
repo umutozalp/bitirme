@@ -1,0 +1,5 @@
+{
+  "wrongPassword": "Yanlış şifre girdiniz.",
+  "userNotFound": "Kullanıcı bulunamadı.",
+  "invalidEmail": "Geçersiz e-posta adresi."
+}

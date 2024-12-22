@@ -1,0 +1,5 @@
+{
+  "wrongPassword": "Incorrect password.",
+  "userNotFound": "User not found.",
+  "invalidEmail": "Invalid email address."
+}
