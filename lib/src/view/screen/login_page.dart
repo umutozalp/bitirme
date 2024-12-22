@@ -1,5 +1,5 @@
 import 'package:bitirme/service/auth.dart';
-import 'package:bitirme/src/view/screen/profile_screen.dart';
+import 'package:bitirme/src/view/screen/home_screen.dart';
 import 'package:bitirme/src/view/screen/register_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +17,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
   final TextEditingController passwordController = TextEditingController();
 
   String? errorMessage;
+  bool _obscurePassword = true; // Şifrenin gizlenip gösterilmesi için boolean
 
   Future<void> createUser() async {
     try {
@@ -57,13 +58,12 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
           child: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(bottom:0), // Gerekirse biraz boşluk ekleyin
+                    padding: const EdgeInsets.only(bottom: 0), // Gerekirse biraz boşluk ekleyin
                     child: Image.asset(
                       "assets/images/modo1.png", // Fotoğrafınızın yolu
                       width: 200, // İhtiyaç duyduğunuz boyut
@@ -85,6 +85,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                     controller: emailController,
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.email, color: Colors.white),
                       hintText: "Email",
                       hintStyle: const TextStyle(color: Colors.white70),
                       filled: true,
@@ -97,12 +98,13 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                   ),
                   const SizedBox(height: 20),
 
-                  // Password Input
+                  // Password Input with Show/Hide Toggle
                   TextField(
                     controller: passwordController,
-                    obscureText: true,
+                    obscureText: _obscurePassword, // Şifreyi gizle/göster
                     style: const TextStyle(color: Colors.white),
                     decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.key, color: Colors.white),
                       hintText: "Şifre",
                       hintStyle: const TextStyle(color: Colors.white70),
                       filled: true,
@@ -110,6 +112,17 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                         borderSide: BorderSide.none,
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscurePassword ? Icons.visibility_off : Icons.visibility, // Göz simgesi
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _obscurePassword = !_obscurePassword; // Şifreyi göster/gizle
+                          });
+                        },
                       ),
                     ),
                   ),
@@ -146,15 +159,15 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                       // ŞART BLOĞU EKLENECEK
                       onPressed: () async {
                         await singIn();
-                        Navigator.pushReplacement(
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ProfileScreen()),
+                              builder: (context) => HomeScreen()),
                         );
                       },
                       child: Text(
                         "Giriş Yap",
-                        style: const TextStyle(fontSize: 18),
+                        style: const TextStyle(fontSize: 18, color: Colors.black),
                       ),
                     ),
                   ),
@@ -164,7 +177,10 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                   GestureDetector(
                     onTap: () {
                       setState(() {
-                        showRegisterModal(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (BuildContext context) => RegisterPage()),
+                        );
                       });
                     },
                     child: Text(

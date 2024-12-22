@@ -157,7 +157,7 @@ class ProductListScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Merhaba, Meloşum",
+                  "Merhaba",
                   style: Theme.of(context).textTheme.displayLarge,
                 ),
                 Text(

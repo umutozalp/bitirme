@@ -1,5 +1,6 @@
 import 'package:bitirme/service/auth.dart';
 import 'package:bitirme/src/view/screen/home_screen.dart';
+import 'package:bitirme/src/view/screen/user_info.dart';
 import 'package:flutter/material.dart';
 import 'package:bitirme/src/view/screen/login_page.dart';
 
@@ -21,193 +22,201 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final currentUser = Auth().currentUser;
-
     if (currentUser == null) {
       return const LoginRegisterPage();
     } else {
       // Kullanıcı bilgilerini güncelle
       userInfo = {
-        "name": currentUser.displayName ?? "Ad Bulunamadı",  // null olması durumunda varsayılan değer
+        "name": currentUser.displayName ?? "Ad Bulunamadı",
+        // null olması durumunda varsayılan değer
         "email": currentUser.email ?? "Email Bulunamadı",
         "phone": currentUser.phoneNumber ?? "Telefon Bulunamadı",
       };
     }
 
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Profil', style: TextStyle(fontSize: 24)),
-          centerTitle: true,
-          backgroundColor: Colors.blueAccent,
-          bottom: const TabBar(
-            indicatorColor: Colors.white,
-            tabs: [
-              Tab(icon: Icon(Icons.person), text: "Bilgilerim"),
-              Tab(icon: Icon(Icons.payment), text: "Ödemelerim"),
-              Tab(icon: Icon(Icons.location_on), text: "Adreslerim"),
-            ],
-          ),
+    return Scaffold(
+      backgroundColor: Colors.grey[100],
+      appBar: AppBar(
+        backgroundColor: Colors.blueAccent,
+        title: Text(
+          "Profil",
+          style: TextStyle(
+              fontSize: 23, fontWeight: FontWeight.w600, color: Colors.white),
         ),
-        body: TabBarView(
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            UserInfoTab(userInfo: userInfo, onUpdate: updateUserInfo),
-            const PaymentInfoTab(),
-            const AddressInfoTab(),
+            // Profil fotoğrafı ve kullanıcı adı - Card içine alındı
+            Card(
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 40,
+                      backgroundColor: Colors.blueAccent,
+                      child: Icon(
+                        Icons.person,
+                        color: Color.fromRGBO(255, 255, 255, 1.0),
+                        size: 50,
+                      ),
+                    ),
+                    SizedBox(width: 16),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Umut Özalp",
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          userInfo["email"] ?? "Email Bulunamadı",
+                          style: TextStyle(fontSize: 14, color: Colors.grey),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 5),
+            Divider(color: Colors.grey[300], thickness: 1),
+            SizedBox(height: 5),
+            // Kullanıcı bilgileri sekmesi
+            _buildProfileOption(
+              icon: Icon(Icons.edit, color: Colors.blueAccent),
+              context,
+              title: "Kullanıcı Bilgilerim",
+              onTap: () {
+                Navigator.push(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) => UserInfo(),
+                    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                      // FadeTransition ile ekranın opaklığını değiştirme
+                      return FadeTransition(
+                        opacity: animation,  // Opaklık animasyonu
+                        child: child,
+                      );
+                    },
+                  ),
+                );
+
+              },
+            ),
+
+            // Adreslerim sekmesi
+            _buildProfileOption(
+              icon: Icon(Icons.home, color: Colors.blueAccent),
+              context,
+              title: "Adreslerim",
+              onTap: () {},
+            ),
+
+            // Geçmiş Siparişler sekmesi
+            _buildProfileOption(
+              icon: Icon(Icons.history, color: Colors.blueAccent),
+              context,
+              title: "Geçmiş Siparişlerim",
+              onTap: () {},
+            ),
+
+            _buildProfileOption(
+              icon: Icon(Icons.credit_card, color: Colors.blueAccent),
+              context,
+              title: "Ödeme Yöntemlerim",
+              onTap: () {},
+            ),
+            _handleLogout(context),
           ],
         ),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () async {
-            await Auth().signOut();
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
-            );
-          },
-          label: const Text("Çıkış Yap"),
-          icon: const Icon(Icons.logout),
-          backgroundColor: Colors.redAccent,
+      ),
+    );
+  }
+
+  // Profil seçeneklerini oluşturan fonksiyon
+  Widget _buildProfileOption(BuildContext context,
+      {required String title, required Function() onTap, required Icon icon}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 80,
+        padding: EdgeInsets.symmetric(horizontal: 15),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(5),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 1,
+              blurRadius: 8,
+              offset: Offset(0, 3), //DEĞİŞTİRİLEBİLİR LA BAK
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            icon,
+            SizedBox(width: 3),
+            Expanded(
+              child: Text(
+                title,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              ),
+            ),
+            Icon(Icons.arrow_forward_ios, size: 18, color: Colors.blueAccent),
+          ],
         ),
       ),
     );
   }
 
-  // Kullanıcı bilgilerini güncelleyen metod
-  void updateUserInfo(String key, String value) {
-    setState(() {
-      userInfo[key] = value;
-    });
-  }
-}
-
-/// Kullanıcı Bilgileri Sekmesi
-class UserInfoTab extends StatefulWidget {
-  final Map<String, String> userInfo;
-  final Function(String, String) onUpdate;
-
-  const UserInfoTab({super.key, required this.userInfo, required this.onUpdate});
-
-  @override
-  State<UserInfoTab> createState() => _UserInfoTabState();
-}
-
-class _UserInfoTabState extends State<UserInfoTab> {
-  late TextEditingController nameController;
-  late TextEditingController emailController;
-  late TextEditingController phoneController;
-
-  @override
-  void initState() {
-    super.initState();
-    nameController = TextEditingController(text: widget.userInfo["name"]);
-    emailController = TextEditingController(text: widget.userInfo["email"]);
-    phoneController = TextEditingController(text: widget.userInfo["phone"]);
-  }
-
-  @override
-  void dispose() {
-    nameController.dispose();
-    emailController.dispose();
-    phoneController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(16),
-      children: [
-        const Center(
-          child: CircleAvatar(
-            radius: 60,
-            backgroundImage: AssetImage('assets/images/profile_pic.png'),
-          ),
-        ),
-        const SizedBox(height: 20),
-        buildEditableField("Ad Soyad", nameController, "name"),
-        const SizedBox(height: 10),
-        buildEditableField("E-mail", emailController, "email"),
-        const SizedBox(height: 10),
-        buildEditableField("Telefon", phoneController, "phone"),
-      ],
-    );
-  }
-
-  /// Tek bir düzenlenebilir alan oluşturan widget
-  Widget buildEditableField(String label, TextEditingController controller, String key) {
-    return TextField(
-      controller: controller,
-      decoration: InputDecoration(
-        labelText: label,
-        border: const OutlineInputBorder(),
-        suffixIcon: const Icon(Icons.edit),
-      ),
-      onChanged: (value) {
-        widget.onUpdate(key, value); // Ana sayfadaki bilgileri günceller
+  Widget _handleLogout(BuildContext context) {
+    return GestureDetector(
+      onTap: () async {
+        await Auth().signOut();
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const HomeScreen()),
+        );
       },
-    );
-  }
-}
-
-/// Ödeme Bilgileri Sekmesi
-class PaymentInfoTab extends StatelessWidget {
-  const PaymentInfoTab({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(16),
-      children: [
-        Card(
-          child: ListTile(
-            leading: const Icon(Icons.credit_card, color: Colors.blueAccent),
-            title: const Text("Kredi Kartı"),
-            subtitle: const Text("**** **** **** 1234"),
-            trailing: const Icon(Icons.edit),
-            onTap: () {},
-          ),
+      child: Container(
+        height: 70,
+        padding: EdgeInsets.symmetric(horizontal: 15),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(5),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 1,
+              blurRadius: 8,
+              offset: Offset(0, 3),
+            ),
+          ],
         ),
-        Card(
-          child: ListTile(
-            leading: const Icon(Icons.account_balance, color: Colors.green),
-            title: const Text("Banka Hesabı"),
-            subtitle: const Text("TR12 1234 5678 9101 1121 00"),
-            trailing: const Icon(Icons.edit),
-            onTap: () {},
+        child: Row(children: [
+          Icon(
+            Icons.logout,
+            color: Colors.blueAccent,
           ),
-        ),
-      ],
-    );
-  }
-}
-
-/// Adres Bilgileri Sekmesi
-class AddressInfoTab extends StatelessWidget {
-  const AddressInfoTab({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(16),
-      children: [
-        Card(
-          child: ListTile(
-            leading: const Icon(Icons.home, color: Colors.orange),
-            title: const Text("Ev Adresi"),
-            subtitle: const Text("Cumhuriyet Mah. No:12 Daire:34, İstanbul"),
-            trailing: const Icon(Icons.edit),
-            onTap: () {},
+          SizedBox(width: 3),
+          Expanded(
+            child: Text(
+              "Çıkış Yap",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            ),
           ),
-        ),
-        Card(
-          child: ListTile(
-            leading: const Icon(Icons.work, color: Colors.blueGrey),
-            title: const Text("İş Adresi"),
-            subtitle: const Text("Sanayi Mah. No:45 Kat:3, Ankara"),
-            trailing: const Icon(Icons.edit),
-            onTap: () {},
-          ),
-        ),
-      ],
+          Icon(Icons.arrow_forward_ios, size: 18, color: Colors.blueAccent),
+        ]),
+      ),
     );
   }
 }
