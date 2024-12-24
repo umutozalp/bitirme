@@ -18,12 +18,16 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Kayıt Ol",style: TextStyle(fontSize: 23, fontWeight: FontWeight.w600, color: Colors.white),),
+        title: Text("Kayıt Ol", style: TextStyle(
+            fontSize: 23, fontWeight: FontWeight.w600, color: Colors.white),),
         backgroundColor: Colors.blue,
       ),
       body: Padding(
         padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom, // Klavye için ayarlama
+          bottom: MediaQuery
+              .of(context)
+              .viewInsets
+              .bottom, // Klavye için ayarlama
         ),
         child: SingleChildScrollView(
           child: Padding(
@@ -39,14 +43,16 @@ class _RegisterPageState extends State<RegisterPage> {
                     color: Colors.black87,
                   ),
                 ),
-                const Text("Modo'da hesap oluştur, indirimleri kaçırma!", style: TextStyle(fontWeight: FontWeight.w400, fontSize: 15)),
+                const Text("Modo'da hesap oluştur, indirimleri kaçırma!",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w400, fontSize: 15)),
                 const SizedBox(height: 15),
                 // E-posta TextField
                 TextField(
                   inputFormatters: [
                     FilteringTextInputFormatter.deny(RegExp(r'\s')),
                   ],
-                  maxLength:30,
+                  maxLength: 30,
                   controller: emailController,
                   decoration: InputDecoration(
                     labelText: "E-posta",
@@ -95,12 +101,14 @@ class _RegisterPageState extends State<RegisterPage> {
                   height: 198,
                   onSuccess: () {
                     setState(() {
-                      isPasswordValid = true;  // Şifre geçerliyse durumu güncelle
+                      isPasswordValid =
+                      true; // Şifre geçerliyse durumu güncelle
                     });
                   },
                   onFail: () {
                     setState(() {
-                      isPasswordValid = false; // Şifre geçersizse durumu güncelle
+                      isPasswordValid =
+                      false; // Şifre geçersizse durumu güncelle
                     });
                   },
                 ),
@@ -109,30 +117,33 @@ class _RegisterPageState extends State<RegisterPage> {
                 Center(
                   child: ElevatedButton(
                     onPressed: () {
-                      if (EmailValidator.validate(emailController.text) && isPasswordValid) {
+                      if (EmailValidator.validate(emailController.text) &&
+                          isPasswordValid) {
                         // E-posta ve şifre geçerliyse işlemi yap
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text("Kullanıcı başarıyla oluşturuldu!",),
                             backgroundColor: Colors.green,
-                            duration:Duration(seconds: 2),
+                            duration: Duration(seconds: 2),
                           ),
                         );
-                        Auth().createUser(email: emailController.text, password: passwordController.text);
+                        Auth().createUser(email: emailController.text,
+                            password: passwordController.text);
                       } else {
                         // E-posta veya şifre geçersizse SnackBar göster
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text("Geçersiz e-posta adresi veya şifre"),
                             backgroundColor: Colors.red,
-                            duration:Duration(seconds: 2),
+                            duration: Duration(seconds: 2),
                           ),
                         );
                       }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blueAccent,
-                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 40),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 12, horizontal: 40),
                     ),
                     child: const Text(
                       "Kayıt Ol",
@@ -152,3 +163,4 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 }
+
