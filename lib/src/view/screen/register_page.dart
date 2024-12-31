@@ -116,19 +116,32 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(height: 10),
                 Center(
                   child: ElevatedButton(
-                    onPressed: () {
-                      if (EmailValidator.validate(emailController.text) &&
-                          isPasswordValid) {
-                        // E-posta ve şifre geçerliyse işlemi yap
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text("Kullanıcı başarıyla oluşturuldu!",),
-                            backgroundColor: Colors.green,
-                            duration: Duration(seconds: 2),
-                          ),
-                        );
-                        Auth().createUser(email: emailController.text,
-                            password: passwordController.text);
+                    onPressed: () async {
+                      if (EmailValidator.validate(emailController.text) && isPasswordValid) {
+                        // E-posta adresi geçerli, Firebase'de daha önce kayıtlı olup olmadığını kontrol et
+                        bool isRegistered = await Auth().isEmailRegistered(emailController.text);
+                        if (isRegistered) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("Bu e-posta adresi zaten kayıtlı!"),
+                              backgroundColor: Colors.red,
+                              duration: Duration(seconds: 2),
+                            ),
+                          );
+                        } else {
+                          // E-posta ve şifre geçerli, kullanıcıyı oluştur
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("Kullanıcı başarıyla oluşturuldu!"),
+                              backgroundColor: Colors.green,
+                              duration: Duration(seconds: 2),
+                            ),
+                          );
+                          await Auth().createUser(
+                            email: emailController.text,
+                            password: passwordController.text,
+                          );
+                        }
                       } else {
                         // E-posta veya şifre geçersizse SnackBar göster
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -163,4 +176,3 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 }
-
