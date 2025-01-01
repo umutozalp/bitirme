@@ -9,8 +9,8 @@ plugins {
 }
 
 android {
-    namespace = "com.example.bitirme"
-    compileSdk = flutter.compileSdkVersion
+    namespace "com.example.bitirme"
+    compileSdkVersion flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
     compileOptions {

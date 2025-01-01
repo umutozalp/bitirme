@@ -1,5 +1,6 @@
 import 'package:bitirme/service/auth.dart';
 import 'package:bitirme/src/view/screen/home_screen.dart';
+import 'package:bitirme/src/view/screen/payment_methods_screen.dart';
 import 'package:bitirme/src/view/screen/user_info.dart';
 import 'package:flutter/material.dart';
 import 'package:bitirme/src/view/screen/login_page.dart';
@@ -133,7 +134,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
               icon: Icon(Icons.credit_card, color: Colors.blueAccent),
               context,
               title: "Ödeme Yöntemlerim",
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) => PaymentScreen(),
+                    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                      // FadeTransition ile ekranın opaklığını değiştirme
+                      return FadeTransition(
+                        opacity: animation,  // Opaklık animasyonu
+                        child: child,
+                      );
+                    },
+                  ),
+                );
+              },
             ),
             _handleLogout(context),
           ],

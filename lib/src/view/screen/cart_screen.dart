@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:bitirme/core/extensions.dart';
@@ -5,11 +9,25 @@ import 'package:bitirme/src/model/product.dart';
 import 'package:bitirme/src/view/widget/empty_cart.dart';
 import 'package:bitirme/src/controller/product_controller.dart';
 import 'package:bitirme/src/view/animation/animated_switcher_wrapper.dart';
+import 'package:bitirme/src/view/screen/payment_methods_screen.dart';
+import 'package:http/http.dart' as http;
+
 
 final ProductController controller = Get.put(ProductController());
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
+
+  @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+  String PublishableKey =
+      "pk_test_51Qc0Z5FsTMJbzVuHIS8tZL17mLNFhhUydweQll93uF3Gt46FAIBIAVuwWVrn1jRnEYJVlh9VPlMqfjzSJ6ML5dDY00M8chSssd";
+  String SecretKey =
+      "sk_test_51Qc0Z5FsTMJbzVuHngTNhhxEGi6fQrefztu2T4KxgnS7I3IJ5TE7yQtFw8DHGafaEzeCKZ3yeDE0xejpYJA4FSdG00J2xZ2mZg";
+  Map<String, dynamic>? intentPaymentData;
 
   PreferredSizeWidget _appBar(BuildContext context) {
     return AppBar(
@@ -17,6 +35,19 @@ class CartScreen extends StatelessWidget {
         "My cart",
         style: Theme.of(context).textTheme.displayLarge,
       ),
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.credit_card),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>  PaymentScreen(),
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 
@@ -180,9 +211,19 @@ class CartScreen extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(left: 30, right: 30, bottom: 20),
         child: ElevatedButton(
-          style: ElevatedButton.styleFrom(padding: const EdgeInsets.all(20)),
-          onPressed: controller.isEmptyCart ? null : () {},
-          child: const Text("Buy Now"),
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.all(20),
+          ),
+          onPressed: controller.isEmptyCart
+              ? null
+              : () async {
+                  await makePayment();
+                },
+          child: const Text(
+            "Şimdi Öde",
+            style: TextStyle(
+                color: Colors.white, fontSize: 15, fontWeight: FontWeight.bold),
+          ),
         ),
       ),
     );
@@ -204,5 +245,82 @@ class CartScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  // Ödeme işlemini başlatan ana metod
+  Future<void> makePayment() async {
+    try {
+      var paymentIntent = await createPaymentIntent();
+
+      await Stripe.instance.initPaymentSheet(
+        paymentSheetParameters: SetupPaymentSheetParameters(
+          paymentIntentClientSecret: paymentIntent['client_secret'],
+          merchantDisplayName: 'Modo Shop',
+          style: ThemeMode.light,
+          appearance: PaymentSheetAppearance(
+            colors: PaymentSheetAppearanceColors(
+              primary: Color(0xFFEC6813),
+              background: Colors.white,
+              componentBackground: Colors.grey[200],
+            ),
+            shapes: PaymentSheetShape(
+              borderRadius: 12.0,
+              shadow: PaymentSheetShadowParams(color: Colors.black),
+            ),
+          ),
+          googlePay: PaymentSheetGooglePay(
+            merchantCountryCode: 'TR',
+            currencyCode: 'TRY',
+            testEnv: true,
+          ),
+        ),
+      );
+
+      await displayPaymentSheet();
+    } catch (e) {
+      print('Hata: $e');
+    }
+  }
+
+// Ödeme sayfasını gösteren ve sonucu işleyen metod
+  Future<void> displayPaymentSheet() async {
+    try {
+      await Stripe.instance.presentPaymentSheet();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Ödeme Başarılı'),
+          backgroundColor: Colors.green,
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Hata: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
+// Stripe'a ödeme isteği gönderen metod
+  Future<Map<String, dynamic>> createPaymentIntent() async {
+    try {
+      Map<String, dynamic> body = {
+        'amount': (controller.totalPrice.value * 100).toString(),
+        'currency': 'TRY',
+      };
+
+      var response = await http.post(
+        Uri.parse('https://api.stripe.com/v1/payment_intents'),
+        headers: {
+          'Authorization': 'Bearer $SecretKey',
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: body,
+      );
+      return json.decode(response.body);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
   }
 }
