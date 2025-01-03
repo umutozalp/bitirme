@@ -12,7 +12,6 @@ import 'package:bitirme/src/view/animation/animated_switcher_wrapper.dart';
 import 'package:bitirme/src/view/screen/payment_methods_screen.dart';
 import 'package:http/http.dart' as http;
 
-
 final ProductController controller = Get.put(ProductController());
 
 class CartScreen extends StatefulWidget {
@@ -42,7 +41,7 @@ class _CartScreenState extends State<CartScreen> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) =>  PaymentScreen(),
+                builder: (context) => PaymentScreen(),
               ),
             );
           },

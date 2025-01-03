@@ -1,28 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
+import 'package:bitirme/service/firestore_database.dart';
 
 class SavedCard {
-  final String cardNumber;
+  final String cardNo;
   final String expiryDate;
   final String cardHolderName;
   final String cardNickname;
+  final String documentId;
 
   SavedCard({
-    required this.cardNumber,
+    required this.cardNo,
     required this.expiryDate,
     required this.cardHolderName,
     required this.cardNickname,
+    required this.documentId,
   });
 }
 
 class PaymentScreen extends StatefulWidget {
   const PaymentScreen({super.key});
+
   @override
   State<PaymentScreen> createState() => _PaymentScreenState();
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
-  String cardNumber = '';
+  FirebaseService _firebaseService = FirebaseService();
+  String cardNo = '';
   String expiryDate = '';
   String cardHolderName = '';
   String cvvCode = '';
@@ -31,36 +36,36 @@ class _PaymentScreenState extends State<PaymentScreen> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final List<SavedCard> savedCards = [];
   final nicknameController = TextEditingController();
-  bool useGlassMorphism = false;
-  bool useBackgroundImage = false;
-  bool useFloatingAnimation = true;
+  bool showErrors = false;
 
-  String get maskedCardNumber {
-    if (cardNumber.isEmpty) return '';
-    // Boşlukları kaldır ve sadece sayıları al
-    final cleanNumber = cardNumber.replaceAll(RegExp(r'[^\d]'), '');
-    if (cleanNumber.length < 4) return cardNumber;
-
-    // Son 4 hane hariç hepsini maskele ve 4'lü grupla
+  String get maskedCardNo {
+    if (cardNo.isEmpty) return '';
+    final cleanNumber = cardNo.replaceAll(RegExp(r'[^\d]'), '');
+    if (cleanNumber.length < 4) return cardNo;
     final lastFour = cleanNumber.substring(cleanNumber.length - 4);
-    return '0000 0000 0000 $lastFour'; // Sabit format kullan
+    return '0000 0000 0000 $lastFour';
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCardData();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Ödeme Yöntemleri'),
+        title: const Text(
+          'Kayıtlı Kartlarım',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
       ),
       body: isAddingCard ? _buildAddCardForm() : _buildCardsList(),
       floatingActionButton: isAddingCard
           ? null
           : FloatingActionButton.extended(
-              onPressed: () {
-                setState(() {
-                  isAddingCard = true;
-                });
-              },
+              onPressed: () => setState(() => isAddingCard = true),
               label: const Text('+ Kart Ekle'),
               icon: const Icon(Icons.add),
             ),
@@ -75,7 +80,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             CreditCardWidget(
-              cardNumber: maskedCardNumber,
+              cardNumber: maskedCardNo,
               expiryDate: expiryDate,
               cardHolderName: cardHolderName,
               cvvCode: cvvCode,
@@ -84,7 +89,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               obscureCardNumber: false,
               obscureCardCvv: true,
               isHolderNameVisible: true,
-              onCreditCardWidgetChange: (brand) {},
+              onCreditCardWidgetChange: (_) {},
             ),
             const SizedBox(height: 20),
             const Text(
@@ -113,22 +118,44 @@ class _PaymentScreenState extends State<PaymentScreen> {
               child: Column(
                 children: [
                   TextField(
+                    maxLength: 10,
                     controller: nicknameController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'Kart Takma Adı',
                       hintText: 'Örn: İş Bankası Kartım',
-                      border: OutlineInputBorder(),
+                      border: const OutlineInputBorder(),
+                      errorText: showErrors && nicknameController.text.isEmpty
+                          ? 'Kart takma adı boş geçilemez'
+                          : null,
                     ),
                   ),
-                  const SizedBox(height: 16),
                   CreditCardForm(
                     formKey: formKey,
-                    cardNumber: cardNumber,
+                    cardNumber: cardNo,
                     expiryDate: expiryDate,
                     cardHolderName: cardHolderName,
                     cvvCode: cvvCode,
                     themeColor: Colors.blue,
                     onCreditCardModelChange: onCreditCardModelChange,
+                    cardNumberDecoration: const InputDecoration(
+                      labelText: 'Kart Numarası',
+                      hintText: 'Kart Numarası Giriniz',
+                    ),
+                    expiryDateDecoration: const InputDecoration(
+                      labelText: 'Son Kullanma Tarihi',
+                      hintText: 'GG/YY',
+                    ),
+                    cvvCodeDecoration: const InputDecoration(
+                      labelText: 'CVV',
+                      hintText: 'CVV Kodunu Giriniz',
+                    ),
+                    cardHolderDecoration: InputDecoration(
+                      labelText: 'Kart Sahibi',
+                      hintText: 'Kart Sahibini Giriniz',
+                      errorText: showErrors && cardHolderName.isEmpty
+                          ? 'Kart sahibi boş geçilemez'
+                          : null,
+                    ),
                   ),
                 ],
               ),
@@ -137,17 +164,21 @@ class _PaymentScreenState extends State<PaymentScreen> {
             Row(
               children: [
                 Expanded(
-                  child: OutlinedButton(
-                    style: OutlinedButton.styleFrom(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
+                      backgroundColor: Colors.white,
+                      side:
+                          const BorderSide(color: Colors.blueAccent, width: 2),
                     ),
-                    onPressed: () {
-                      setState(() {
-                        isAddingCard = false;
-                        _clearForm();
-                      });
-                    },
-                    child: const Text('İptal'),
+                    onPressed: () => setState(() {
+                      isAddingCard = false;
+                      _clearForm();
+                    }),
+                    child: const Text(
+                      'İptal',
+                      style: TextStyle(color: Colors.blueAccent),
+                    ),
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -155,9 +186,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
+                      backgroundColor: Colors.blueAccent,
                     ),
                     onPressed: _onValidate,
-                    child: const Text('Kartı Kaydet'),
+                    child: const Text(
+                      'Kartı Kaydet',
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ),
               ],
@@ -184,13 +219,21 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 child: ListTile(
                   title: Text(card.cardNickname),
                   subtitle: Text(
-                      '**** **** **** ${card.cardNumber.substring(card.cardNumber.length - 4)}'),
+                      '**** **** **** ${card.cardNo.substring(card.cardNo.length - 4)}'),
                   trailing: IconButton(
                     icon: const Icon(Icons.delete),
-                    onPressed: () {
-                      setState(() {
-                        savedCards.removeAt(index);
-                      });
+                    onPressed: () async {
+                      bool success = await _firebaseService
+                          .deleteCreditCard(card.documentId);
+                      if (success) {
+                        setState(() => savedCards.removeAt(index));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Kart silindi'),
+                            backgroundColor: Colors.green,
+                          ),
+                        );
+                      }
                     },
                   ),
                 ),
@@ -200,42 +243,80 @@ class _PaymentScreenState extends State<PaymentScreen> {
   }
 
   void _onValidate() {
-    if (formKey.currentState?.validate() ?? false) {
-      if (nicknameController.text.isNotEmpty) {
-        savedCards.add(SavedCard(
-          cardNumber: cardNumber,
-          expiryDate: expiryDate,
-          cardHolderName: cardHolderName,
-          cardNickname: nicknameController.text,
-        ));
+    setState(() => showErrors = true);
+    if ((formKey.currentState?.validate() ?? false) &&
+        nicknameController.text.isNotEmpty &&
+        cardHolderName.isNotEmpty) {
+      _firebaseService.saveCreditCard(
+          nicknameController.text, cardNo, expiryDate, cvvCode, cardHolderName);
 
-        setState(() {
-          isAddingCard = false;
-          _clearForm();
-        });
+      savedCards.add(SavedCard(
+        cardNo: cardNo,
+        expiryDate: expiryDate,
+        cardHolderName: cardHolderName,
+        cardNickname: nicknameController.text,
+        documentId: '',
+      ));
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Kart başarıyla kaydedildi')),
-        );
-      }
+      setState(() {
+        isAddingCard = false;
+        _clearForm();
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Kart başarıyla kaydedildi'),
+          backgroundColor: Colors.green,
+        ),
+      );
     }
   }
 
-  void onCreditCardModelChange(CreditCardModel creditCardModel) {
+  void onCreditCardModelChange(CreditCardModel model) {
     setState(() {
-      cardNumber = creditCardModel.cardNumber;
-      expiryDate = creditCardModel.expiryDate;
-      cardHolderName = creditCardModel.cardHolderName;
-      cvvCode = creditCardModel.cvvCode;
-      isCvvFocused = creditCardModel.isCvvFocused;
+      cardNo = model.cardNumber;
+      expiryDate = model.expiryDate;
+      cardHolderName = model.cardHolderName;
+      cvvCode = model.cvvCode;
+      isCvvFocused = model.isCvvFocused;
     });
   }
 
   void _clearForm() {
-    cardNumber = '';
+    cardNo = '';
     expiryDate = '';
     cardHolderName = '';
     cvvCode = '';
     nicknameController.clear();
+    showErrors = false;
+  }
+
+  Future<void> _loadCardData() async {
+    try {
+      List<Map<String, dynamic>>? cards =
+          await _firebaseService.getCreditCard();
+      if (cards != null && cards.isNotEmpty) {
+        setState(() {
+          savedCards.clear();
+          for (var card in cards) {
+            savedCards.add(SavedCard(
+              cardNo: card['cardNo'],
+              expiryDate: card['validThru'],
+              cardHolderName: card['holder'],
+              cardNickname: card['cardName'],
+              documentId: card['documentId'],
+            ));
+          }
+        });
+      }
+    } catch (e) {
+      print('Veri yüklenirken bir hata oluştu: $e');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text('Kart bilgileri yüklenirken hata oluştu')),
+        );
+      }
+    }
   }
 }
