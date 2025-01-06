@@ -267,7 +267,7 @@ class _CartScreenState extends State<CartScreen> {
               shadow: PaymentSheetShadowParams(color: Colors.black),
             ),
           ),
-          googlePay: PaymentSheetGooglePay(
+          googlePay: const PaymentSheetGooglePay(
             merchantCountryCode: 'TR',
             currencyCode: 'TRY',
             testEnv: true,

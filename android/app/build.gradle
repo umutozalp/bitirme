@@ -49,3 +49,7 @@ flutter {
 tasks.withType(JavaCompile) {
     options.compilerArgs << "-Xlint:deprecation"
 }
+
+dependencies {
+    implementation "com.google.android.gms:play-services-wallet:19.2.1"
+}
