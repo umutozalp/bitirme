@@ -47,4 +47,5 @@
     </queries>
     <!-- İnternet izni -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.google.android.gms.permission.WALLET" />
 </manifest>

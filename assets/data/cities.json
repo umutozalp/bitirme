@@ -1,0 +1,1614 @@
+[
+  {
+    "name": "Adana",
+    "plate": "01",
+    "latitude": "36.9914",
+    "longitude": "35.3308",
+    "counties": [
+      "Aladağ",
+      "Ceyhan",
+      "Çukurova",
+      "Feke",
+      "İmamoğlu",
+      "Karaisalı",
+      "Karataş",
+      "Kozan",
+      "Pozantı",
+      "Saimbeyli",
+      "Sarıçam",
+      "Seyhan",
+      "Tufanbeyli",
+      "Yumurtalık",
+      "Yüreğir"
+    ]
+  },
+  {
+    "name": "Adıyaman",
+    "plate": "02",
+    "latitude": "37.7636",
+    "longitude": "38.2773",
+    "counties": [
+      "Besni",
+      "Çelikhan",
+      "Gerger",
+      "Gölbaşı",
+      "Kahta",
+      "Merkez",
+      "Samsat",
+      "Sincik",
+      "Tut"
+    ]
+  },
+  {
+    "name": "Afyonkarahisar",
+    "plate": "03",
+    "latitude": "38.7569",
+    "longitude": "30.5387",
+    "counties": [
+      "Merkez",
+      "Sandıklı",
+      "Dinar",
+      "Bolvadin",
+      "Sinanpaşa",
+      "Emirdağ",
+      "Şuhut",
+      "Çay",
+      "Ihsaniye",
+      "Iscehisar",
+      "Sultandağı",
+      "Çobanlar",
+      "Dazkırı",
+      "Başmakçı",
+      "Hocalar",
+      "Bayat",
+      "Evciler",
+      "Kızılören"
+    ]
+  },
+  {
+    "name": "Ağrı",
+    "plate": "04",
+    "latitude": "39.7191",
+    "longitude": "43.0506",
+    "counties": [
+      "Merkez",
+      "Patnos",
+      "Doğubayazıt",
+      "Diyadin",
+      "Eleşkirt",
+      "Tutak",
+      "Taşlıçay",
+      "Hamur"
+    ]
+  },
+  {
+    "name": "Amasya",
+    "plate": "05",
+    "latitude": "40.6565",
+    "longitude": "35.8373",
+    "counties": [
+      "Merkez",
+      "Merzifon",
+      "Suluova",
+      "Taşova",
+      "Gümüşhacıköy",
+      "Göynücek",
+      "Hamamözü"
+    ]
+  },
+  {
+    "name": "Ankara",
+    "plate": "06",
+    "latitude": "39.9334",
+    "longitude": "32.8597",
+    "counties": [
+      "Çankaya",
+      "Keçiören",
+      "Yenimahalle",
+      "Mamak",
+      "Etimesgut",
+      "Sincan",
+      "Altındağ",
+      "Pursaklar",
+      "Gölbaşı",
+      "Polatlı",
+      "Çubuk",
+      "Kahramankazan",
+      "Beypazarı",
+      "Elmadağ",
+      "Şereflikoçhisar",
+      "Akyurt",
+      "Nallıhan",
+      "Haymana",
+      "Kızılcahamam",
+      "Bala",
+      "Kalecik",
+      "Ayaş",
+      "Güdül",
+      "Çamlıdere",
+      "Evren"
+    ]
+  },
+  {
+    "name": "Antalya",
+    "plate": "07",
+    "latitude": "36.8969",
+    "longitude": "30.7133",
+    "counties": [
+      "Kepez",
+      "Muratpaşa",
+      "Alanya",
+      "Manavgat",
+      "Konyaaltı",
+      "Serik",
+      "Aksu",
+      "Kumluca",
+      "Döşemealtı",
+      "Kaş",
+      "Korkuteli",
+      "Gazipaşa",
+      "Finike",
+      "Kemer",
+      "Elmalı",
+      "Demre",
+      "Akseki",
+      "Gündoğmuş",
+      "Ibradı"
+    ]
+  },
+  {
+    "name": "Artvin",
+    "plate": "08",
+    "latitude": "41.1809",
+    "longitude": "41.8208",
+    "counties": [
+      "Hopa",
+      "Merkez",
+      "Borçka",
+      "Yusufeli",
+      "Arhavi",
+      "Şavşat",
+      "Ardanuç",
+      "Murgul",
+      "Kemalpaşa"
+    ]
+  },
+  {
+    "name": "Aydın",
+    "plate": "09",
+    "latitude": "37.8380",
+    "longitude": "27.8456",
+    "counties": [
+      "Efeler",
+      "Nazilli",
+      "Söke",
+      "Kuşadası",
+      "Didim",
+      "Çine",
+      "Incirliova",
+      "Germencik",
+      "Bozdoğan",
+      "Köşk",
+      "Kuyucak",
+      "Sultanhisar",
+      "Karacasu",
+      "Yenipazar",
+      "Buharkent",
+      "Karpuzlu"
+    ]
+  },
+  {
+    "name": "Balıkesir",
+    "plate": "10",
+    "latitude": "39.6533",
+    "longitude": "27.8903",
+    "counties": [
+      "Karesi",
+      "Altıeylül",
+      "Bandırma",
+      "Edremit",
+      "Gönen",
+      "Ayvalık",
+      "Burhaniye",
+      "Bigadiç",
+      "Susurluk",
+      "Dursunbey",
+      "Sındırgı",
+      "Ivrindi",
+      "Erdek",
+      "Havran",
+      "Kepsut",
+      "Manyas",
+      "Savaştepe",
+      "Balya",
+      "Gömeç",
+      "Marmara"
+    ]
+  },
+  {
+    "name": "Bilecik",
+    "plate": "11",
+    "latitude": "40.1426",
+    "longitude": "29.9793",
+    "counties": [
+      "Merkez",
+      "Bozüyük",
+      "Osmaneli",
+      "Söğüt",
+      "Gölpazarı",
+      "Pazaryeri",
+      "Yenipazar",
+      "Inhisar"
+    ]
+  },
+  {
+    "name": "Bingöl",
+    "plate": "12",
+    "latitude": "38.8855",
+    "longitude": "40.4966",
+    "counties": [
+      "Merkez",
+      "Genç",
+      "Solhan",
+      "Karlıova",
+      "Adaklı",
+      "Kiğı",
+      "Yedisu",
+      "Yayladere"
+    ]
+  },
+  {
+    "name": "Bitlis",
+    "plate": "13",
+    "latitude": "38.4006",
+    "longitude": "42.1095",
+    "counties": [
+      "Tatvan",
+      "Merkez",
+      "Güroymak",
+      "Ahlat",
+      "Hizan",
+      "Mutki",
+      "Adilcevaz"
+    ]
+  },
+  {
+    "name": "Bolu",
+    "plate": "14",
+    "latitude": "40.7325",
+    "longitude": "31.6082",
+    "counties": [
+      "Merkez",
+      "Gerede",
+      "Mudurnu",
+      "Göynük",
+      "Mengen",
+      "Yeniçağa",
+      "Dörtdivan",
+      "Seben",
+      "Kıbrıscık"
+    ]
+  },
+  {
+    "name": "Burdur",
+    "plate": "15",
+    "latitude": "37.7183",
+    "longitude": "30.2823",
+    "counties": [
+      "Merkez",
+      "Bucak",
+      "Gölhisar",
+      "Yeşilova",
+      "Çavdır",
+      "Tefenni",
+      "Ağlasun",
+      "Karamanlı",
+      "Altınyayla",
+      "Çeltikçi",
+      "Kemer"
+    ]
+  },
+  {
+    "name": "Bursa",
+    "plate": "16",
+    "latitude": "40.1885",
+    "longitude": "29.0610",
+    "counties": [
+      "Osmangazi",
+      "Yıldırım",
+      "Nilüfer",
+      "Gemlik",
+      "Mustafakemalpaşa",
+      "Mudanya",
+      "Gürsu",
+      "Karacabey",
+      "Orhangazi",
+      "Kestel",
+      "Yenişehir",
+      "İznik",
+      "Orhaneli",
+      "Keles",
+      "Büyükorhan",
+      "Harmancık"
+    ]
+  },
+  {
+    "name": "Çanakkale",
+    "plate": "17",
+    "latitude": "40.1467",
+    "longitude": "26.4086",
+    "counties": [
+      "Merkez",
+      "Biga",
+      "Çan",
+      "Gelibolu",
+      "Yenice",
+      "Ayvacık",
+      "Ezine",
+      "Bayramıç",
+      "Lapseki",
+      "Eceabat",
+      "Gökçeada",
+      "Bozcaada"
+    ]
+  },
+  {
+    "name": "Çankırı",
+    "plate": "18",
+    "latitude": "40.6002",
+    "longitude": "33.6162",
+    "counties": [
+      "Merkez",
+      "Çerkeş",
+      "Ilgaz",
+      "Orta",
+      "Şabanözü",
+      "Kurşunlu",
+      "Yapraklı",
+      "Kızılırmak",
+      "Atkaracalar",
+      "Eldivan",
+      "Korgun",
+      "Bayramören"
+    ]
+  },
+  {
+    "name": "Çorum",
+    "plate": "19",
+    "latitude": "40.5499",
+    "longitude": "34.9537",
+    "counties": [
+      "Merkez",
+      "Sungurlu",
+      "Osmancık",
+      "Iskilip",
+      "Alaca",
+      "Bayat",
+      "Mecitözü",
+      "Kargı",
+      "Ortaköy",
+      "Uğurludağ",
+      "Dodurga",
+      "Oğuzlar",
+      "Laçin",
+      "Boğazkale"
+    ]
+  },
+  {
+    "name": "Denizli",
+    "plate": "20",
+    "latitude": "37.7830",
+    "longitude": "29.0963",
+    "counties": [
+      "Pamukkale",
+      "Merkezefendi",
+      "Çivril",
+      "Acıpayam",
+      "Tavas",
+      "Honaz",
+      "Sarayköy",
+      "Buldan",
+      "Kale",
+      "Çal",
+      "Çameli",
+      "Serinhisar",
+      "Bozkurt",
+      "Güney",
+      "Çardak",
+      "Bekilli",
+      "Beyağaç",
+      "Babadağ",
+      "Baklan"
+    ]
+  },
+  {
+    "name": "Diyarbakır",
+    "plate": "21",
+    "latitude": "37.9250",
+    "longitude": "40.2110",
+    "counties": [
+      "Bağlar",
+      "Kayapınar",
+      "Yenişehir",
+      "Ergani",
+      "Sur",
+      "Bismil",
+      "Silvan",
+      "Çınar",
+      "Çermik",
+      "Dicle",
+      "Kulp",
+      "Hani",
+      "Lice",
+      "Eğil",
+      "Hazro",
+      "Kocaköy",
+      "Çüngüş"
+    ]
+  },
+  {
+    "name": "Edirne",
+    "plate": "22",
+    "latitude": "41.6771",
+    "longitude": "26.5557",
+    "counties": [
+      "Merkez",
+      "Keşan",
+      "Uzunköprü",
+      "Ipsala",
+      "Havsa",
+      "Meriç",
+      "Enz",
+      "Süloğlu",
+      "Lalapaşa"
+    ]
+  },
+  {
+    "name": "Elazığ",
+    "plate": "23",
+    "latitude": "38.6748",
+    "longitude": "39.2225",
+    "counties": [
+      "Merkez",
+      "Kovancılar",
+      "Karakoçan",
+      "Palu",
+      "Arıcak",
+      "Baskil",
+      "Maden",
+      "Sivrice",
+      "Alacakaya",
+      "Keban",
+      "Ağın"
+    ]
+  },
+  {
+    "name": "Erzincan",
+    "plate": "24",
+    "latitude": "39.7468",
+    "longitude": "39.4911",
+    "counties": [
+      "Merkez",
+      "Tercan",
+      "Üzümlü",
+      "Çayırlı",
+      "Iliç",
+      "Kemah",
+      "Kemaliye",
+      "Otlukbeli"
+    ]
+  },
+  {
+    "name": "Erzurum",
+    "plate": "25",
+    "latitude": "39.9055",
+    "longitude": "41.2658",
+    "counties": [
+      "Yakutiye",
+      "Palandöken",
+      "Aziziye",
+      "Horasan",
+      "Oltu",
+      "Pasinler",
+      "Karayazı",
+      "Hınıs",
+      "Tekman",
+      "Karaçoban",
+      "Aşkale",
+      "Şenkaya",
+      "Çat",
+      "Köprüköy",
+      "Ispir",
+      "Tortum",
+      "Narman",
+      "Uzundere",
+      "Olur",
+      "Pazaryolu"
+    ]
+  },
+  {
+    "name": "Eskişehir",
+    "plate": "26",
+    "latitude": "39.7667",
+    "longitude": "30.5256",
+    "counties": [
+      "Odunpazarı",
+      "Tepebaşı",
+      "Sivrihisar",
+      "Çifteler",
+      "Seyitgazi",
+      "Alpu",
+      "Mihalıççık",
+      "Mahmudiye",
+      "Beylikova",
+      "Inönü",
+      "Sarıcakaya",
+      "Günyüzü",
+      "Mihalgazi",
+      "Han"
+    ]
+  },
+  {
+    "name": "Gaziantep",
+    "plate": "27",
+    "latitude": "37.0660",
+    "longitude": "37.3781",
+    "counties": [
+      "Şahinbey",
+      "Şehitkamil",
+      "Nizip",
+      "Islahiye",
+      "Nurdağı",
+      "Araban",
+      "Oğuzeli",
+      "Yavuzeli",
+      "Karkamış"
+    ]
+  },
+  {
+    "name": "Giresun",
+    "plate": "28",
+    "latitude": "40.9175",
+    "longitude": "38.3927",
+    "counties": [
+      "Merkez",
+      "Bulancak",
+      "Espiye",
+      "Görele",
+      "Tirebolu",
+      "Dereli",
+      "Şebinkarahisar",
+      "Keşap",
+      "Yağlıdere",
+      "Alucra",
+      "Piraziz",
+      "Eynesil",
+      "Güce",
+      "Çanakçı",
+      "Doğankent",
+      "Çamoluk"
+    ]
+  },
+  {
+    "name": "Gümüşhane",
+    "plate": "29",
+    "latitude": "40.4608",
+    "longitude": "39.4803",
+    "counties": [
+      "Merkez",
+      "Kelkit",
+      "Şiran",
+      "Kürtün",
+      "Torul",
+      "Köse"
+    ]
+  },
+  {
+    "name": "Hakkari",
+    "plate": "30",
+    "latitude": "37.5774",
+    "longitude": "43.7368",
+    "counties": [
+      "Yüksekova",
+      "Merkez",
+      "Çukurca",
+      "Şemdinli",
+      "Çukurca"
+    ]
+  },
+  {
+    "name": "Hatay",
+    "plate": "31",
+    "latitude": "36.2023",
+    "longitude": "36.1613",
+    "counties": [
+      "Antakya",
+      "Iskenderun",
+      "Defne",
+      "Dörtyol",
+      "Samandağ",
+      "Kırıkhan",
+      "Reyhanlı",
+      "Arsuz",
+      "Altınözü",
+      "Hassa",
+      "Erzin",
+      "Payas",
+      "Belen",
+      "Yayladağı",
+      "Kumlu"
+    ]
+  },
+  {
+    "name": "Isparta",
+    "plate": "32",
+    "latitude": "37.7626",
+    "longitude": "30.5537",
+    "counties": [
+      "Merkez",
+      "Yalvaç",
+      "Eğirdir",
+      "Şarkikaraağaç",
+      "Gelendost",
+      "Keçiborlu",
+      "Senirkent",
+      "Sütçüler",
+      "Gönen",
+      "Uluborlu",
+      "Atabey",
+      "Aksu",
+      "Yenişarbademli"
+    ]
+  },
+  {
+    "name": "Mersin",
+    "plate": "33",
+    "latitude": "36.8121",
+    "longitude": "34.6415",
+    "counties": [
+      "Tarsus",
+      "Toroslar",
+      "Akdeniz",
+      "Yenişehir",
+      "Mezitli",
+      "Erdemli",
+      "Silifke",
+      "Anamur",
+      "Mut",
+      "Bozyazı",
+      "Gülnar",
+      "Aydıncık",
+      "Çamlıyayla"
+    ]
+  },
+  {
+    "name": "İstanbul",
+    "plate": "34",
+    "latitude": "41.0082",
+    "longitude": "28.9784",
+    "counties": [
+      "Esenyurt",
+      "Küçükçekmece",
+      "Bağcılar",
+      "Ümraniye",
+      "Pendik",
+      "Bahçelievler",
+      "Üsküdar",
+      "Sultangazi",
+      "Gaziosmanpaşa",
+      "Maltepe",
+      "Kartal",
+      "Esenler",
+      "Kadıköy",
+      "Kağıthane",
+      "Avcılar",
+      "Atışehir",
+      "Fatih",
+      "Eyüp",
+      "Sancaktepe",
+      "Başakşehir",
+      "Sarıyer",
+      "Sultanbeyli",
+      "Güngören",
+      "Beylikdüzü",
+      "Zeytinburnu",
+      "Bayrampaşa",
+      "Şişli",
+      "Beykoz",
+      "Arnavutköy",
+      "Tuzla",
+      "Çekmeköy",
+      "Beyoğlu",
+      "Büyükçekmece",
+      "Bakırköy",
+      "Beşiktaş",
+      "Silivri",
+      "Çatalca",
+      "Şile",
+      "Adalar"
+    ]
+  },
+  {
+    "name": "İzmir",
+    "plate": "35",
+    "latitude": "38.4237",
+    "longitude": "27.1428",
+    "counties": [
+      "Buca",
+      "Karabağlar",
+      "Bornova",
+      "Konak",
+      "Karşıyaka",
+      "Bayraklı",
+      "Çiğli",
+      "Torbalı",
+      "Menemen",
+      "Gaziemir",
+      "Ödemiş",
+      "Kemalpaşa",
+      "Bergama",
+      "Aliağa",
+      "Menderes",
+      "Tire",
+      "Balçova",
+      "Narlıdere",
+      "Urla",
+      "Kiraz",
+      "Dikili",
+      "Çeşme",
+      "Bayındır",
+      "Seferihısar",
+      "Selçuk",
+      "Güzelbahçe",
+      "Foça",
+      "Kınık",
+      "Beydağ",
+      "Karaburun"
+    ]
+  },
+  {
+    "name": "Kars",
+    "plate": "36",
+    "latitude": "40.6013",
+    "longitude": "43.0975",
+    "counties": [
+      "Merkez",
+      "Kağızman",
+      "Sarıkamış",
+      "Selim",
+      "Digor",
+      "Arpaçay",
+      "Akyaka",
+      "Susuz"
+    ]
+  },
+  {
+    "name": "Kastamonu",
+    "plate": "37",
+    "latitude": "41.3766",
+    "longitude": "33.7765",
+    "counties": [
+      "Merkez",
+      "Tosya",
+      "Taşköprü",
+      "Cide",
+      "Inebolu",
+      "Araç",
+      "Devrekani",
+      "Bozkurt",
+      "Daday",
+      "Azdavay",
+      "Çatalzeytin",
+      "Küre",
+      "Doğanyurt",
+      "Ihsangazi",
+      "Pınarbaşı",
+      "Şenpazar",
+      "Abana",
+      "Seydiler",
+      "Hanönü",
+      "Ağlı"
+    ]
+  },
+  {
+    "name": "Kayseri",
+    "plate": "38",
+    "latitude": "38.7205",
+    "longitude": "35.4826",
+    "counties": [
+      "Melikgazi",
+      "Kocasinan",
+      "Talas",
+      "Develi",
+      "Yahyalı",
+      "Bünyan",
+      "Incesu",
+      "Pınarbaşı",
+      "Tomarza",
+      "Yeşilhisar",
+      "Sarıoğlan",
+      "Hacılar",
+      "Sarız",
+      "Akkışla",
+      "Felahiye",
+      "Özvatan"
+    ]
+  },
+  {
+    "name": "Kırklareli",
+    "plate": "39",
+    "latitude": "41.7355",
+    "longitude": "27.2244",
+    "counties": [
+      "Lüleburgaz",
+      "Merkez",
+      "Babaeski",
+      "Vize",
+      "Pınarhisar",
+      "Demirköy",
+      "Pehlivanköy",
+      "Kofçaz"
+    ]
+  },
+  {
+    "name": "Kırşehir",
+    "plate": "40",
+    "latitude": "39.1461",
+    "longitude": "34.1595",
+    "counties": [
+      "Merkez",
+      "Kaman",
+      "Mucur",
+      "Çiçekdağı",
+      "Akpınar",
+      "Boztepe",
+      "Akçakent"
+    ]
+  },
+  {
+    "name": "Kocaeli",
+    "plate": "41",
+    "latitude": "40.7654",
+    "longitude": "29.9408",
+    "counties": [
+      "Gebze",
+      "İzmit",
+      "Darıca",
+      "Körfez",
+      "Gölcük",
+      "Derince",
+      "Çayırova",
+      "Kartepe",
+      "Başiskele",
+      "Karamürsel",
+      "Kandıra",
+      "Dilovası"
+    ]
+  },
+  {
+    "name": "Konya",
+    "plate": "42",
+    "latitude": "37.8746",
+    "longitude": "32.4932",
+    "counties": [
+      "Selçuklu",
+      "Meram",
+      "Karatay",
+      "Ereğli",
+      "Akşehir",
+      "Beyşehir",
+      "Çumra",
+      "Seydişehir",
+      "Ilgın",
+      "Cihanbeyli",
+      "Kulu",
+      "Karapınar",
+      "Kadınhanı",
+      "Sarayönü",
+      "Bozkır",
+      "Yunak",
+      "Doğanhisar",
+      "Hüyük",
+      "Altınekin",
+      "Hadim",
+      "Çeltik",
+      "Emirgazi",
+      "Tuzlukçu",
+      "Derebucak",
+      "Akören",
+      "Halkapınar",
+      "Yalıhüyük"
+    ]
+  },
+  {
+    "name": "Kütahya",
+    "plate": "43",
+    "latitude": "39.4200",
+    "longitude": "29.9857",
+    "counties": [
+      "Merkez",
+      "Tavşanlı",
+      "Simav",
+      "Gediz",
+      "Emet",
+      "Altıntaş",
+      "Domaniç",
+      "Hisarcık",
+      "Aslanapa",
+      "Çavdarhisar",
+      "Şaphane",
+      "Pazarlar",
+      "Dumlupınar"
+    ]
+  },
+  {
+    "name": "Malatya",
+    "plate": "44",
+    "latitude": "38.3554",
+    "longitude": "38.3335",
+    "counties": [
+      "Battalgazi",
+      "Yeşilyurt",
+      "Doğanşehir",
+      "Akçadağ",
+      "Darende",
+      "Hekimhan",
+      "Pütürge",
+      "Yazıhan",
+      "Arapgir",
+      "Arguvan",
+      "Kuluncak",
+      "Kale",
+      "Doğanyol"
+    ]
+  },
+  {
+    "name": "Manisa",
+    "plate": "45",
+    "latitude": "38.6140",
+    "longitude": "27.4296",
+    "counties": [
+      "Yunusemre",
+      "Şehzadeler",
+      "Akhisar",
+      "Salihli",
+      "Turgutlu",
+      "Soma",
+      "Alaşehir",
+      "Saruhanlı",
+      "Kula",
+      "Kırkağaç",
+      "Demirci",
+      "Sarıgöl",
+      "Gördes",
+      "Selendi",
+      "Ahmetli",
+      "Gölmarmara",
+      "Köprübaşı"
+    ]
+  },
+  {
+    "name": "Kahramanmaraş",
+    "plate": "46",
+    "latitude": "37.5753",
+    "longitude": "36.9228",
+    "counties": [
+      "Onikişubat",
+      "Dulkadiroğlu",
+      "Elbistan",
+      "Afşin",
+      "Türkoğlu",
+      "Pazarcık",
+      "Göksun",
+      "Andırın",
+      "Çağlayancerit",
+      "Nurhak",
+      "Ekinözü"
+    ]
+  },
+  {
+    "name": "Mardin",
+    "plate": "47",
+    "latitude": "37.3129",
+    "longitude": "40.7340",
+    "counties": [
+      "Kızıltepe",
+      "Artuklu",
+      "Midyat",
+      "Nusaybin",
+      "Derik",
+      "Mazıdağı",
+      "Dargeçit",
+      "Savur",
+      "Yeşilli",
+      "Ömerli"
+    ]
+  },
+  {
+    "name": "Muğla",
+    "plate": "48",
+    "latitude": "37.2154",
+    "longitude": "28.3634",
+    "counties": [
+      "Bodrum",
+      "Fethiye",
+      "Milas",
+      "Menteşe",
+      "Marmaris",
+      "Seydikemer",
+      "Ortaca",
+      "Yatağan",
+      "Dalaman",
+      "Köyceğiz",
+      "Ula",
+      "Datça",
+      "Kavaklıdere"
+    ]
+  },
+  {
+    "name": "Muş",
+    "plate": "49",
+    "latitude": "38.7346",
+    "longitude": "41.4910",
+    "counties": [
+      "Merkez",
+      "Bulanık",
+      "Malazgirt",
+      "Varto",
+      "Hasköy",
+      "Korkut"
+    ]
+  },
+  {
+    "name": "Nevşehir",
+    "plate": "50",
+    "latitude": "38.6247",
+    "longitude": "34.7142",
+    "counties": [
+      "Merkez",
+      "Ürgüp",
+      "Avanos",
+      "Gülşehir",
+      "Derinkuyu",
+      "Acıgöl",
+      "Kozaklı",
+      "Hacıbektaş"
+    ]
+  },
+  {
+    "name": "Niğde",
+    "plate": "51",
+    "latitude": "37.9698",
+    "longitude": "34.6766",
+    "counties": [
+      "Merkez",
+      "Bor",
+      "Çiftlik",
+      "Ulukışla",
+      "Altunhisar",
+      "Çamardı"
+    ]
+  },
+  {
+    "name": "Ordu",
+    "plate": "52",
+    "latitude": "40.9862",
+    "longitude": "37.8797",
+    "counties": [
+      "Altınordu",
+      "Ünye",
+      "Fatsa",
+      "Gölköy",
+      "Perşembe",
+      "Kumru",
+      "Aybastı",
+      "Korgan",
+      "Akkuş",
+      "Ulubey",
+      "Mesudiye",
+      "Ikizce",
+      "Gürgentepe",
+      "Çatalpınar",
+      "Çaybaşı",
+      "Kabataş",
+      "Çamaş",
+      "Gülyalı"
+    ]
+  },
+  {
+    "name": "Rize",
+    "plate": "53",
+    "latitude": "41.0255",
+    "longitude": "40.5177",
+    "counties": [
+      "Merkez",
+      "Çayeli",
+      "Ardeşen",
+      "Pazar",
+      "Fındıklı",
+      "Güneysu",
+      "Kalkandere",
+      "Iyidere",
+      "Derepazarı",
+      "Çamlıhemşin",
+      "Ikizdere",
+      "Hemşin"
+    ]
+  },
+  {
+    "name": "Sakarya",
+    "plate": "54",
+    "latitude": "40.7889",
+    "longitude": "30.4060",
+    "counties": [
+      "Adapazarı",
+      "Serdivan",
+      "Akyazı",
+      "Erenler",
+      "Hendek",
+      "Karasu",
+      "Geyve",
+      "Arifiye",
+      "Sapanca",
+      "Pamukova",
+      "Ferizli",
+      "Kaynarca",
+      "Kocaali",
+      "Karapürçek",
+      "Taraklı"
+    ]
+  },
+  {
+    "name": "Samsun",
+    "plate": "55",
+    "latitude": "41.2797",
+    "longitude": "36.3361",
+    "counties": [
+      "Ikadım",
+      "Atakum",
+      "Bafra",
+      "Çarşamba",
+      "Canik",
+      "Vezirköprü",
+      "Terhi",
+      "Tekkeköy",
+      "Havza",
+      "Alaçam",
+      "19 Mayıs",
+      "Ayvacık",
+      "Kavak",
+      "Salıpazarı",
+      "Asarcık",
+      "Ladik",
+      "Yakakent"
+    ]
+  },
+  {
+    "name": "Siirt",
+    "plate": "56",
+    "latitude": "37.9274",
+    "longitude": "41.9420",
+    "counties": [
+      "Merkez",
+      "Kurtalan",
+      "Pervari",
+      "Baykan",
+      "Şirvan",
+      "Eruh",
+      "Tillo"
+    ]
+  },
+  {
+    "name": "Sinop",
+    "plate": "57",
+    "latitude": "42.0280",
+    "longitude": "35.1517",
+    "counties": [
+      "Merkez",
+      "Boyabat",
+      "Gerze",
+      "Ayancık",
+      "Durağan",
+      "Türkeli",
+      "Erfelek",
+      "Dikmen",
+      "Saraydüzü"
+    ]
+  },
+  {
+    "name": "Sivas",
+    "plate": "58",
+    "latitude": "39.7505",
+    "longitude": "37.0150",
+    "counties": [
+      "Merkez",
+      "Şarkışla",
+      "Yıldızeli",
+      "Suşehri",
+      "Gemerek",
+      "Zara",
+      "Kangal",
+      "Gürün",
+      "Divriği",
+      "Koyulhisar",
+      "Altınyayla",
+      "Hafik",
+      "Ulaş",
+      "Imranlı",
+      "Akıncılar",
+      "Gülova",
+      "Doğanşar"
+    ]
+  },
+  {
+    "name": "Tekirdağ",
+    "plate": "59",
+    "latitude": "40.9781",
+    "longitude": "27.5117",
+    "counties": [
+      "Çorlu",
+      "Süleymanpaşa",
+      "Çerkezköy",
+      "Kapaklı",
+      "Ergen",
+      "Malkara",
+      "Saray",
+      "Hayrabolu",
+      "Şarköy",
+      "Muratlı",
+      "Marmaraereğlisi"
+    ]
+  },
+  {
+    "name": "Tokat",
+    "plate": "60",
+    "latitude": "40.3235",
+    "longitude": "36.5522",
+    "counties": [
+      "Merkez",
+      "Erbaa",
+      "Turhal",
+      "Niksar",
+      "Zile",
+      "Reşadiye",
+      "Almus",
+      "Pazar",
+      "Başçiftlik",
+      "Yeşilyurt",
+      "Artova",
+      "Sulusaray"
+    ]
+  },
+  {
+    "name": "Trabzon",
+    "plate": "61",
+    "latitude": "41.0027",
+    "longitude": "39.7168",
+    "counties": [
+      "Ortahısar",
+      "Akçaabat",
+      "Arakı",
+      "Of",
+      "Yomra",
+      "Arsin",
+      "Vakfıkebir",
+      "Sürmene",
+      "Maçka",
+      "Beşikdüzü",
+      "Çarşıbaşı",
+      "Tonya",
+      "Düzköy",
+      "Çaykara",
+      "Şalpazarı",
+      "Hayrat",
+      "Köprübaşı",
+      "Dernekpazarı"
+    ]
+  },
+  {
+    "name": "Tunceli",
+    "plate": "62",
+    "latitude": "39.1062",
+    "longitude": "39.5483",
+    "counties": [
+      "Merkez",
+      "Pertek",
+      "Mazgirt",
+      "Çemişgezek",
+      "Hozat",
+      "Ovacık",
+      "Pülümür",
+      "Nazımiye"
+    ]
+  },
+  {
+    "name": "Şanlıurfa",
+    "plate": "63",
+    "latitude": "37.1674",
+    "longitude": "38.7955",
+    "counties": [
+      "Eyyübiye",
+      "Haliliye",
+      "Siverek",
+      "Viranşehir",
+      "Karaköprü",
+      "Akçakale",
+      "Suruç",
+      "Birecik",
+      "Ceylanpınar",
+      "Harran",
+      "Bozova",
+      "Hilvan",
+      "Halfeti"
+    ]
+  },
+  {
+    "name": "Uşak",
+    "plate": "64",
+    "latitude": "38.6742",
+    "longitude": "29.4059",
+    "counties": [
+      "Merkez",
+      "Banaz",
+      "Eşme",
+      "Sivaslı",
+      "Ulubey",
+      "Karahallı"
+    ]
+  },
+  {
+    "name": "Van",
+    "plate": "65",
+    "latitude": "38.5012",
+    "longitude": "43.3730",
+    "counties": [
+      "Ipekyolu",
+      "Erciş",
+      "Tuşba",
+      "Edremit",
+      "Özalp",
+      "Çaldıran",
+      "Başkale",
+      "Muradiye",
+      "Gürpınar",
+      "Gevş",
+      "Saray",
+      "Çatak",
+      "Bahçesaray"
+    ]
+  },
+  {
+    "name": "Yozgat",
+    "plate": "66",
+    "latitude": "39.8210",
+    "longitude": "34.8086",
+    "counties": [
+      "Merkez",
+      "Sorgun",
+      "Akdağmadeni",
+      "Yerköy",
+      "Sarıkaya",
+      "Boğazlıyan",
+      "Çekerek",
+      "Şefaatli",
+      "Saraykent",
+      "Çayıralan",
+      "Kadışehri",
+      "Aydıncık",
+      "Yenifakıllı",
+      "Çandır"
+    ]
+  },
+  {
+    "name": "Zonguldak",
+    "plate": "67",
+    "latitude": "41.4535",
+    "longitude": "31.7894",
+    "counties": [
+      "Ereğli",
+      "Merkez",
+      "Çaycuma",
+      "Devrek",
+      "Kozlu",
+      "Alaplı",
+      "Kilimli",
+      "Gökçebey"
+    ]
+  },
+  {
+    "name": "Aksaray",
+    "plate": "68",
+    "latitude": "38.3686",
+    "longitude": "34.0297",
+    "counties": [
+      "Merkez",
+      "Ortaköy",
+      "Eskil",
+      "Gülağaç",
+      "Güzelyurt",
+      "Ağaçören",
+      "Sarıyahşi",
+      "Sultanhanı"
+    ]
+  },
+  {
+    "name": "Bayburt",
+    "plate": "69",
+    "latitude": "40.2603",
+    "longitude": "40.2280",
+    "counties": [
+      "Merkez",
+      "Demirözü",
+      "Aydıntepe"
+    ]
+  },
+  {
+    "name": "Karaman",
+    "plate": "70",
+    "latitude": "37.1810",
+    "longitude": "33.2222",
+    "counties": [
+      "Merkez",
+      "Ermenek",
+      "Sarıevliler",
+      "Ayrancı",
+      "Kazımkarabekir",
+      "Başyayla"
+    ]
+  },
+  {
+    "name": "Kırıkkale",
+    "plate": "71",
+    "latitude": "39.8398",
+    "longitude": "33.5089",
+    "counties": [
+      "Merkez",
+      "Yahşihan",
+      "Keskin",
+      "Delice",
+      "Bahşili",
+      "Sulakyurt",
+      "Balışeyh",
+      "Karakeçili",
+      "Çelebi"
+    ]
+  },
+  {
+    "name": "Batman",
+    "plate": "72",
+    "latitude": "37.8895",
+    "longitude": "41.1293",
+    "counties": [
+      "Merkez",
+      "Kozluk",
+      "Beşiri",
+      "Sason",
+      "Gerçüş",
+      "Hasankeyf"
+    ]
+  },
+  {
+    "name": "Şırnak",
+    "plate": "73",
+    "latitude": "37.5190",
+    "longitude": "42.4537",
+    "counties": [
+      "Cizre",
+      "Silopi",
+      "Merkez",
+      "Idil",
+      "Uludere",
+      "Beytüşşebap",
+      "Güçlükonak"
+    ]
+  },
+  {
+    "name": "Bartın",
+    "plate": "74",
+    "latitude": "41.6376",
+    "longitude": "32.3338",
+    "counties": [
+      "Merkez",
+      "Uluş",
+      "Amasra",
+      "Kurucaşile"
+    ]
+  },
+  {
+    "name": "Ardahan",
+    "plate": "75",
+    "latitude": "41.1130",
+    "longitude": "42.7023",
+    "counties": [
+      "Merkez",
+      "Göle",
+      "Çıldır",
+      "Hanak",
+      "Posof",
+      "Damal"
+    ]
+  },
+  {
+    "name": "Iğdır",
+    "plate": "76",
+    "latitude": "39.9201",
+    "longitude": "44.0436",
+    "counties": [
+      "Merkez",
+      "Tuzluca",
+      "Aralık",
+      "Karakoyunlu"
+    ]
+  },
+  {
+    "name": "Yalova",
+    "plate": "77",
+    "latitude": "40.6549",
+    "longitude": "29.2842",
+    "counties": [
+      "Merkez",
+      "Çiftlikköy",
+      "Çınarcık",
+      "Altınova",
+      "Armutlu",
+      "Termal"
+    ]
+  },
+  {
+    "name": "Karabük",
+    "plate": "78",
+    "latitude": "41.1956",
+    "longitude": "32.6227",
+    "counties": [
+      "Merkez",
+      "Safranbolu",
+      "Yenice",
+      "Eskipazar",
+      "Eflani",
+      "Ovacık"
+    ]
+  },
+  {
+    "name": "Kilis",
+    "plate": "79",
+    "latitude": "36.7165",
+    "longitude": "37.1147",
+    "counties": [
+      "Merkez",
+      "Musabeyli",
+      "Elbeyli",
+      "Polateli"
+    ]
+  },
+  {
+    "name": "Osmaniye",
+    "plate": "80",
+    "latitude": "37.0746",
+    "longitude": "36.2464",
+    "counties": [
+      "Merkez",
+      "Kadirli",
+      "Düziçi",
+      "Bahçe",
+      "Toprakkale",
+      "Sumbas",
+      "Hasanbeyli"
+    ]
+  },
+  {
+    "name": "Düzce",
+    "plate": "81",
+    "latitude": "40.8387",
+    "longitude": "31.1626",
+    "counties": [
+      "Merkez",
+      "Akçakoca",
+      "Kaynaşlı",
+      "Gölyaka",
+      "Çilimli",
+      "Yığılca",
+      "Gümüşova",
+      "Cumayeri"
+    ]
+  }
+]

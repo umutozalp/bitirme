@@ -11,9 +11,7 @@ class FirebaseService {
     try {
       User? user = _auth.currentUser;
       if (user != null) {
-        String userId = user.uid; // Kullanıcının benzersiz ID'si
-
-        // Bu ID ile Firestore'da kullanıcıya ait veriyi kaydetmek
+        String userId = user.uid;
         await _db.collection("users").doc(userId).set({
           'name': name,
           'surname': surname,
@@ -21,12 +19,9 @@ class FirebaseService {
           'phone': phone,
           'gender': gender,
         });
-        print('Veri başarıyla kaydedildi.');
-      } else {
-        print("Kullanıcı oturum açmamış.");
       }
     } catch (e) {
-      print('Veri kaydetme hatası: $e');
+      // Hata durumunda sadece işlemi başarısız olarak işaretle
     }
   }
 
@@ -40,19 +35,15 @@ class FirebaseService {
         DocumentSnapshot doc = await _db.collection("users").doc(userId).get();
 
         if (doc.exists) {
-          print("Veri bulundu: ${doc.data()}");
           // Belge verilerini Map olarak döndür
           return doc.data() as Map<String, dynamic>;
         } else {
-          print("Belge bulunamadı.");
           return null;
         }
       } else {
-        print("Kullanıcı oturum açmamış.");
         return null;
       }
     } catch (e) {
-      print('Veri çekme hatası: $e');
       return null;
     }
   }
@@ -77,13 +68,9 @@ class FirebaseService {
           'CVV': CVV,
           'holder': holder
         });
-        print('Kart başarıyla kaydedildi.');
-      } else {
-        print("Kullanıcı oturum açmamış.");
       }
     } catch (e) {
-      print('Kart kaydedilirken bir hata oluştu : $e');
-      return null;
+      return;
     }
   }
 
@@ -103,18 +90,14 @@ class FirebaseService {
             return data;
           }).toList();
 
-          print("Kartlar bulundu");
           return cards;
         } else {
-          print("Kart bulunumadı.");
           return null;
         }
       } else {
-        print("Kullanıcı oturum açmamış.");
         return null;
       }
     } catch (e) {
-      print("Veri çekme hatası : $e");
       return null;
     }
   }
@@ -134,14 +117,128 @@ class FirebaseService {
             .doc(documentId)
             .delete();
 
-        print('Kart başarıyla silindi.');
         return true;
       } else {
-        print("Kullanıcı oturum açmamış.");
         return false;
       }
     } catch (e) {
-      print('Kart silinirken bir hata oluştu: $e');
+      return false;
+    }
+  }
+
+//Adresi veritabanına kaydeden metot
+  Future<void> saveAddress(String name, String surname, String phone,
+      String city, String county, String address, String address_header) async {
+    try {
+      User? user = _auth.currentUser;
+      if (user != null) {
+        String userId = user.uid;
+        await _db
+            .collection("users")
+            .doc(userId)
+            .collection("address")
+            .doc()
+            .set({
+          'name': name,
+          'surname': surname,
+          'phone': phone,
+          'city': city,
+          'county': county,
+          'address': address,
+          'address_header': address_header,
+        });
+      }
+    } catch (e) {
+      // Hata durumunda sadece işlemi başarısız olarak işaretle
+    }
+  }
+
+  //Adresi veritabanından getiren metot.
+  Future<List<Map<String, dynamic>>?> getAddress() async {
+    try {
+      User? user = _auth.currentUser;
+      if (user != null) {
+        String userId = user.uid;
+        QuerySnapshot querySnapshot = await _db
+            .collection("users")
+            .doc(userId)
+            .collection("address")
+            .get();
+
+        if (querySnapshot.docs.isNotEmpty) {
+          List<Map<String, dynamic>> address = querySnapshot.docs.map((doc) {
+            Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+            data['documentId'] = doc.id;
+            return data;
+          }).toList();
+
+          return address;
+        } else {
+          return null;
+        }
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+  //  adres silen metot
+  Future<bool> deleteAddress(String documentId) async {
+    try {
+      User? user = _auth.currentUser;
+      if (user != null) {
+        String userId = user.uid;
+
+        await _db
+            .collection("users")
+            .doc(userId)
+            .collection("address")
+            .doc(documentId)
+            .delete();
+
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
+    }
+  }
+
+//adres güncelleyen metot
+  Future<bool> updateAddress(
+      String documentId,
+      String name,
+      String surname,
+      String phone,
+      String city,
+      String county,
+      String address,
+      String addressHeader) async {
+    try {
+      User? user = _auth.currentUser;
+      if (user != null) {
+        String userId = user.uid;
+        await _db
+            .collection("users")
+            .doc(userId)
+            .collection("address")
+            .doc(documentId)
+            .update({
+          'name': name,
+          'surname': surname,
+          'phone': phone,
+          'city': city,
+          'county': county,
+          'address': address,
+          'address_header': addressHeader,
+        });
+        return true;
+      }
+      return false;
+    } catch (e) {
       return false;
     }
   }

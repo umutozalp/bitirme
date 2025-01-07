@@ -26,7 +26,7 @@ class PaymentScreen extends StatefulWidget {
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
-  FirebaseService _firebaseService = FirebaseService();
+  final FirebaseService _firebaseService = FirebaseService();
   String cardNo = '';
   String expiryDate = '';
   String cardHolderName = '';

@@ -1,13 +1,12 @@
 import 'package:bitirme/service/auth.dart';
 import 'package:bitirme/src/view/screen/home_screen.dart';
-import 'package:bitirme/src/view/screen/register_page.dart';
+import 'package:bitirme/src/view/screen/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
-import 'package:sign_in_button/sign_in_button.dart'; // sign_in_button paketini import ettik
+// sign_in_button paketini import ettik
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:password_field_validator/password_field_validator.dart';
 
 class LoginRegisterPage extends StatefulWidget {
   const LoginRegisterPage({super.key});
@@ -24,10 +23,10 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
 
   // Google ile giriş fonksiyonu
   Future<void> signInWithGoogle() async {
-    final GoogleSignIn _googleSignIn = GoogleSignIn();
+    final GoogleSignIn googleSignIn = GoogleSignIn();
     try {
       // Google ile giriş
-      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
       if (googleUser == null) {
         setState(() {
           errorMessage = "Google ile giriş yapılamadı.";

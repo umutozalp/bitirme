@@ -5,6 +5,8 @@ import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:flutter/services.dart';
 
 class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
+
   @override
   _RegisterPageState createState() => _RegisterPageState();
 }

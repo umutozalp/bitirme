@@ -5,18 +5,20 @@ import 'package:flutter/services.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 class UserInfo extends StatefulWidget {
+  const UserInfo({super.key});
+
   @override
   _UserInfoState createState() => _UserInfoState();
 }
 
 class _UserInfoState extends State<UserInfo> {
-  FirebaseService _firebaseService = FirebaseService();
+  final FirebaseService _firebaseService = FirebaseService();
 
   // TextField'ler için controller'lar
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _phoneController = TextEditingController();
-  TextEditingController _surnameController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _surnameController = TextEditingController();
 
   // Cinsiyet seçimi için değişken
   String? _selectedGender;
@@ -26,6 +28,7 @@ class _UserInfoState extends State<UserInfo> {
 
   PhoneNumber? _phoneNumber;
 
+  @override
   void initState() {
     super.initState();
     _loadUserData(); // Sayfa açıldığında veriyi yükle
@@ -51,7 +54,7 @@ class _UserInfoState extends State<UserInfo> {
     }
   }
 
-  void _saveUserData() async {
+  Future<void> _saveUserData() async {
     String name = _nameController.text;
     String surname = _surnameController.text;
     String email = Auth().currentUser?.email ?? "";
@@ -193,7 +196,9 @@ class _UserInfoState extends State<UserInfo> {
             ),
             Row(
               children: [
-                SizedBox(width: 25,),
+                SizedBox(
+                  width: 25,
+                ),
                 Radio<String>(
                   value: 'Erkek',
                   groupValue: _selectedGender,
@@ -243,13 +248,13 @@ class _UserInfoState extends State<UserInfo> {
             SizedBox(height: 20),
 
             // Güncelle butonu
-            Container(
+            SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: _isButtonEnabled ? _saveUserData : null,
                 style: ElevatedButton.styleFrom(
                   backgroundColor:
-                  _isButtonEnabled ? Colors.blueAccent : Colors.grey,
+                      _isButtonEnabled ? Colors.blueAccent : Colors.grey,
                   padding: EdgeInsets.symmetric(vertical: 16),
                 ),
                 child: Text(
@@ -268,4 +273,3 @@ class _UserInfoState extends State<UserInfo> {
     );
   }
 }
-

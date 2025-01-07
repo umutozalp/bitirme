@@ -1,9 +1,10 @@
 import 'package:bitirme/service/auth.dart';
+import 'package:bitirme/src/view/screen/address_screen.dart';
 import 'package:bitirme/src/view/screen/home_screen.dart';
 import 'package:bitirme/src/view/screen/payment_methods_screen.dart';
-import 'package:bitirme/src/view/screen/user_info.dart';
+import 'package:bitirme/src/view/screen/user_info_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:bitirme/src/view/screen/login_page.dart';
+import 'package:bitirme/src/view/screen/login_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -100,26 +101,42 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Navigator.push(
                   context,
                   PageRouteBuilder(
-                    pageBuilder: (context, animation, secondaryAnimation) => UserInfo(),
-                    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                    pageBuilder: (context, animation, secondaryAnimation) =>
+                        UserInfo(),
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
                       // FadeTransition ile ekranın opaklığını değiştirme
                       return FadeTransition(
-                        opacity: animation,  // Opaklık animasyonu
+                        opacity: animation, // Opaklık animasyonu
                         child: child,
                       );
                     },
                   ),
                 );
-
               },
             ),
 
-            // Adreslerim sekmesi
             _buildProfileOption(
               icon: Icon(Icons.home, color: Colors.blueAccent),
               context,
               title: "Adreslerim",
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) =>
+                        AddressScreen(),
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                      // FadeTransition ile ekranın opaklığını değiştirme
+                      return FadeTransition(
+                        opacity: animation, // Opaklık animasyonu
+                        child: child,
+                      );
+                    },
+                  ),
+                );
+              },
             ),
 
             // Geçmiş Siparişler sekmesi
@@ -138,11 +155,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Navigator.push(
                   context,
                   PageRouteBuilder(
-                    pageBuilder: (context, animation, secondaryAnimation) => PaymentScreen(),
-                    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                    pageBuilder: (context, animation, secondaryAnimation) =>
+                        PaymentScreen(),
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
                       // FadeTransition ile ekranın opaklığını değiştirme
                       return FadeTransition(
-                        opacity: animation,  // Opaklık animasyonu
+                        opacity: animation, // Opaklık animasyonu
                         child: child,
                       );
                     },
