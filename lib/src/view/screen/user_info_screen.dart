@@ -79,7 +79,7 @@ class _UserInfoState extends State<UserInfo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Color.fromRGBO(10, 61, 51, 1.0),
         title: Text(
           'Kullanıcı Bilgileri',
           style: TextStyle(
@@ -96,7 +96,7 @@ class _UserInfoState extends State<UserInfo> {
               children: [
                 Icon(
                   Icons.person,
-                  color: Colors.blueAccent,
+                  color: Color.fromRGBO(10, 61, 51, 1.0),
                   size: 40,
                 ),
                 SizedBox(width: 8),
@@ -143,7 +143,7 @@ class _UserInfoState extends State<UserInfo> {
               children: [
                 Icon(
                   Icons.email,
-                  color: Colors.blueAccent,
+                  color: Color.fromRGBO(10, 61, 51, 1.0),
                   size: 40,
                 ),
                 SizedBox(width: 8),
@@ -191,7 +191,7 @@ class _UserInfoState extends State<UserInfo> {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Colors.blueAccent,
+                color: Color.fromRGBO(10, 61, 51, 1.0),
               ),
             ),
             Row(
@@ -253,8 +253,9 @@ class _UserInfoState extends State<UserInfo> {
               child: ElevatedButton(
                 onPressed: _isButtonEnabled ? _saveUserData : null,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor:
-                      _isButtonEnabled ? Colors.blueAccent : Colors.grey,
+                  backgroundColor: _isButtonEnabled
+                      ? Color.fromRGBO(10, 61, 51, 1.0)
+                      : Colors.grey,
                   padding: EdgeInsets.symmetric(vertical: 16),
                 ),
                 child: Text(

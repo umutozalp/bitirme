@@ -55,7 +55,7 @@ class ProductDetailScreen extends StatelessWidget {
           onRatingUpdate: (_) {},
         ),
         Text(
-          "(4500 Reviews)",
+          "(4500 Değerlendirme)",
           style: Theme.of(context).textTheme.displaySmall?.copyWith(
                 fontWeight: FontWeight.w300,
               ),
@@ -76,7 +76,9 @@ class ProductDetailScreen extends StatelessWidget {
             alignment: Alignment.center,
             width: controller.isNominal(product) ? 40 : 70,
             decoration: BoxDecoration(
-              color: controller.sizeType(product)[index].isSelected == false ? Colors.white : AppColor.lightOrange,
+              color: controller.sizeType(product)[index].isSelected == false
+                  ? Colors.white
+                  : AppColor.lightGreen,
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
                 color: Colors.grey,
@@ -131,14 +133,16 @@ class ProductDetailScreen extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              product.off != null ? "\$${product.off}" : "\$${product.price}",
+                              product.off != null
+                                  ? "\₺${product.off}"
+                                  : "\₺${product.price}",
                               style: Theme.of(context).textTheme.displayLarge,
                             ),
                             const SizedBox(width: 3),
                             Visibility(
                               visible: product.off != null ? true : false,
                               child: Text(
-                                "\$${product.price}",
+                                "\₺${product.price}",
                                 style: const TextStyle(
                                   decoration: TextDecoration.lineThrough,
                                   color: Colors.grey,
@@ -148,14 +152,17 @@ class ProductDetailScreen extends StatelessWidget {
                             ),
                             const Spacer(),
                             Text(
-                              product.isAvailable ? "Available in stock" : "Not available",
-                              style: const TextStyle(fontWeight: FontWeight.w500),
+                              product.isAvailable
+                                  ? "Stok bulunuyor"
+                                  : "Stok yok",
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.w500),
                             )
                           ],
                         ),
                         const SizedBox(height: 30),
                         Text(
-                          "About",
+                          "Ürün Hakkında",
                           style: Theme.of(context).textTheme.headlineMedium,
                         ),
                         const SizedBox(height: 10),
@@ -171,8 +178,10 @@ class ProductDetailScreen extends StatelessWidget {
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
-                            onPressed: product.isAvailable ? () => controller.addToCart(product) : null,
-                            child: const Text("Add to cart"),
+                            onPressed: product.isAvailable
+                                ? () => controller.addToCart(product)
+                                : null,
+                            child: const Text("Sepete Ekle"),
                           ),
                         )
                       ],

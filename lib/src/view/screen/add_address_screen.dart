@@ -131,7 +131,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               children: [
                 const Icon(
                   Icons.person,
-                  color: Colors.blueAccent,
+                  color: Color.fromRGBO(10, 61, 51, 1.0),
                   size: 30,
                 ),
                 const SizedBox(width: 12),
@@ -167,7 +167,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               children: [
                 const Icon(
                   Icons.phone,
-                  color: Colors.blueAccent,
+                  color: Color.fromRGBO(10, 61, 51, 1.0),
                   size: 30,
                 ),
                 const SizedBox(width: 12),
@@ -205,7 +205,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               children: [
                 const Icon(
                   Icons.pin_drop,
-                  color: Colors.blueAccent,
+                  color: Color.fromRGBO(10, 61, 51, 1.0),
                   size: 30,
                 ),
                 const SizedBox(width: 12),
@@ -315,7 +315,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               children: [
                 const Icon(
                   Icons.apartment,
-                  color: Colors.blueAccent,
+                  color: Color.fromRGBO(10, 61, 51, 1.0),
                   size: 30,
                 ),
                 const SizedBox(width: 12),
@@ -341,7 +341,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               child: ElevatedButton(
                 onPressed: _saveAddress,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blueAccent,
+                  backgroundColor: Color.fromRGBO(10, 61, 51, 1.0),
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),

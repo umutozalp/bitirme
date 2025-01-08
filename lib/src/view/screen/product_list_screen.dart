@@ -13,109 +13,59 @@ final ProductController controller = Get.put(ProductController());
 class ProductListScreen extends StatelessWidget {
   const ProductListScreen({super.key});
 
-  Widget appBarActionButton(AppbarActionType type) {
-    IconData icon = Icons.ac_unit_outlined;
-
-    if (type == AppbarActionType.trailing) {
-      icon = Icons.search;
-    }
-
-    return Container(
-      margin: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: AppColor.lightGrey,
-      ),
-      child: IconButton(
-        padding: const EdgeInsets.all(8),
-        constraints: const BoxConstraints(),
-        onPressed: () {},
-        icon: Icon(icon, color: Colors.black),
-      ),
-    );
-  }
-
-  PreferredSize get _appBar {
-    return PreferredSize(
-      preferredSize: const Size.fromHeight(100),
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              appBarActionButton(AppbarActionType.leading),
-              appBarActionButton(AppbarActionType.trailing),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget _recommendedProductListView(BuildContext context) {
-    return SizedBox(
-      height: 170,
-      child: ListView.builder(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          shrinkWrap: true,
-          scrollDirection: Axis.horizontal,
-          itemCount: AppData.recommendedProducts.length,
-          itemBuilder: (_, index) {
-            return Padding(
-              padding: const EdgeInsets.only(right: 20),
-              child: Container(
-                width: 300,
-                decoration: BoxDecoration(
-                  color: AppData.recommendedProducts[index].cardBackgroundColor,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 12),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Yılbaşına özel %30 \nİNDİRİM',
-                            style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                                  color: Colors.white,
-                                ),
-                          ),
-                          const SizedBox(height: 8),
-                          ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppData.recommendedProducts[index].buttonBackgroundColor,
-                              elevation: 0,
-                              padding: const EdgeInsets.symmetric(horizontal: 18),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18),
-                              ),
-                            ),
-                            child: Text(
-                              "Hemen Al",
-                              style: TextStyle(
-                                color: AppData.recommendedProducts[index].buttonTextColor!,
-                              ),
-                            ),
-                          )
-                        ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      child: Container(
+        height: 170,
+        width: MediaQuery.of(context).size.width - 40,
+        decoration: BoxDecoration(
+          color: AppData.recommendedProducts[0].cardBackgroundColor,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Yılbaşına özel %10 \nİNDİRİM',
+                    style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.bold)
+                  ),
+                  const SizedBox(height: 8),
+                  ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor:
+                          AppData.recommendedProducts[0].buttonBackgroundColor,
+                      elevation: 0,
+                      padding: const EdgeInsets.symmetric(horizontal: 18),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18),
                       ),
                     ),
-                    const Spacer(),
-                    Image.asset(
-                      AppData.recommendedProducts[index].imagePath,
-                      height: 125,
-                      fit: BoxFit.cover,
-                    )
-                  ],
-                ),
+                    child: Text(
+                      "Hemen Al",
+                      style: TextStyle(
+                        color: AppData.recommendedProducts[0].buttonTextColor!,
+                      ),
+                    ),
+                  )
+                ],
               ),
-            );
-          }),
+            ),
+            const Spacer(),
+            Image.asset(
+              AppData.recommendedProducts[0].imagePath,
+              height: 125,
+              fit: BoxFit.cover,
+            )
+          ],
+        ),
+      ),
     );
   }
 
@@ -147,35 +97,38 @@ class ProductListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     controller.getAllItems();
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: _appBar,
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Merhaba",
-                  style: Theme.of(context).textTheme.displayLarge,
+          child: Column(
+            children: [
+              const SizedBox(height: 50),
+              Center(
+                child: Image.asset(
+                  'assets/images/home_modo1.png',
+                  height: 60,
+                  fit: BoxFit.contain,
                 ),
-                Text(
-                  "Lets gets somethings?",
-                  style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _recommendedProductListView(context),
+                    _topCategoriesHeader(context),
+                    _topCategoriesListView(),
+                    GetBuilder(builder: (ProductController controller) {
+                      return ProductGridView(
+                        items: controller.filteredProducts,
+                        likeButtonPressed: (index) =>
+                            controller.isFavorite(index),
+                        isPriceOff: (product) => controller.isPriceOff(product),
+                      );
+                    }),
+                  ],
                 ),
-                _recommendedProductListView(context),
-                _topCategoriesHeader(context),
-                _topCategoriesListView(),
-                GetBuilder(builder: (ProductController controller) {
-                  return ProductGridView(
-                    items: controller.filteredProducts,
-                    likeButtonPressed: (index) => controller.isFavorite(index),
-                    isPriceOff: (product) => controller.isPriceOff(product),
-                  );
-                }),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

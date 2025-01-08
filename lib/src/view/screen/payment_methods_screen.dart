@@ -135,7 +135,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     expiryDate: expiryDate,
                     cardHolderName: cardHolderName,
                     cvvCode: cvvCode,
-                    themeColor: Colors.blue,
+                    themeColor: Color.fromRGBO(10, 61, 51, 1.0),
                     onCreditCardModelChange: onCreditCardModelChange,
                     cardNumberDecoration: const InputDecoration(
                       labelText: 'Kart Numarası',
@@ -168,16 +168,18 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       backgroundColor: Colors.white,
-                      side:
-                          const BorderSide(color: Colors.blueAccent, width: 2),
+                      side: BorderSide(
+                          color: Color.fromRGBO(10, 61, 51, 1.0), width: 2),
                     ),
                     onPressed: () => setState(() {
                       isAddingCard = false;
                       _clearForm();
                     }),
-                    child: const Text(
+                    child: Text(
                       'İptal',
-                      style: TextStyle(color: Colors.blueAccent),
+                      style: TextStyle(
+                        color: Color.fromRGBO(10, 61, 51, 1.0),
+                      ),
                     ),
                   ),
                 ),
@@ -186,7 +188,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
-                      backgroundColor: Colors.blueAccent,
+                      backgroundColor: Color.fromRGBO(10, 61, 51, 1.0),
                     ),
                     onPressed: _onValidate,
                     child: const Text(

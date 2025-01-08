@@ -39,7 +39,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Color.fromRGBO(10, 61, 51, 1.0),
         title: Text(
           "Profil",
           style: TextStyle(
@@ -63,7 +63,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     CircleAvatar(
                       radius: 40,
-                      backgroundColor: Colors.blueAccent,
+                      backgroundColor: Color.fromRGBO(10, 61, 51, 1.0),
                       child: Icon(
                         Icons.person,
                         color: Color.fromRGBO(255, 255, 255, 1.0),
@@ -94,7 +94,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             SizedBox(height: 5),
             // Kullanıcı bilgileri sekmesi
             _buildProfileOption(
-              icon: Icon(Icons.edit, color: Colors.blueAccent),
+              icon: Icon(Icons.edit, color: Color.fromRGBO(10, 61, 51, 1.0),),
               context,
               title: "Kullanıcı Bilgilerim",
               onTap: () {
@@ -117,7 +117,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
 
             _buildProfileOption(
-              icon: Icon(Icons.home, color: Colors.blueAccent),
+              icon: Icon(Icons.home, color: Color.fromRGBO(10, 61, 51, 1.0),),
               context,
               title: "Adreslerim",
               onTap: () {
@@ -141,14 +141,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
             // Geçmiş Siparişler sekmesi
             _buildProfileOption(
-              icon: Icon(Icons.history, color: Colors.blueAccent),
+              icon: Icon(Icons.history, color: Color.fromRGBO(10, 61, 51, 1.0),),
               context,
               title: "Geçmiş Siparişlerim",
               onTap: () {},
             ),
 
             _buildProfileOption(
-              icon: Icon(Icons.credit_card, color: Colors.blueAccent),
+              icon: Icon(Icons.credit_card, color: Color.fromRGBO(10, 61, 51, 1.0),),
               context,
               title: "Ödeme Yöntemlerim",
               onTap: () {
@@ -206,7 +206,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
               ),
             ),
-            Icon(Icons.arrow_forward_ios, size: 18, color: Colors.blueAccent),
+            Icon(Icons.arrow_forward_ios, size: 18, color: Color.fromRGBO(10, 61, 51, 1.0),),
           ],
         ),
       ),
@@ -239,7 +239,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Row(children: [
           Icon(
             Icons.logout,
-            color: Colors.blueAccent,
+            color: Color.fromRGBO(10, 61, 51, 1.0),
           ),
           SizedBox(width: 3),
           Expanded(
@@ -248,7 +248,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
           ),
-          Icon(Icons.arrow_forward_ios, size: 18, color: Colors.blueAccent),
+          Icon(Icons.arrow_forward_ios, size: 18, color: Color.fromRGBO(10, 61, 51, 1.0),),
         ]),
       ),
     );

@@ -27,11 +27,11 @@ class ProductGridView extends StatelessWidget {
                 borderRadius: BorderRadius.circular(30),
                 color: Colors.white,
               ),
-              width: 80,
+              width: 95,
               height: 30,
               alignment: Alignment.center,
               child: const Text(
-                "30% OFF",
+                "10% İNDİRİM",
                 style: TextStyle(fontWeight: FontWeight.w600),
               ),
             ),
@@ -94,15 +94,15 @@ class ProductGridView extends StatelessWidget {
               children: [
                 Text(
                   product.off != null
-                      ? "\$${product.off}"
-                      : "\$${product.price}",
+                      ? "\₺${product.off}"
+                      : "\₺${product.price}",
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 const SizedBox(width: 3),
                 Visibility(
                   visible: product.off != null ? true : false,
                   child: Text(
-                    "\$${product.price}",
+                    "\₺${product.price}",
                     style: const TextStyle(
                       decoration: TextDecoration.lineThrough,
                       color: Colors.grey,

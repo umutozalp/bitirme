@@ -19,21 +19,29 @@ class _CarouselSliderState extends State<CarouselSlider> {
 
   @override
   Widget build(BuildContext context) {
-    var height = MediaQuery.of(context).size.height;
     return Column(
       children: [
         SizedBox(
-          height: height * 0.32,
+          height: MediaQuery.of(context).size.height * 0.35,
           child: PageView.builder(
             itemCount: widget.items.length,
-            onPageChanged: (int currentIndex) {
-              newIndex = currentIndex;
-              setState(() {});
+            onPageChanged: (int index) {
+              setState(() => newIndex = index);
             },
             itemBuilder: (_, index) {
-              return FittedBox(
-                fit: BoxFit.none,
-                child: Image.asset(widget.items[index], scale: 3),
+              return Container(
+                margin: const EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Center(
+                  child: Image.asset(
+                    widget.items[index],
+                    fit: BoxFit.contain,
+                    height: MediaQuery.of(context).size.height * 0.3,
+                  ),
+                ),
               );
             },
           ),
@@ -41,7 +49,7 @@ class _CarouselSliderState extends State<CarouselSlider> {
         AnimatedSmoothIndicator(
           effect: const WormEffect(
             dotColor: Colors.white,
-            activeDotColor: AppColor.darkOrange,
+            activeDotColor: AppColor.darkGreen,
           ),
           count: widget.items.length,
           activeIndex: newIndex,

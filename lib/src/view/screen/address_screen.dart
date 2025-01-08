@@ -72,9 +72,10 @@ class _AddressScreenState extends State<AddressScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text('Adres Ekle',
-                    style: TextStyle(fontSize: 16, color: Colors.blueAccent)),
+                    style: TextStyle(
+                        fontSize: 16, color: Color.fromRGBO(10, 61, 51, 1.0))),
                 SizedBox(width: 4),
-                Icon(Icons.add, color: Colors.blue),
+                Icon(Icons.add, color: Color.fromRGBO(10, 61, 51, 1.0)),
               ],
             ),
           ),
@@ -118,7 +119,8 @@ class _AddressScreenState extends State<AddressScreen> {
                               Row(
                                 children: [
                                   const Icon(Icons.location_on,
-                                      color: Colors.blueAccent, size: 24),
+                                      color: Color.fromRGBO(10, 61, 51, 1.0),
+                                      size: 24),
                                   const SizedBox(width: 8),
                                   Expanded(
                                     child: Text(
@@ -126,7 +128,7 @@ class _AddressScreenState extends State<AddressScreen> {
                                       style: const TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.blueAccent,
+                                        color: Color.fromRGBO(10, 61, 51, 1.0),
                                       ),
                                     ),
                                   ),

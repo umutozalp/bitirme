@@ -20,16 +20,17 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Kayıt Ol", style: TextStyle(
-            fontSize: 23, fontWeight: FontWeight.w600, color: Colors.white),),
-        backgroundColor: Colors.blue,
+        title: Text(
+          "Kayıt Ol",
+          style: TextStyle(
+              fontSize: 23, fontWeight: FontWeight.w600, color: Colors.white),
+        ),
+        backgroundColor: Color.fromRGBO(10, 61, 51, 1.0),
       ),
       body: Padding(
         padding: EdgeInsets.only(
-          bottom: MediaQuery
-              .of(context)
-              .viewInsets
-              .bottom, // Klavye için ayarlama
+          bottom:
+              MediaQuery.of(context).viewInsets.bottom, // Klavye için ayarlama
         ),
         child: SingleChildScrollView(
           child: Padding(
@@ -46,9 +47,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 const Text("Modo'da hesap oluştur, indirimleri kaçırma!",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400, fontSize: 15)),
-                const SizedBox(height: 15),
+                    style:
+                        TextStyle(fontWeight: FontWeight.w400, fontSize: 15)),
+                const SizedBox(height: 40),
                 // E-posta TextField
                 TextField(
                   inputFormatters: [
@@ -58,13 +59,13 @@ class _RegisterPageState extends State<RegisterPage> {
                   controller: emailController,
                   decoration: InputDecoration(
                     labelText: "E-posta",
-                    prefixIcon: Icon(Icons.email, color: Colors.blue),
+                    prefixIcon: Icon(Icons.email, color: Color.fromRGBO(10, 61, 51, 1.0)),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide(color: Colors.blue, width: 4),
+                      borderSide: BorderSide(color: Color.fromRGBO(10, 61, 51, 1.0), width: 4),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.blue, width: 4),
+                      borderSide: BorderSide(color: Color.fromRGBO(10, 61, 51, 1.0), width: 4),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
@@ -80,13 +81,13 @@ class _RegisterPageState extends State<RegisterPage> {
                   decoration: InputDecoration(
                     labelText: "Şifre",
                     labelStyle: TextStyle(color: Colors.black87),
-                    prefixIcon: Icon(Icons.lock, color: Colors.blue),
+                    prefixIcon: Icon(Icons.lock, color: Color.fromRGBO(10, 61, 51, 1.0)),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide(color: Colors.blue, width: 2),
+                      borderSide: BorderSide(color: Color.fromRGBO(10, 61, 51, 1.0), width: 2),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.blue, width: 3),
+                      borderSide: BorderSide(color: Color.fromRGBO(10, 61, 51, 1.0), width: 3),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
@@ -104,13 +105,13 @@ class _RegisterPageState extends State<RegisterPage> {
                   onSuccess: () {
                     setState(() {
                       isPasswordValid =
-                      true; // Şifre geçerliyse durumu güncelle
+                          true; // Şifre geçerliyse durumu güncelle
                     });
                   },
                   onFail: () {
                     setState(() {
                       isPasswordValid =
-                      false; // Şifre geçersizse durumu güncelle
+                          false; // Şifre geçersizse durumu güncelle
                     });
                   },
                 ),
@@ -119,9 +120,11 @@ class _RegisterPageState extends State<RegisterPage> {
                 Center(
                   child: ElevatedButton(
                     onPressed: () async {
-                      if (EmailValidator.validate(emailController.text) && isPasswordValid) {
+                      if (EmailValidator.validate(emailController.text) &&
+                          isPasswordValid) {
                         // E-posta adresi geçerli, Firebase'de daha önce kayıtlı olup olmadığını kontrol et
-                        bool isRegistered = await Auth().isEmailRegistered(emailController.text);
+                        bool isRegistered = await Auth()
+                            .isEmailRegistered(emailController.text);
                         if (isRegistered) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
@@ -156,9 +159,12 @@ class _RegisterPageState extends State<RegisterPage> {
                       }
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blueAccent,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 12, horizontal: 40),
+                      backgroundColor: Color.fromRGBO(10, 61, 51, 1.0),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
                     ),
                     child: const Text(
                       "Kayıt Ol",

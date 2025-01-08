@@ -29,9 +29,10 @@ class _CartScreenState extends State<CartScreen> {
 
   PreferredSizeWidget _appBar(BuildContext context) {
     return AppBar(
+      backgroundColor: Color.fromRGBO(10, 61, 51, 1.0),
       title: Text(
-        "My cart",
-        style: Theme.of(context).textTheme.displayLarge,
+        "Sepetim",
+        style: TextStyle(color: Colors.white, fontSize: 20,fontWeight: FontWeight.bold),
       ),
       actions: [
         IconButton(
@@ -72,7 +73,7 @@ class _CartScreenState extends State<CartScreen> {
                   padding: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: ColorExtension.randomColor,
+                    color: Colors.grey.shade100,
                   ),
                   child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(20)),
@@ -112,8 +113,8 @@ class _CartScreenState extends State<CartScreen> {
                     const SizedBox(height: 5),
                     Text(
                       controller.isPriceOff(product)
-                          ? "\$${product.off}"
-                          : "\$${product.price}",
+                          ? "\₺${product.off}"
+                          : "\₺${product.price}",
                       style: const TextStyle(
                         fontWeight: FontWeight.w900,
                         fontSize: 23,
@@ -136,7 +137,7 @@ class _CartScreenState extends State<CartScreen> {
                             controller.decreaseItemQuantity(product),
                         icon: const Icon(
                           Icons.remove,
-                          color: Color(0xFFEC6813),
+                          color: Color(0xFF33691E),
                         ),
                       ),
                       GetBuilder<ProductController>(
@@ -159,7 +160,7 @@ class _CartScreenState extends State<CartScreen> {
                         splashRadius: 10.0,
                         onPressed: () =>
                             controller.increaseItemQuantity(product),
-                        icon: const Icon(Icons.add, color: Color(0xFFEC6813)),
+                        icon: const Icon(Icons.add, color: Color(0xFF33691E)),
                       ),
                     ],
                   ),
@@ -180,19 +181,19 @@ class _CartScreenState extends State<CartScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const Text(
-            "Total",
+            "Toplam",
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.w400),
           ),
           Obx(
             () {
               return AnimatedSwitcherWrapper(
                 child: Text(
-                  "\$${controller.totalPrice.value}",
+                  "\₺${controller.totalPrice.value}",
                   key: ValueKey<int>(controller.totalPrice.value),
                   style: const TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w900,
-                    color: Color(0xFFEC6813),
+                    color: Color(0xFF33691E),
                   ),
                 ),
               );

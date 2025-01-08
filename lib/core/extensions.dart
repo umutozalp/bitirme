@@ -2,14 +2,6 @@ import 'dart:math' show Random;
 import 'package:flutter/material.dart' show Color;
 import 'package:bitirme/core/app_data.dart';
 
-extension ColorExtension on Color {
-  static Color get randomColor {
-    Random random = Random();
-    int randNumber = random.nextInt(AppData.randomColors.length);
-    return AppData.randomColors[randNumber];
-  }
-}
-
 extension IterableExtension<T> on Iterable<T> {
   Iterable<E> mapWithIndex<E>(E Function(int index, T value) f) {
     return Iterable.generate(length).map((i) => f(i, elementAt(i)));

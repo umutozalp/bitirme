@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-  import 'package:animations/animations.dart';
+import 'package:animations/animations.dart';
 import 'package:bitirme/src/model/product.dart';
 import 'package:bitirme/src/view/screen/product_detail_screen.dart';
 

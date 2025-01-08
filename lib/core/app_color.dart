@@ -3,9 +3,9 @@ import 'package:flutter/material.dart' show Color;
 class AppColor {
   const AppColor._();
 
-  static const darkOrange = Color(0xFFEC6813);
-  static const lightOrange = Color(0xFFf8b89a);
+  static const darkGreen = Color(0xFF33691E);
+  static const lightGreen = Color(0xFF33691E);
 
-  static const darkGrey = Color(0xFFA6A3A0);
-  static const lightGrey = Color(0xFFE5E6E8);
+  static const darkGrey = Color(0xFFFFFFFF);
+  static const lightGrey = Color(0xFFFFFFFF);
 }

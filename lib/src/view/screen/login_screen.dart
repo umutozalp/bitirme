@@ -106,8 +106,8 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color.fromRGBO(31, 170, 216, 1.0),
-              Color.fromRGBO(34, 191, 154, 1.0)
+              Color.fromRGBO(10, 61, 51, 1.0),
+              Color.fromRGBO(10, 61, 51, 1.0),
             ],
           ),
         ),
@@ -123,8 +123,8 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                     padding: const EdgeInsets.only(bottom: 0),
                     child: Image.asset(
                       "assets/images/modo1.png",
-                      width: 200,
-                      height: 200,
+                      width: 300,
+                      height: 300,
                     ),
                   ),
                   const Text(
@@ -212,7 +212,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                     alignment: Alignment.centerRight,
                     child: GestureDetector(
                       onTap: () {},
-                      child: Text("Şifremi Unuttum",style: TextStyle(decoration: TextDecoration.underline,decorationThickness: 2  ),),
+                      child: Text("Şifremi Unuttum",style: TextStyle(decoration: TextDecoration.underline,decorationThickness: 2,color: Colors.white ),),
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -243,7 +243,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                     children: <Widget>[
                       Expanded(
                         child: Divider(
-                          color: Colors.black54, // Çizgi rengi
+                          color: Colors.white, // Çizgi rengi
                           thickness: 2, // Çizgi kalınlığı
                         ),
                       ),
@@ -251,12 +251,12 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         child: Text(
                           'Veya Google ile oturum açın', // Çizgi arasındaki yazı
-                          style: TextStyle(fontSize: 16),
+                          style: TextStyle(fontSize: 16,color: Colors.white),
                         ),
                       ),
                       Expanded(
                         child: Divider(
-                          color: Colors.black54, // Çizgi rengi
+                          color: Colors.white, // Çizgi rengi
                           thickness: 2, // Çizgi kalınlığı
                         ),
                       ),
@@ -278,7 +278,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Hesabınız yok mu? "),
+                      Text("Hesabınız yok mu? ",style: TextStyle(color: Colors.white),),
                       GestureDetector(
                         onTap: () {
                           Navigator.push(

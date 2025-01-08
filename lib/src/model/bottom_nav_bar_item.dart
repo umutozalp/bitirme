@@ -11,6 +11,6 @@ class BottomNavBarItem {
   const BottomNavBarItem(
     this.title,
     this.icon, {
-    this.activeColor = AppData.lightOrangeColor,
+    this.activeColor = AppData.lightGreen,
   });
 }
