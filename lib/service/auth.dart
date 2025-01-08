@@ -8,13 +8,12 @@ class Auth {
   User? get currentUser => _firebaseAuth.currentUser;
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 
-
-    // Güvenlik açıkları nedeniyle fetchSignInMethodsForEmail artıl kullanılmaması öneriliyor fakat
-    // yerine kullanılabilecek alternatifler olsa da yapmayı beceremedim.
+  // Güvenlik açıkları nedeniyle fetchSignInMethodsForEmail artıl kullanılmaması öneriliyor fakat
+  // yerine kullanılabilecek alternatifler olsa da yapmayı beceremedim.
   Future<bool> isEmailRegistered(String email) async {
     try {
       List<String> signInMethods =
-      await _firebaseAuth.fetchSignInMethodsForEmail(email);
+          await _firebaseAuth.fetchSignInMethodsForEmail(email);
       return signInMethods.isNotEmpty; // Eğer boş değilse, kullanıcı mevcut
     } catch (e) {
       print('Hata: $e');
@@ -52,7 +51,8 @@ class Auth {
       if (googleUser == null) {
         return null; // Kullanıcı giriş yapmazsa null döner
       }
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
 
       // Firebase ile Google giriş bilgilerini doğruluyoruz
       final AuthCredential credential = GoogleAuthProvider.credential(
@@ -61,7 +61,8 @@ class Auth {
       );
 
       // Firebase ile oturum açıyoruz
-      final UserCredential userCredential = await _firebaseAuth.signInWithCredential(credential);
+      final UserCredential userCredential =
+          await _firebaseAuth.signInWithCredential(credential);
       return userCredential.user;
     } catch (e) {
       print("Google ile giriş hatası: $e");
@@ -72,5 +73,10 @@ class Auth {
   // Sign out
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
+  }
+
+  // Password Reset
+  Future<void> sendPasswordResetEmail({required String email}) async {
+    await _firebaseAuth.sendPasswordResetEmail(email: email);
   }
 }

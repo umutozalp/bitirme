@@ -4,9 +4,9 @@ import 'package:bitirme/src/view/screen/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
-// sign_in_button paketini import ettik
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:bitirme/src/view/screen/forgot_password_screen.dart';
 
 class LoginRegisterPage extends StatefulWidget {
   const LoginRegisterPage({super.key});
@@ -21,33 +21,23 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
   String? errorMessage;
   bool _obscurePassword = true;
 
-  // Google ile giriş fonksiyonu
   Future<void> signInWithGoogle() async {
-    final GoogleSignIn googleSignIn = GoogleSignIn();
     try {
-      // Google ile giriş
-      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
-      if (googleUser == null) {
+      final user = await Auth().signInWithGoogle();
+      if (user != null) {
+        Navigator.pushReplacement(
+          context,
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                HomeScreen(),
+            transitionDuration: Duration.zero,
+            reverseTransitionDuration: Duration.zero,
+          ),
+        );
+      } else {
         setState(() {
           errorMessage = "Google ile giriş yapılamadı.";
         });
-        return;
-      }
-      final GoogleSignInAuthentication googleAuth =
-          await googleUser.authentication;
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-
-      // Firebase'e giriş yap
-      final userCredential =
-          await FirebaseAuth.instance.signInWithCredential(credential);
-      if (userCredential.user != null) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => HomeScreen()),
-        );
       }
     } catch (error) {
       setState(() {
@@ -68,6 +58,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
       });
     }
   }
+
   Future<void> signIn() async {
     if (!EmailValidator.validate(emailController.text)) {
       setState(() {
@@ -87,7 +78,11 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
       );
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
+        PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => HomeScreen(),
+          transitionDuration: Duration.zero,
+          reverseTransitionDuration: Duration.zero,
+        ),
       );
     } on FirebaseAuthException catch (e) {
       setState(() {
@@ -123,14 +118,14 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                     padding: const EdgeInsets.only(bottom: 0),
                     child: Image.asset(
                       "assets/images/modo1.png",
-                      width: 300,
-                      height: 300,
+                      width: 200,
+                      height: 200,
                     ),
                   ),
                   const Text(
                     "Hoşgeldiniz!",
                     style: TextStyle(
-                      fontSize: 32,
+                      fontSize: 28,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
@@ -211,8 +206,25 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: GestureDetector(
-                      onTap: () {},
-                      child: Text("Şifremi Unuttum",style: TextStyle(decoration: TextDecoration.underline,decorationThickness: 2,color: Colors.white ),),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) =>
+                                    const ForgotPasswordScreen(),
+                            transitionDuration: Duration.zero,
+                            reverseTransitionDuration: Duration.zero,
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "Şifremi Unuttum",
+                        style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            decorationThickness: 2,
+                            color: Colors.white),
+                      ),
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -251,7 +263,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         child: Text(
                           'Veya Google ile oturum açın', // Çizgi arasındaki yazı
-                          style: TextStyle(fontSize: 16,color: Colors.white),
+                          style: TextStyle(fontSize: 16, color: Colors.white),
                         ),
                       ),
                       Expanded(
@@ -278,26 +290,28 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Hesabınız yok mu? ",style: TextStyle(color: Colors.white),),
+                      Text(
+                        "Hesabınız yok mu? ",
+                        style: TextStyle(color: Colors.white),
+                      ),
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (BuildContext context) => RegisterPage()),
+                                builder: (BuildContext context) =>
+                                    RegisterPage()),
                           );
                         },
                         child: const Text(
                           "Hesap Oluşturun!",
                           style: TextStyle(
-                            color: Colors.red,
-                            decoration: TextDecoration.underline,
-                          ),
+                              color: Colors.white,
+                              decoration: TextDecoration.underline,
+                              decorationColor: Colors.white),
                         ),
                       ),
                     ],
-
-
                   ),
                 ],
               ),

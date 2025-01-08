@@ -1,10 +1,8 @@
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:bitirme/core/app_data.dart';
 import 'package:bitirme/src/model/product.dart';
-import 'package:bitirme/src/model/numerical.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:bitirme/src/model/product_category.dart';
-import 'package:bitirme/src/model/product_size_type.dart';
 
 class ProductController extends GetxController {
   List<Product> allProducts = AppData.products;
@@ -35,10 +33,19 @@ class ProductController extends GetxController {
   }
 
   void addToCart(Product product) {
-    product.quantity++;
-    cartProducts.add(product);
-    cartProducts.assignAll(cartProducts);
+    var existingProduct = cartProducts.firstWhere(
+      (item) => item.id == product.id,
+      orElse: () => product,
+    );
+
+    if (cartProducts.contains(existingProduct)) {
+      existingProduct.quantity++;
+    } else {
+      product.quantity = 1;
+      cartProducts.add(product);
+    }
     calculateTotalPrice();
+    update();
   }
 
   void increaseItemQuantity(Product product) {
@@ -48,16 +55,19 @@ class ProductController extends GetxController {
   }
 
   void decreaseItemQuantity(Product product) {
-    product.quantity--;
-    calculateTotalPrice();
-    update();
+    if (product.quantity > 0) {
+      product.quantity--;
+      if (product.quantity == 0) {
+        cartProducts.remove(product);
+      }
+      calculateTotalPrice();
+      update();
+    }
   }
 
   bool isPriceOff(Product product) => product.off != null;
 
   bool get isEmptyCart => cartProducts.isEmpty;
-
-  bool isNominal(Product product) => product.sizes?.numerical != null;
 
   void calculateTotalPrice() {
     totalPrice.value = 0;
@@ -84,73 +94,5 @@ class ProductController extends GetxController {
 
   getAllItems() {
     filteredProducts.assignAll(allProducts);
-  }
-
-  List<Numerical> sizeType(Product product) {
-    ProductSizeType? productSize = product.sizes;
-    List<Numerical> numericalList = [];
-
-    if (productSize?.numerical != null) {
-      for (var element in productSize!.numerical!) {
-        numericalList.add(Numerical(element.numerical, element.isSelected));
-      }
-    }
-
-    if (productSize?.categorical != null) {
-      for (var element in productSize!.categorical!) {
-        numericalList.add(
-          Numerical(
-            element.categorical.name,
-            element.isSelected,
-          ),
-        );
-      }
-    }
-
-    return numericalList;
-  }
-
-  void switchBetweenProductSizes(Product product, int index) {
-    sizeType(product).forEach((element) {
-      element.isSelected = false;
-    });
-
-    if (product.sizes?.categorical != null) {
-      for (var element in product.sizes!.categorical!) {
-        element.isSelected = false;
-      }
-
-      product.sizes?.categorical![index].isSelected = true;
-    }
-
-    if (product.sizes?.numerical != null) {
-      for (var element in product.sizes!.numerical!) {
-        element.isSelected = false;
-      }
-
-      product.sizes?.numerical![index].isSelected = true;
-    }
-
-    update();
-  }
-
-  String getCurrentSize(Product product) {
-    String currentSize = "";
-    if (product.sizes?.categorical != null) {
-      for (var element in product.sizes!.categorical!) {
-        if (element.isSelected) {
-          currentSize = "Size: ${element.categorical.name}";
-        }
-      }
-    }
-
-    if (product.sizes?.numerical != null) {
-      for (var element in product.sizes!.numerical!) {
-        if (element.isSelected) {
-          currentSize = "Size: ${element.numerical}";
-        }
-      }
-    }
-    return currentSize;
   }
 }

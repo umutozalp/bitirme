@@ -1,6 +1,7 @@
 import 'package:bitirme/service/auth.dart';
 import 'package:bitirme/src/view/screen/address_screen.dart';
 import 'package:bitirme/src/view/screen/home_screen.dart';
+import 'package:bitirme/src/view/screen/orders_screen.dart';
 import 'package:bitirme/src/view/screen/payment_methods_screen.dart';
 import 'package:bitirme/src/view/screen/user_info_screen.dart';
 import 'package:flutter/material.dart';
@@ -144,7 +145,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               icon: Icon(Icons.history, color: Color.fromRGBO(10, 61, 51, 1.0),),
               context,
               title: "Geçmiş Siparişlerim",
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => OrdersScreen()),
+                );
+              },
             ),
 
             _buildProfileOption(

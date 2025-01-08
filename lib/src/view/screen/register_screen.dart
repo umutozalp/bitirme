@@ -1,4 +1,6 @@
 import 'package:bitirme/service/auth.dart';
+import 'package:bitirme/src/view/screen/home_screen.dart';
+import 'package:bitirme/src/view/screen/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
@@ -30,7 +32,7 @@ class _RegisterPageState extends State<RegisterPage> {
       body: Padding(
         padding: EdgeInsets.only(
           bottom:
-              MediaQuery.of(context).viewInsets.bottom, // Klavye için ayarlama
+              MediaQuery.of(context).viewInsets.bottom,
         ),
         child: SingleChildScrollView(
           child: Padding(
@@ -123,6 +125,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       if (EmailValidator.validate(emailController.text) &&
                           isPasswordValid) {
                         // E-posta adresi geçerli, Firebase'de daha önce kayıtlı olup olmadığını kontrol et
+                        // çalışmıyor şuan
                         bool isRegistered = await Auth()
                             .isEmailRegistered(emailController.text);
                         if (isRegistered) {
@@ -145,6 +148,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           await Auth().createUser(
                             email: emailController.text,
                             password: passwordController.text,
+                          );
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(builder: (context) => HomeScreen()),
                           );
                         }
                       } else {

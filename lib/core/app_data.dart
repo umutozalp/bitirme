@@ -1,40 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:bitirme/src/model/product.dart';
-import 'package:bitirme/src/model/numerical.dart';
-import 'package:bitirme/src/model/categorical.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:bitirme/src/model/product_category.dart';
-import 'package:bitirme/src/model/product_size_type.dart';
 import 'package:bitirme/src/model/recommended_product.dart';
 import 'package:bitirme/src/model/bottom_nav_bar_item.dart';
 
 class AppData {
   const AppData._();
 
-  static const String dummyText =
-      'Lorem Ipsum is simply dummy text of the printing and typesetting'
-      ' industry. Lorem Ipsum has been the industry\'s standard dummy text'
-      ' ever since the 1500s, when an unknown printer took a galley of type'
-      ' and scrambled it to make a type specimen book.';
-
   static const String currencySymbol = '₺';
 
   static List<Product> products = [
     Product(
-      name: 'Apple iPhone 16 Pro 256GB',
+      id: "1",
+      name: 'Apple iPhone 16 Pro Max 256GB',
       price: 83000,
       isAvailable: true,
       off: 74700,
       quantity: 0,
       images: [
-        'assets/images/iphone16_1.png',
-        'assets/images/iphone16_2.png',
+        'assets/images/apple_iphone_16_1.png',
+        'assets/images/apple_iphone_16_2.png',
+        'assets/images/apple_iphone_16_3.png',
       ],
       isFavorite: true,
       rating: 1,
       type: ProductType.mobile,
     ),
     Product(
+      id: "2",
       name: 'Samsung Galaxy Tab S7 FE',
       price: 19999,
       isAvailable: false,
@@ -50,6 +44,7 @@ class AppData {
       type: ProductType.tablet,
     ),
     Product(
+      id: "3",
       name: 'Samsung Galaxy Tab S8+',
       price: 27999,
       isAvailable: true,
@@ -65,65 +60,71 @@ class AppData {
       type: ProductType.tablet,
     ),
     Product(
+      id: "4",
       name: 'APPLE Watch Series 10',
       price: 16799,
       isAvailable: true,
       off: 15120,
       quantity: 0,
       images: [
-        'assets/images/applewatch_1.png',
-        'assets/images/galaxy_watch_4_2.png',
-        'assets/images/galaxy_watch_4_3.png',
+        'assets/images/apple_watch_1.png',
+        'assets/images/apple_watch_1.1.png',
+        'assets/images/apple_watch_1.3.png',
       ],
       isFavorite: false,
       rating: 5,
       type: ProductType.watch,
     ),
     Product(
+      id: "5",
       name: 'APPLE Watch SE GPS 2024',
       price: 9999,
       isAvailable: true,
       off: null,
       quantity: 0,
       images: [
-        'assets/images/applewatch_2.png',
-        'assets/images/apple_watch_series_7_2.png',
-        'assets/images/apple_watch_series_7_3.png',
+        'assets/images/apple_watch_2.png',
+        'assets/images/apple_watch_2.1.png',
+        'assets/images/apple_watch_2.3.png',
       ],
       isFavorite: false,
       rating: 4,
       type: ProductType.watch,
     ),
     Product(
-      name: 'Beats studio 3',
+      id: "6",
+      name: 'APPLE Airpods Max 2024',
       price: 7499,
       isAvailable: true,
       off: null,
       quantity: 0,
       images: [
-        'assets/images/beats_studio_3-1.png',
-        'assets/images/beats_studio_3-2.png',
-        'assets/images/beats_studio_3-3.png',
-        'assets/images/beats_studio_3-4.png',
+        'assets/images/apple_airpods_max_1.png',
+        'assets/images/apple_airpods_max_2.png',
+        'assets/images/apple_airpods_max_3.png',
       ],
       isFavorite: false,
       rating: 2,
       type: ProductType.headphone,
     ),
     Product(
+      id: "7",
       name: 'Apple AirPods Pro (2. Nesil)',
       price: 7499,
       isAvailable: true,
       off: null,
       quantity: 0,
       images: [
-        'assets/images/appleairpods_1.png',
+        'assets/images/apple_airpods_1.png',
+        'assets/images/apple_airpods_1.2.png',
+        'assets/images/apple_airpods_1.3.png',
       ],
       isFavorite: false,
       rating: 4,
       type: ProductType.headphone,
     ),
     Product(
+      id: "8",
       name: 'Vestel 43FA9740 43" 108 Ekran',
       price: 17599,
       isAvailable: true,
@@ -132,12 +133,14 @@ class AppData {
       images: [
         'assets/images/vestel_1.png',
         'assets/images/vestel_2.png',
+        'assets/images/vestel_3.png',
       ],
       isFavorite: false,
       rating: 3,
       type: ProductType.tv,
     ),
     Product(
+      id: "9",
       name: 'LG OLEDB46 65 inç 165 cm 4K OLED Smart TV',
       price: 79999,
       isAvailable: true,
@@ -145,6 +148,7 @@ class AppData {
       quantity: 0,
       images: [
         'assets/images/lg_1.png',
+        'assets/images/lg_2.png',
         'assets/images/lg_3.png',
       ],
       isFavorite: false,

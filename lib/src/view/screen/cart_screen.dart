@@ -32,7 +32,8 @@ class _CartScreenState extends State<CartScreen> {
       backgroundColor: Color.fromRGBO(10, 61, 51, 1.0),
       title: Text(
         "Sepetim",
-        style: TextStyle(color: Colors.white, fontSize: 20,fontWeight: FontWeight.bold),
+        style: TextStyle(
+            color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
       ),
       actions: [
         IconButton(
@@ -100,14 +101,6 @@ class _CartScreenState extends State<CartScreen> {
                       style: const TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 15,
-                      ),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      controller.getCurrentSize(product),
-                      style: TextStyle(
-                        color: Colors.black.withOpacity(0.5),
-                        fontWeight: FontWeight.w400,
                       ),
                     ),
                     const SizedBox(height: 5),
