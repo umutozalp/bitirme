@@ -5,7 +5,6 @@ class FirebaseService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  // Veriyi Firestore'a kaydetme
   Future<void> saveUserData(String name, String surname, String email,
       String phone, String gender) async {
     try {
@@ -127,6 +126,7 @@ class FirebaseService {
   }
 
 //Adresi veritabanına kaydeden metot
+
   Future<void> saveAddress(String name, String surname, String phone,
       String city, String county, String address, String address_header) async {
     try {
@@ -149,7 +149,6 @@ class FirebaseService {
         });
       }
     } catch (e) {
-      // Hata durumunda sadece işlemi başarısız olarak işaretle
     }
   }
 
@@ -243,4 +242,81 @@ class FirebaseService {
     }
   }
 
+  //id'ye göre ürünü getiren metot(suanlık kullanılamyacak)
+  /*Future<Map<String, dynamic>?> getProductById(String productId) async {
+    try {
+      DocumentSnapshot doc =
+          await _db.collection("products").doc(productId).get();
+
+      if (doc.exists) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        data['id'] = doc.id;
+        return data;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }*/
+
+
+
+  // Siparişi kaydet
+  Future<void> saveOrder(List<Map<String, dynamic>> urunler, double toplamFiyat) async {
+    try {
+      // Giriş yapmış kullanıcıyı al
+      var user = _auth.currentUser;
+      
+      if (user != null) {
+        // Kullanıcı ID'sini al
+        String userId = user.uid;
+        
+        // Siparişi veritabanına ekle
+        await _db
+            .collection("users")
+            .doc(userId)
+            .collection("siparisler")
+            .add({
+          'urunler': urunler,
+          'toplamTutar': toplamFiyat,
+          'siparisTarihi': DateTime.now(),
+          'durum': 'Sipariş Alındı',
+        });
+      }
+    } catch (e) {
+      print('Sipariş kaydedilirken hata oldu: $e');
+    }
+  }
+
+  // Siparişleri getir
+  Future<List<Map<String, dynamic>>?> getSiparisler() async {
+    try {
+      // Giriş yapmış kullanıcıyı al
+      var user = _auth.currentUser;
+      
+      if (user != null) {
+        // Kullanıcının siparişlerini al
+        var siparisler = await _db
+            .collection("users")
+            .doc(user.uid)
+            .collection("siparisler")
+            .orderBy('siparisTarihi', descending: true)
+            .get();
+
+        if (siparisler.docs.isNotEmpty) {
+          // Siparişleri listeye çevir
+          return siparisler.docs.map((siparis) {
+            var veri = siparis.data();
+            veri['id'] = siparis.id;
+            return veri;
+          }).toList();
+        }
+      }
+      return null;
+    } catch (e) {
+      print('Siparişler getirilirken hata oldu: $e');
+      return null;
+    }
+  }
 }

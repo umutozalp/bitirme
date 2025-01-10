@@ -14,16 +14,13 @@ class UserInfo extends StatefulWidget {
 class _UserInfoState extends State<UserInfo> {
   final FirebaseService _firebaseService = FirebaseService();
 
-  // TextField'ler için controller'lar
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _surnameController = TextEditingController();
 
-  // Cinsiyet seçimi için değişken
   String? _selectedGender;
 
-  // Butonun aktiflik durumu
   bool _isButtonEnabled = false;
 
   PhoneNumber? _phoneNumber;
@@ -31,10 +28,9 @@ class _UserInfoState extends State<UserInfo> {
   @override
   void initState() {
     super.initState();
-    _loadUserData(); // Sayfa açıldığında veriyi yükle
+    _loadUserData();
   }
 
-  // Firestore'dan kullanıcı verilerini çekme
   Future<void> _loadUserData() async {
     var userData = await _firebaseService.getUserData();
     if (userData != null) {
@@ -42,10 +38,15 @@ class _UserInfoState extends State<UserInfo> {
         _nameController.text = userData['name'] ?? '';
         _surnameController.text = userData['surname'] ?? '';
         _emailController.text = Auth().currentUser?.email ?? '';
-        _phoneController.text = userData['phone'] ?? '';
-        _selectedGender = userData['gender'] ?? '';
 
-        // Eğer telefon numarası varsa, PhoneNumber nesnesine dönüştür
+        // veritabanından gelecek telefon numarasının başındaki +90 yazısını kaldıran bölüm.
+        String phoneNumber = userData['phone'] ?? '';
+        if (phoneNumber.startsWith('+90')) {
+          _phoneController.text = phoneNumber.substring(3); // +90'ı kaldır
+        } else {
+          _phoneController.text = phoneNumber;
+        }
+        _selectedGender = userData['gender'] ?? '';
         if (userData['phone'] != null) {
           _phoneNumber =
               PhoneNumber(isoCode: 'TR', phoneNumber: userData['phone']);
@@ -61,8 +62,26 @@ class _UserInfoState extends State<UserInfo> {
     String phone = _phoneNumber?.phoneNumber ?? "";
     String gender = _selectedGender ?? "";
 
-    // Veritabanına kullanıcı bilgilerini kaydet
-    await _firebaseService.saveUserData(name, surname, email, phone, gender);
+    try {
+      // Veritabanına kullanıcı bilgilerini kaydet
+      await _firebaseService.saveUserData(name, surname, email, phone, gender);
+      
+      // Başarılı mesajı göster
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Kullanıcı başarıyla güncellendi'),
+          backgroundColor: Colors.green,
+        ),
+      );
+    } catch (e) {
+      // Hata durumunda kullanıcıya bilgi ver
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Güncelleme sırasında bir hata oluştu: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
   }
 
   // TextField değişikliklerini kontrol etme
@@ -80,6 +99,7 @@ class _UserInfoState extends State<UserInfo> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(10, 61, 51, 1.0),
+        iconTheme: IconThemeData(color: Colors.white),
         title: Text(
           'Kullanıcı Bilgileri',
           style: TextStyle(
@@ -165,23 +185,47 @@ class _UserInfoState extends State<UserInfo> {
             SizedBox(height: 16),
 
             // Phone number with intl_phone_number_input
-            InternationalPhoneNumberInput(
-              maxLength: 13,
-              onInputChanged: (PhoneNumber number) {
-                setState(() {
-                  _phoneNumber = number;
-                });
-                _checkFields();
-              },
-              onInputValidated: (bool value) {},
-              selectorConfig: SelectorConfig(
-                selectorType: PhoneInputSelectorType.DIALOG,
-              ),
-              inputDecoration: InputDecoration(
-                labelText: 'Cep Telefonu',
-                border: OutlineInputBorder(),
-              ),
-              initialValue: _phoneNumber ?? PhoneNumber(isoCode: 'TR'),
+            Row(
+              children: [
+                Icon(
+                  Icons.phone,
+                  color: Color.fromRGBO(10, 61, 51, 1.0),
+                  size: 40,
+                ),
+                SizedBox(width: 8),
+                Expanded(
+                  child: TextField(
+                    controller: _phoneController,
+                    keyboardType: TextInputType.number,
+                    maxLength: 10,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                      LengthLimitingTextInputFormatter(10),
+                    ],
+                    decoration: InputDecoration(
+                      labelText: 'Cep Telefonu',
+                      border: OutlineInputBorder(),
+                      prefixText: '+90 ',
+                      counterText: '',
+                      errorText: _phoneController.text.length != 10 &&
+                              _phoneController.text.isNotEmpty
+                          ? 'Telefon numarası 10 haneli olmalıdır'
+                          : null,
+                    ),
+                    onChanged: (value) {
+                      setState(() {
+                        if (value.length == 10) {
+                          _phoneNumber = PhoneNumber(
+                              isoCode: 'TR', phoneNumber: '+90$value');
+                        } else {
+                          _phoneNumber = null;
+                        }
+                      });
+                      _checkFields();
+                    },
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 16),
 
@@ -246,17 +290,16 @@ class _UserInfoState extends State<UserInfo> {
               ],
             ),
             SizedBox(height: 20),
-
-            // Güncelle butonu
+            
             SizedBox(
               width: double.infinity,
+              height: 63,
               child: ElevatedButton(
                 onPressed: _isButtonEnabled ? _saveUserData : null,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: _isButtonEnabled
                       ? Color.fromRGBO(10, 61, 51, 1.0)
                       : Colors.grey,
-                  padding: EdgeInsets.symmetric(vertical: 16),
                 ),
                 child: Text(
                   'Güncelle',

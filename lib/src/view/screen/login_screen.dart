@@ -209,13 +209,9 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                       onTap: () {
                         Navigator.push(
                           context,
-                          PageRouteBuilder(
-                            pageBuilder:
-                                (context, animation, secondaryAnimation) =>
-                                    const ForgotPasswordScreen(),
-                            transitionDuration: Duration.zero,
-                            reverseTransitionDuration: Duration.zero,
-                          ),
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  ForgotPasswordScreen()),
                         );
                       },
                       child: Text(

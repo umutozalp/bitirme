@@ -33,19 +33,10 @@ class ProductController extends GetxController {
   }
 
   void addToCart(Product product) {
-    var existingProduct = cartProducts.firstWhere(
-      (item) => item.id == product.id,
-      orElse: () => product,
-    );
-
-    if (cartProducts.contains(existingProduct)) {
-      existingProduct.quantity++;
-    } else {
-      product.quantity = 1;
-      cartProducts.add(product);
-    }
+    product.quantity++;
+    cartProducts.add(product);
+    cartProducts.assignAll(cartProducts);
     calculateTotalPrice();
-    update();
   }
 
   void increaseItemQuantity(Product product) {
@@ -55,17 +46,12 @@ class ProductController extends GetxController {
   }
 
   void decreaseItemQuantity(Product product) {
-    if (product.quantity > 0) {
-      product.quantity--;
-      if (product.quantity == 0) {
-        cartProducts.remove(product);
-      }
-      calculateTotalPrice();
-      update();
-    }
+    product.quantity--;
+    calculateTotalPrice();
+    update();
   }
 
-  bool isPriceOff(Product product) => product.off != null;
+  bool isPriceOff(Product product) => product.discount != null;
 
   bool get isEmptyCart => cartProducts.isEmpty;
 
@@ -73,7 +59,7 @@ class ProductController extends GetxController {
     totalPrice.value = 0;
     for (var element in cartProducts) {
       if (isPriceOff(element)) {
-        totalPrice.value += element.quantity * element.off!;
+        totalPrice.value += element.quantity * element.discount!;
       } else {
         totalPrice.value += element.quantity * element.price;
       }
@@ -94,5 +80,14 @@ class ProductController extends GetxController {
 
   getAllItems() {
     filteredProducts.assignAll(allProducts);
+  }
+
+  void clearCart() {
+    for (var product in cartProducts) {
+      product.quantity = 0;
+    }
+    cartProducts.clear();
+    totalPrice.value = 0;
+    update();
   }
 }

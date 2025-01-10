@@ -56,8 +56,10 @@ class _AddressScreenState extends State<AddressScreen> {
       appBar: AppBar(
         title: const Text(
           'Adreslerim',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white),
         ),
+        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Color.fromRGBO(10, 61, 51, 1.0),
         actions: [
           TextButton(
             onPressed: () async {

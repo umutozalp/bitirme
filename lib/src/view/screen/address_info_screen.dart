@@ -125,26 +125,56 @@ class _AddressInfoState extends State<AddressInfo> {
   }
 
   Future<void> _deleteAddress() async {
-    try {
-      bool success =
-          await _firebaseService.deleteAddress(widget.address!['documentId']);
-      if (success) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Adres başarıyla silindi'),
-            backgroundColor: Colors.green,
-          ),
+
+    bool? selectDelete = await showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Text('Bu adresi gerçekten silmek istiyor musunuz?'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('İptal',style: TextStyle(color: Colors.black),),
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+            ),
+            TextButton(
+              child: Text(
+                'Evet',
+                style: TextStyle(color: Colors.black),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop(true); // Dialog'u kapat, true döndür
+              },
+            ),
+          ],
         );
-        Navigator.pop(context, true);
-      } else {
+      },
+    );
+
+    // Eğer kullanıcı evet dediyse silme işlemini gerçekleştir
+    if (selectDelete == true) {
+      try {
+        bool success =
+            await _firebaseService.deleteAddress(widget.address!['documentId']);
+        if (success) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Adres başarıyla silindi'),
+              backgroundColor: Colors.green,
+            ),
+          );
+          Navigator.pop(context, true);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Adres silinirken bir hata oluştu')),
+          );
+        }
+      } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Adres silinirken bir hata oluştu')),
+          SnackBar(content: Text('Hata oluştu: $e')),
         );
       }
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Hata oluştu: $e')),
-      );
     }
   }
 
@@ -163,7 +193,7 @@ class _AddressInfoState extends State<AddressInfo> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Adres Detayı',
+          'Adres Güncelle ',
           style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
         ),
       ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:bitirme/service/firestore_database.dart';
 
 class OrdersScreen extends StatefulWidget {
   const OrdersScreen({super.key});
@@ -10,114 +10,87 @@ class OrdersScreen extends StatefulWidget {
 }
 
 class _OrdersScreenState extends State<OrdersScreen> {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseService _firebase = FirebaseService();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Siparişlerim",
-          style: TextStyle(color: Colors.white, fontSize: 20),
-        ),
-        backgroundColor: const Color.fromRGBO(10, 61, 51, 1.0),
-        iconTheme: const IconThemeData(
-          color: Colors.white,
-          size: 28,
-        ),
+        title: Text("Siparişlerim",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),),
+        backgroundColor: Color.fromRGBO(10,61,61, 1.0),
+        iconTheme:  IconThemeData(color: Colors.white),
       ),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: _firestore
-            .collection('users')
-            .doc(_auth.currentUser?.uid)
-            .collection('orders')
-            .orderBy('orderDate', descending: true)
-            .snapshots(),
+      body: FutureBuilder(
+        future: _firebase.getSiparisler(),
         builder: (context, snapshot) {
+          // Yükleniyor
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(
-                  Color.fromRGBO(10, 61, 51, 1.0),
-                ),
-              ),
-            );
+            return Center(child: CircularProgressIndicator());
           }
 
+          // Hata varsa
           if (snapshot.hasError) {
-            return Center(
-              child: Text('Bir hata oluştu: ${snapshot.error}'),
-            );
+            return Center(child: Text('Hata: ${snapshot.error}'));
           }
 
-          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return const Center(
-              child: Text(
-                'Henüz siparişiniz bulunmamaktadır.',
-                style: TextStyle(fontSize: 16),
-              ),
-            );
+          // Veri yoksa
+          var siparisler = snapshot.data;
+          if (siparisler == null || siparisler.isEmpty) {
+            return Center(child: Text('Henüz sipariş vermediniz'));
           }
 
+          // Siparişleri göster
           return ListView.builder(
-            padding: const EdgeInsets.all(16),
-            itemCount: snapshot.data!.docs.length,
+            itemCount: siparisler.length,
             itemBuilder: (context, index) {
-              final order =
-                  snapshot.data!.docs[index].data() as Map<String, dynamic>;
-              final orderDate = (order['orderDate'] as Timestamp).toDate();
+              var siparis = siparisler[index];
+              var tarih = (siparis['siparisTarihi'] as Timestamp).toDate();
+              var urunler = List<Map<String, dynamic>>.from(siparis['urunler']);
 
               return Card(
-                elevation: 4,
-                margin: const EdgeInsets.only(bottom: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
+                margin: EdgeInsets.all(8),
                 child: Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: EdgeInsets.all(12),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Sipariş #${index + 1}',
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            '${orderDate.day}/${orderDate.month}/${orderDate.year}',
-                            style: const TextStyle(
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const Divider(height: 20),
                       Text(
-                        'Ürün: ${order['productName']}',
-                        style: const TextStyle(fontSize: 16),
+                        'Tarih: ${tarih.day}/${tarih.month}/${tarih.year}',
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                       ),
-                      const SizedBox(height: 8),
+                      Divider(),
+                      // Ürünleri listele
+                      for (var urun in urunler)
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 4),
+                          child: Row(
+                            children: [
+                              Image.asset(
+                                urun['resim'],
+                                width: 50,
+                                height: 50,
+                              ),
+                              SizedBox(width: 10),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(urun['urunAdi']),
+                                    Text('${urun['fiyat']} TL  x  ${urun['adet']} adet'),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      Divider(),
                       Text(
-                        'Fiyat: ₺${order['price']}',
-                        style: const TextStyle(
+                        'Toplam: ${siparis['toplamTutar']} TL',
+                        style: TextStyle(
                           fontSize: 16,
-                          color: Color.fromRGBO(10, 61, 51, 1.0),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      if (order['address'] != null) ...[
-                        const SizedBox(height: 8),
-                        Text(
-                          'Teslimat Adresi: ${order['address']}',
-                          style: const TextStyle(fontSize: 14),
-                        ),
-                      ],
                     ],
                   ),
                 ),

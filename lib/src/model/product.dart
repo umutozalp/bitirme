@@ -8,7 +8,7 @@ class Product {
   String id;
   String name;
   int price;
-  int? off;
+  int? discount;
   String about = '';
   bool isAvailable;
   int _quantity;
@@ -28,7 +28,7 @@ class Product {
     required this.name,
     required this.price,
     required this.isAvailable,
-    required this.off,
+    required this.discount,
     required int quantity,
     required this.images,
     required this.isFavorite,

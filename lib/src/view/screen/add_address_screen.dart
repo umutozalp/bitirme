@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter/services.dart' show rootBundle, FilteringTextInputFormatter;
 import 'package:bitirme/service/firestore_database.dart';
 
 class AddAddressScreen extends StatefulWidget {
@@ -71,7 +71,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
         );
 
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Adres başarıyla kaydedildi')),
+          const SnackBar(content: Text('Adres başarıyla kaydedildi'), backgroundColor: Colors.green,),
         );
         Navigator.pop(context);
       } catch (e) {
@@ -90,7 +90,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
         selectedCounty == null ||
         _addressController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Lütfen tüm alanları doldurun')),
+        const SnackBar(content: Text('Lütfen tüm alanları doldurun'),backgroundColor: Colors.red,),
       );
       return false;
     }
@@ -139,7 +139,11 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                   child: Column(
                     children: [
                       TextField(
+                        maxLength: 20,
                         controller: _nameController,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r'[a-zA-ZğüşıöçĞÜŞİÖÇ ]')),
+                        ],
                         decoration: InputDecoration(
                           labelText: 'Ad',
                           border: OutlineInputBorder(
@@ -149,12 +153,17 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       ),
                       const SizedBox(height: 12),
                       TextField(
+                        maxLength: 20,
                         controller: _surnameController,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r'[a-zA-ZğüşıöçĞÜŞİÖÇ ]')),
+                        ],
                         decoration: InputDecoration(
                           labelText: 'Soyad',
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
+
                         ),
                       ),
                     ],
@@ -172,15 +181,34 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                 ),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: TextField(
-                    controller: _phoneController,
-                    keyboardType: TextInputType.phone,
-                    decoration: InputDecoration(
-                      labelText: 'Cep Telefonu',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextField(
+                        controller: _phoneController,
+                        maxLength: 10,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
+                        decoration: InputDecoration(
+                          labelText: 'Cep Telefonu',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
                       ),
-                    ),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 4.0, left: 4.0),
+                        child: Text(
+                          'Numaranızın başına 0 koymayınız',
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Color(0xFF666666),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -286,6 +314,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TextField(
+                        maxLength: 40,
                         controller: _addressController,
                         decoration: InputDecoration(
                           labelText: 'Adres',

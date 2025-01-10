@@ -10,13 +10,14 @@ class AppData {
 
   static const String currencySymbol = '₺';
 
+
   static List<Product> products = [
     Product(
       id: "1",
       name: 'Apple iPhone 16 Pro Max 256GB',
       price: 83000,
       isAvailable: true,
-      off: 74700,
+      discount: 74700,
       quantity: 0,
       images: [
         'assets/images/apple_iphone_16_1.png',
@@ -32,7 +33,7 @@ class AppData {
       name: 'Samsung Galaxy Tab S7 FE',
       price: 19999,
       isAvailable: false,
-      off: 17999,
+      discount: 17999,
       quantity: 0,
       images: [
         'assets/images/tab_s7_fe_1.png',
@@ -48,7 +49,7 @@ class AppData {
       name: 'Samsung Galaxy Tab S8+',
       price: 27999,
       isAvailable: true,
-      off: null,
+      discount: null,
       quantity: 0,
       images: [
         'assets/images/tab_s8_1.png',
@@ -64,7 +65,7 @@ class AppData {
       name: 'APPLE Watch Series 10',
       price: 16799,
       isAvailable: true,
-      off: 15120,
+      discount: 15120,
       quantity: 0,
       images: [
         'assets/images/apple_watch_1.png',
@@ -80,7 +81,7 @@ class AppData {
       name: 'APPLE Watch SE GPS 2024',
       price: 9999,
       isAvailable: true,
-      off: null,
+      discount: null,
       quantity: 0,
       images: [
         'assets/images/apple_watch_2.png',
@@ -96,7 +97,7 @@ class AppData {
       name: 'APPLE Airpods Max 2024',
       price: 7499,
       isAvailable: true,
-      off: null,
+      discount: null,
       quantity: 0,
       images: [
         'assets/images/apple_airpods_max_1.png',
@@ -112,7 +113,7 @@ class AppData {
       name: 'Apple AirPods Pro (2. Nesil)',
       price: 7499,
       isAvailable: true,
-      off: null,
+      discount: null,
       quantity: 0,
       images: [
         'assets/images/apple_airpods_1.png',
@@ -128,7 +129,7 @@ class AppData {
       name: 'Vestel 43FA9740 43" 108 Ekran',
       price: 17599,
       isAvailable: true,
-      off: null,
+      discount: null,
       quantity: 0,
       images: [
         'assets/images/vestel_1.png',
@@ -144,7 +145,7 @@ class AppData {
       name: 'LG OLEDB46 65 inç 165 cm 4K OLED Smart TV',
       price: 79999,
       isAvailable: true,
-      off: null,
+      discount: null,
       quantity: 0,
       images: [
         'assets/images/lg_1.png',
@@ -182,17 +183,6 @@ class AppData {
       type: ProductType.tv,
       icon: Icons.tv,
     ),
-  ];
-
-  static List<Color> randomColors = [
-    const Color(0xFFFCE4EC),
-    const Color(0xFFF3E5F5),
-    const Color(0xFFEDE7F6),
-    const Color(0xFFE3F2FD),
-    const Color(0xFFE0F2F1),
-    const Color(0xFFF1F8E9),
-    const Color(0xFFFFF8E1),
-    const Color(0xFFECEFF1),
   ];
 
   static const Color lightGreen = Color.fromRGBO(34, 139, 34, 1.0);

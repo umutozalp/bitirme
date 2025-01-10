@@ -64,7 +64,6 @@ class ProductDetailScreen extends StatelessWidget {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -97,14 +96,14 @@ class ProductDetailScreen extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              product.off != null
-                                  ? "\₺${product.off}"
+                              product.discount != null
+                                  ? "\₺${product.discount}"
                                   : "\₺${product.price}",
                               style: Theme.of(context).textTheme.displayLarge,
                             ),
                             const SizedBox(width: 3),
                             Visibility(
-                              visible: product.off != null ? true : false,
+                              visible: product.discount != null ? true : false,
                               child: Text(
                                 "\₺${product.price}",
                                 style: const TextStyle(

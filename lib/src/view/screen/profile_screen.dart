@@ -15,27 +15,16 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  // Kullanıcı bilgileri
-  Map<String, String> userInfo = {
-    "name": "",
-    "email": "",
-    "phone": "",
-  };
-
   @override
   Widget build(BuildContext context) {
     final currentUser = Auth().currentUser;
     if (currentUser == null) {
       return const LoginRegisterPage();
-    } else {
-      // Kullanıcı bilgilerini güncelle
-      userInfo = {
-        "name": currentUser.displayName ?? "Ad Bulunamadı",
-        // null olması durumunda varsayılan değer
-        "email": currentUser.email ?? "Email Bulunamadı",
-        "phone": currentUser.phoneNumber ?? "Telefon Bulunamadı",
-      };
     }
+
+    // Kullanıcı bilgilerini doğrudan al
+    final userName = currentUser.displayName ?? "Ad Bulunamadı";
+    final userEmail = currentUser.email ?? "Email Bulunamadı";
 
     return Scaffold(
       backgroundColor: Colors.grey[100],
@@ -76,12 +65,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Umut Özalp",
+                          userName,
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          userInfo["email"] ?? "Email Bulunamadı",
+                          userEmail,
                           style: TextStyle(fontSize: 14, color: Colors.grey),
                         ),
                       ],
@@ -93,7 +82,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             SizedBox(height: 5),
             Divider(color: Colors.grey[300], thickness: 1),
             SizedBox(height: 5),
+
             // Kullanıcı bilgileri sekmesi
+
             _buildProfileOption(
               icon: Icon(Icons.edit, color: Color.fromRGBO(10, 61, 51, 1.0),),
               context,
@@ -106,9 +97,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         UserInfo(),
                     transitionsBuilder:
                         (context, animation, secondaryAnimation, child) {
-                      // FadeTransition ile ekranın opaklığını değiştirme
                       return FadeTransition(
-                        opacity: animation, // Opaklık animasyonu
+                        opacity: animation,
                         child: child,
                       );
                     },
@@ -144,10 +134,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
             _buildProfileOption(
               icon: Icon(Icons.history, color: Color.fromRGBO(10, 61, 51, 1.0),),
               context,
-              title: "Geçmiş Siparişlerim",
+              title: "Siparişlerim",
               onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => OrdersScreen()),
+                Navigator.push(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) =>
+                        OrdersScreen(),
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                      // FadeTransition ile ekranın opaklığını değiştirme
+                      return FadeTransition(
+                        opacity: animation, // Opaklık animasyonu
+                        child: child,
+                      );
+                    },
+                  ),
                 );
               },
             ),
@@ -164,7 +166,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         PaymentScreen(),
                     transitionsBuilder:
                         (context, animation, secondaryAnimation, child) {
-                      // FadeTransition ile ekranın opaklığını değiştirme
                       return FadeTransition(
                         opacity: animation, // Opaklık animasyonu
                         child: child,
@@ -181,7 +182,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  // Profil seçeneklerini oluşturan fonksiyon
+
+
   Widget _buildProfileOption(BuildContext context,
       {required String title, required Function() onTap, required Icon icon}) {
     return GestureDetector(
@@ -197,10 +199,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               color: Colors.grey.withOpacity(0.2),
               spreadRadius: 1,
               blurRadius: 8,
-              offset: Offset(0, 3), //DEĞİŞTİRİLEBİLİR LA BAK
+              offset: Offset(0, 3),
             ),
           ],
         ),
+
         child: Row(
           children: [
             icon,
@@ -208,7 +211,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Expanded(
               child: Text(
                 title,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
               ),
             ),
             Icon(Icons.arrow_forward_ios, size: 18, color: Color.fromRGBO(10, 61, 51, 1.0),),
