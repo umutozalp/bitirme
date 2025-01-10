@@ -265,18 +265,12 @@ class FirebaseService {
   // Siparişi kaydet
   Future<void> saveOrder(List<Map<String, dynamic>> urunler, double toplamFiyat) async {
     try {
-      // Giriş yapmış kullanıcıyı al
       var user = _auth.currentUser;
-      
       if (user != null) {
-        // Kullanıcı ID'sini al
-        String userId = user.uid;
-        
-        // Siparişi veritabanına ekle
         await _db
             .collection("users")
-            .doc(userId)
-            .collection("siparisler")
+            .doc(user.uid)
+            .collection("orders")
             .add({
           'urunler': urunler,
           'toplamTutar': toplamFiyat,
@@ -285,37 +279,33 @@ class FirebaseService {
         });
       }
     } catch (e) {
-      print('Sipariş kaydedilirken hata oldu: $e');
+      print('Hata: $e');
     }
   }
 
-  // Siparişleri getir
   Future<List<Map<String, dynamic>>?> getSiparisler() async {
     try {
-      // Giriş yapmış kullanıcıyı al
       var user = _auth.currentUser;
-      
       if (user != null) {
-        // Kullanıcının siparişlerini al
-        var siparisler = await _db
+        var snapshot = await _db
             .collection("users")
             .doc(user.uid)
-            .collection("siparisler")
-            .orderBy('siparisTarihi', descending: true)
+            .collection("orders")
             .get();
 
-        if (siparisler.docs.isNotEmpty) {
-          // Siparişleri listeye çevir
-          return siparisler.docs.map((siparis) {
-            var veri = siparis.data();
-            veri['id'] = siparis.id;
-            return veri;
+        if (snapshot.docs.isNotEmpty) {
+          var siparisler = snapshot.docs.map((doc) {
+            var siparis = doc.data();
+            siparis['id'] = doc.id;
+            return siparis;
           }).toList();
+          
+          return siparisler;
         }
       }
       return null;
     } catch (e) {
-      print('Siparişler getirilirken hata oldu: $e');
+      print('Hata: $e');
       return null;
     }
   }

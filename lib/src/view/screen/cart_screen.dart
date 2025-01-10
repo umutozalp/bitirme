@@ -71,8 +71,8 @@ class _CartScreenState extends State<CartScreen> {
               children: [
                 // Ürün resmi
                 Container(
-                  width: 100,
-                  height: 90,
+                  width: 80,
+                  height: 80,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10),
@@ -85,7 +85,7 @@ class _CartScreenState extends State<CartScreen> {
                     ),
                   ),
                 ),
-                
+
                 // Ürün bilgileri
                 Expanded(
                   child: Padding(
@@ -109,7 +109,7 @@ class _CartScreenState extends State<CartScreen> {
                               : "\₺${product.price}",
                           style: const TextStyle(
                             fontWeight: FontWeight.w900,
-                            fontSize: 23,
+                            fontSize: 18,
                           ),
                         ),
                       ],
@@ -132,19 +132,23 @@ class _CartScreenState extends State<CartScreen> {
                         icon: const Icon(
                           Icons.remove,
                           color: Color(0xFF33691E),
+                          size: 20,
                         ),
                       ),
-                      Text(
+                      Obx(() => Text(
                         '${product.quantity}',
                         style: const TextStyle(
-                          fontSize: 18,
+                          fontSize: 16,
                           fontWeight: FontWeight.w700,
                         ),
-                      ),
+                      )),
                       IconButton(
                         splashRadius: 10.0,
                         onPressed: () => controller.increaseItemQuantity(product),
-                        icon: const Icon(Icons.add, color: Color(0xFF33691E)),
+                        icon: const Icon(Icons.add, 
+                          color: Color(0xFF33691E),
+                          size: 20,
+                        ),
                       ),
                     ],
                   ),
@@ -169,7 +173,7 @@ class _CartScreenState extends State<CartScreen> {
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.w400),
           ),
           Obx(
-            () {
+                () {
               return AnimatedSwitcherWrapper(
                 child: Text(
                   "\₺${controller.totalPrice.value}",
@@ -201,8 +205,8 @@ class _CartScreenState extends State<CartScreen> {
           onPressed: controller.isEmptyCart
               ? null
               : () async {
-                  await makePayment();
-                },
+            await makePayment();
+          },
           child: const Text(
             "Şimdi Öde",
             style: TextStyle(
@@ -270,43 +274,39 @@ class _CartScreenState extends State<CartScreen> {
   Future<void> displayPaymentPage() async {
     try {
       await Stripe.instance.presentPaymentSheet();
-      
+
       // Sipariş bilgilerini hazırla
       final FirebaseService _firebaseService = FirebaseService();
-      List<Map<String, dynamic>> urunListesi = []; // List tipini belirttik
-      
+      List<Map<String, dynamic>> urunListesi = [];
+
       // Sepetteki ürünleri listeye ekle
       for(var urun in controller.cartProducts) {
         urunListesi.add({
           'urunAdi': urun.name,
-          'fiyat': urun.price.toDouble(), // int'i double'a çevirdik
+          'fiyat': urun.price.toDouble(),
           'adet': urun.quantity,
           'resim': urun.images[0],
         });
       }
-      
+
       // Siparişi kaydet
-      await _firebaseService.saveOrder(urunListesi, controller.totalPrice.value.toDouble()); // int'i double'a çevirdik
-      
+      await _firebaseService.saveOrder(urunListesi, controller.totalPrice.value.toDouble());
+
       // Sepeti temizle
-      for(var urun in controller.cartProducts) {
-        urun.quantity = 0;
-      }
-      controller.cartProducts.clear();
-      controller.totalPrice.value = 0;
-      controller.update();
-      
+      controller.clearCart();
+      setState(() {}); // UI'ı güncelle
+
       // Başarılı mesajı göster
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Siparişiniz alındı!'),
           backgroundColor: Colors.green,
         ),
       );
-      
+
       // Siparişler sayfasına git
       Navigator.pushNamed(context, '/orders');
-      
+
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -333,11 +333,11 @@ class _CartScreenState extends State<CartScreen> {
         },
         body: istek,
       );
-      
+
       return json.decode(cevap.body);
     } catch (e) {
       print('Hata: $e');
       throw Exception('Ödeme isteği oluşturulamadı');
     }
-  }
+    }
 }

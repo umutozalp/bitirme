@@ -36,10 +36,9 @@ class _OrdersScreenState extends State<OrdersScreen> {
           // Veri yoksa
           var siparisler = snapshot.data;
           if (siparisler == null || siparisler.isEmpty) {
-            return Center(child: Text('Henüz sipariş vermediniz'));
+            return Center(child: Text('Henüz Siparişiniz yok.'));
           }
 
-          // Siparişleri göster
           return ListView.builder(
             itemCount: siparisler.length,
             itemBuilder: (context, index) {
@@ -48,6 +47,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
               var urunler = List<Map<String, dynamic>>.from(siparis['urunler']);
 
               return Card(
+                color: Colors.grey.shade300,
                 margin: EdgeInsets.all(8),
                 child: Padding(
                   padding: EdgeInsets.all(12),
@@ -67,16 +67,16 @@ class _OrdersScreenState extends State<OrdersScreen> {
                             children: [
                               Image.asset(
                                 urun['resim'],
-                                width: 50,
-                                height: 50,
+                                width: 60,
+                                height: 60,
                               ),
                               SizedBox(width: 10),
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(urun['urunAdi']),
-                                    Text('${urun['fiyat']} TL  x  ${urun['adet']} adet'),
+                                    Text(urun['urunAdi'],style: TextStyle(fontSize: 16),),
+                                    Text('${urun['fiyat']} TL  x  ${urun['adet']} adet',style: TextStyle(fontSize: 16),),
                                   ],
                                 ),
                               ),

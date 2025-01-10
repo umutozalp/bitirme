@@ -1,6 +1,7 @@
 import 'package:bitirme/core/app_data.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
+import 'package:get/get.dart';
 
 enum ProductType { all, watch, mobile, headphone, tablet, tv }
 
@@ -11,16 +12,16 @@ class Product {
   int? discount;
   String about = '';
   bool isAvailable;
-  int _quantity;
+  final RxInt _quantity = 0.obs;
   List<String> images;
   bool isFavorite;
   double rating;
   ProductType type;
 
-  int get quantity => _quantity;
+  int get quantity => _quantity.value;
 
   set quantity(int newQuantity) {
-    if (newQuantity >= 0) _quantity = newQuantity;
+    if (newQuantity >= 0) _quantity.value = newQuantity;
   }
 
   Product({
@@ -34,7 +35,8 @@ class Product {
     required this.isFavorite,
     required this.rating,
     required this.type,
-  }) : _quantity = quantity {
+  }) {
+    _quantity.value = quantity;
     loadAbout();
   }
 // bir ürün oluşturulduğunda otomatik constructor calısıyor ve mu metodu cagırıyoruz

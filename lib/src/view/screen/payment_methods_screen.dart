@@ -58,16 +58,19 @@ class _PaymentScreenState extends State<PaymentScreen> {
       appBar: AppBar(
         title: const Text(
           'Kayıtlı Kartlarım',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white),
         ),
+        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Color.fromRGBO(10, 61, 51, 1.0),
       ),
       body: isAddingCard ? _buildAddCardForm() : _buildCardsList(),
       floatingActionButton: isAddingCard
           ? null
           : FloatingActionButton.extended(
               onPressed: () => setState(() => isAddingCard = true),
-              label: const Text('+ Kart Ekle'),
-              icon: const Icon(Icons.add),
+              label: const Text('Kart Ekle',style: TextStyle(color: Colors.white),),
+              icon: const Icon(Icons.add,color: Colors.white,),
+        backgroundColor: Color.fromRGBO(10, 61, 51, 1.0),
             ),
     );
   }

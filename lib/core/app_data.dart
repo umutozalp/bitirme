@@ -161,7 +161,7 @@ class AppData {
   static List<ProductCategory> categories = [
     ProductCategory(
       type: ProductType.all,
-      icon: Icons.all_inclusive,
+      icon: Icons.apps,
     ),
     ProductCategory(
       type: ProductType.mobile,

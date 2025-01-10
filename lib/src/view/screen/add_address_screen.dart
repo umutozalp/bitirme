@@ -94,6 +94,16 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       );
       return false;
     }
+
+    if (_phoneController.text.length != 10) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Lütfen geçerli bir telefon numarası giriniz.'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return false;
+    }
     return true;
   }
 

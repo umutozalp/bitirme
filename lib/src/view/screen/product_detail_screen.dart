@@ -136,7 +136,16 @@ class ProductDetailScreen extends StatelessWidget {
                           width: double.infinity,
                           child: ElevatedButton(
                             onPressed: product.isAvailable
-                                ? () => controller.addToCart(product)
+                                ? () {
+                                    controller.addToCart(product);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('Ürün sepete eklendi'),
+                                        backgroundColor: Colors.green,
+                                        duration: Duration(seconds: 2),
+                                      ),
+                                    );
+                                  }
                                 : null,
                             child: const Text("Sepete Ekle"),
                           ),

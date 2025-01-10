@@ -42,13 +42,20 @@ class ProductController extends GetxController {
   void increaseItemQuantity(Product product) {
     product.quantity++;
     calculateTotalPrice();
+    cartProducts.refresh();
     update();
   }
 
   void decreaseItemQuantity(Product product) {
-    product.quantity--;
-    calculateTotalPrice();
-    update();
+    if (product.quantity > 0) {
+      product.quantity--;
+      calculateTotalPrice();
+      if (product.quantity == 0) {
+        cartProducts.remove(product);
+      }
+      cartProducts.refresh();
+      update();
+    }
   }
 
   bool isPriceOff(Product product) => product.discount != null;

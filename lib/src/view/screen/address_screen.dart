@@ -15,6 +15,7 @@ class _AddressScreenState extends State<AddressScreen> {
   final FirebaseService _firebaseService = FirebaseService();
   List<Map<String, dynamic>> addresses = [];
   bool isLoading = true;
+  String? selectedAddressId;
 
   @override
   void initState() {
@@ -53,128 +54,146 @@ class _AddressScreenState extends State<AddressScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Adreslerim',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white),
-        ),
-        iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: Color.fromRGBO(10, 61, 51, 1.0),
-        actions: [
-          TextButton(
-            onPressed: () async {
-              await Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const AddAddressScreen()),
-              );
-              _loadAddresses();
-            },
-            child: const Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text('Adres Ekle',
-                    style: TextStyle(
-                        fontSize: 16, color: Color.fromRGBO(10, 61, 51, 1.0))),
-                SizedBox(width: 4),
-                Icon(Icons.add, color: Color.fromRGBO(10, 61, 51, 1.0)),
-              ],
-            ),
+        appBar: AppBar(
+          title: const Text(
+            'Adreslerim',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white),
           ),
-        ],
-      ),
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : addresses.isEmpty
-              ? const Center(
-                  child: Text(
-                    'Henüz kayıtlı adresiniz bulunmamaktadır',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                )
-              : ListView.builder(
-                  padding: const EdgeInsets.all(16),
-                  itemCount: addresses.length,
-                  itemBuilder: (context, index) {
-                    final address = addresses[index];
-                    return InkWell(
-                      onTap: () async {
-                        final result = await Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => AddressInfo(address: address),
-                          ),
-                        );
+          iconTheme: IconThemeData(color: Colors.white),
+          backgroundColor: Color.fromRGBO(10, 61, 51, 1.0),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const AddAddressScreen()),
+                );
+                _loadAddresses();
+              },
+              child: const Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('Adres Ekle',
+                      style: TextStyle(
+                          fontSize: 16, color:Colors.white)),
+                  SizedBox(width: 4),
+                  Icon(Icons.add, color: Color.fromRGBO(10, 61, 51, 1.0)),
+                ],
+              ),
+            ),
+          ],
+        ),
+        body: isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : addresses.isEmpty
+            ? const Center(
+          child: Text(
+            'Henüz kayıtlı adresiniz bulunmamaktadır',
+            style: TextStyle(fontSize: 16),
+          ),
+        )
+            : ListView.builder(
+            padding: const EdgeInsets.all(16),
+            itemCount: addresses.length,
+            itemBuilder: (context, index) {
+              final address = addresses[index];
+              return InkWell(
+                onTap: () async {
+                  final result = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AddressInfo(address: address),
+                    ),
+                  );
 
-                        if (result == true) {
-                          _loadAddresses();
-                        }
-                      },
-                      child: Card(
-                        elevation: 4,
-                        margin: const EdgeInsets.only(bottom: 16),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  const Icon(Icons.location_on,
-                                      color: Color.fromRGBO(10, 61, 51, 1.0),
-                                      size: 24),
-                                  const SizedBox(width: 8),
-                                  Expanded(
-                                    child: Text(
-                                      address['address_header'],
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Color.fromRGBO(10, 61, 51, 1.0),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const Divider(height: 24),
-                              Text(
-                                '${address['name']} ${address['surname']}',
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                address['phone'],
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black54,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                '${address['city']} / ${address['county']}',
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black54,
-                                ),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                address['address'],
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.black54,
-                                ),
-                              ),
-                            ],
-                          ),
+                  if (result == true) {
+                    _loadAddresses();
+                  }
+                },
+                child: Card(
+                  elevation: 4,
+                  margin: const EdgeInsets.only(bottom: 16),
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        left: 8,
+                        top: 8,
+                        child: Radio<String>(
+                          value: address['documentId'],
+                          groupValue: selectedAddressId,
+                          onChanged: (String? value) {
+                            setState(() {
+                              selectedAddressId = value;
+                            });
+                          },
+                          activeColor: Color.fromRGBO(10, 61, 51, 1.0),
                         ),
                       ),
-                    );
-                  },
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(48, 16, 16, 16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                const Icon(Icons.location_on,
+                                    color: Color.fromRGBO(10, 61, 51, 1.0),
+                                    size: 24),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: Text(
+                                    address['address_header'],
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromRGBO(10, 61, 51, 1.0),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Divider(height: 24),
+                            Text(
+                              '${address['name']} ${address['surname']}',
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              address['phone'],
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.black54,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              '${address['city']} / ${address['county']}',
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.black54,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              address['address'],
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.black54,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
+              );
+            },
+            ),
     );
-  }
+    }
 }
