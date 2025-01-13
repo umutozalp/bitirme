@@ -99,13 +99,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         (context, animation, secondaryAnimation, child) {
                       return FadeTransition(
                         opacity: animation,
-                        child: child,
-                      );
-                    },
-                  ),
-                );
-              },
-            ),
+                        child: child,);},),);},),
 
             _buildProfileOption(
               icon: Icon(Icons.home, color: Color.fromRGBO(10, 61, 51, 1.0),),
@@ -147,12 +141,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       return FadeTransition(
                         opacity: animation, // Opaklık animasyonu
                         child: child,
-                      );
-                    },
-                  ),
-                );
-              },
-            ),
+                      );},),);},),
+
 
             _buildProfileOption(
               icon: Icon(Icons.credit_card, color: Color.fromRGBO(10, 61, 51, 1.0),),
@@ -199,11 +189,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               color: Colors.grey.withOpacity(0.2),
               spreadRadius: 1,
               blurRadius: 8,
-              offset: Offset(0, 3),
-            ),
-          ],
-        ),
-
+              offset: Offset(0, 3),),],),
         child: Row(
           children: [
             icon,
@@ -211,9 +197,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Expanded(
               child: Text(
                 title,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-              ),
-            ),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),),),
             Icon(Icons.arrow_forward_ios, size: 18, color: Color.fromRGBO(10, 61, 51, 1.0),),
           ],
         ),

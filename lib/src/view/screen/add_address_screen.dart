@@ -36,16 +36,14 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     final List<dynamic> citiesJson = json.decode(response);
     setState(() {
       cities = List<Map<String, dynamic>>.from(citiesJson);
-    });
-  }
+    });}
 
   void updateCounties(String cityName) {
     final city = cities.firstWhere((city) => city['name'] == cityName);
     setState(() {
       counties = List<String>.from(city['counties']);
-      selectedCounty = null; // İl değiştiğinde ilçe seçimini sıfırla
-    });
-  }
+      selectedCounty = null;
+    });}
 
   @override
   void dispose() {
@@ -113,8 +111,10 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       appBar: AppBar(
         title: const Text(
           'Yeni Adres Ekle',
-          style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
         ),
+        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Color.fromRGBO(10, 61, 51, 1.0),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -126,7 +126,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               child: Text(
                 'İletişim Bilgileri',
                 style: TextStyle(
-                  fontSize: 15,
+                  fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -229,7 +229,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               child: Text(
                 'Adres Bilgisi',
                 style: TextStyle(
-                  fontSize: 15,
+                  fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),

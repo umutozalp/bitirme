@@ -23,14 +23,12 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
         title: Text("Kayıt Ol",
-            style: TextStyle(fontSize: 23, color: Colors.white)),
+            style: TextStyle(fontSize: 20, color: Colors.white,fontWeight: FontWeight.bold)),
         backgroundColor: Color.fromRGBO(10, 61, 51, 1.0),
         iconTheme: IconThemeData(color: Colors.white),
       ),
-
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16),
         child: Column(
@@ -82,7 +80,6 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             SizedBox(height: 10),
 
-
             FlutterPwValidator(
               controller: passwordController,
               minLength: 6,
@@ -104,7 +101,6 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             SizedBox(height: 30),
 
-
             ElevatedButton(
               onPressed: () async {
                 if (!EmailValidator.validate(emailController.text)) {
@@ -116,7 +112,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   );
                   return;
                 }
-
                 if (!isPasswordValid) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
@@ -125,9 +120,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   );
                   return;
-
                 }
-
                 try {
                   await Auth().createUser(
                     email: emailController.text,
@@ -151,7 +144,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   );
                 }
               },
-
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color.fromRGBO(10, 61, 51, 1.0),
                 padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),

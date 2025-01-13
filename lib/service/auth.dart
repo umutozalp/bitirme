@@ -8,18 +8,6 @@ class Auth {
   User? get currentUser => _firebaseAuth.currentUser;
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 
-  // Güvenlik açıkları nedeniyle fetchSignInMethodsForEmail artıl kullanılmaması öneriliyor fakat
-  // yerine kullanılabilecek alternatifler olsa da yapmayı beceremedim.
-  Future<bool> isEmailRegistered(String email) async {
-    try {
-      List<String> signInMethods =
-          await _firebaseAuth.fetchSignInMethodsForEmail(email);
-      return signInMethods.isNotEmpty; // Eğer boş değilse, kullanıcı mevcut
-    } catch (e) {
-      print('Hata: $e');
-      return false;
-    }
-  }
 
   // Register
   Future<void> createUser({

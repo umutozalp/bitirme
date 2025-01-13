@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:bitirme/src/view/screen/login_screen.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -9,9 +10,11 @@ import 'package:bitirme/src/controller/product_controller.dart';
 import 'package:bitirme/src/view/animation/animated_switcher_wrapper.dart';
 import 'package:bitirme/src/view/screen/payment_methods_screen.dart';
 import 'package:bitirme/service/firestore_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 
 final ProductController controller = Get.put(ProductController());
+final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -128,7 +131,8 @@ class _CartScreenState extends State<CartScreen> {
                     children: [
                       IconButton(
                         splashRadius: 10.0,
-                        onPressed: () => controller.decreaseItemQuantity(product),
+                        onPressed: () =>
+                            controller.decreaseItemQuantity(product),
                         icon: const Icon(
                           Icons.remove,
                           color: Color(0xFF33691E),
@@ -136,16 +140,18 @@ class _CartScreenState extends State<CartScreen> {
                         ),
                       ),
                       Obx(() => Text(
-                        '${product.quantity}',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      )),
+                            '${product.quantity}',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          )),
                       IconButton(
                         splashRadius: 10.0,
-                        onPressed: () => controller.increaseItemQuantity(product),
-                        icon: const Icon(Icons.add, 
+                        onPressed: () =>
+                            controller.increaseItemQuantity(product),
+                        icon: const Icon(
+                          Icons.add,
                           color: Color(0xFF33691E),
                           size: 20,
                         ),
@@ -173,7 +179,7 @@ class _CartScreenState extends State<CartScreen> {
             style: TextStyle(fontSize: 22, fontWeight: FontWeight.w400),
           ),
           Obx(
-                () {
+            () {
               return AnimatedSwitcherWrapper(
                 child: Text(
                   "\₺${controller.totalPrice.value}",
@@ -204,8 +210,17 @@ class _CartScreenState extends State<CartScreen> {
           ),
           onPressed: controller.isEmptyCart
               ? null
-              : () async {
-            await makePayment();
+              : () async{
+            if (_auth.currentUser == null) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Lütfen önce giriş yapınız.'),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            } else {
+              await makePayment();
+            }
           },
           child: const Text(
             "Şimdi Öde",
@@ -238,13 +253,10 @@ class _CartScreenState extends State<CartScreen> {
   // Ödeme işlemi
   Future<void> makePayment() async {
     try {
-      // Stripe ödeme isteği oluştur
-      var odemeIstegi = await createPaymentRequest();
-
-      // Ödeme sayfasını hazırla
+      var paymentRequest = await createPaymentRequest();
       await Stripe.instance.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
-          paymentIntentClientSecret: odemeIstegi['client_secret'],
+          paymentIntentClientSecret: paymentRequest['client_secret'],
           merchantDisplayName: 'Modo Shop',
           style: ThemeMode.light,
           appearance: PaymentSheetAppearance(
@@ -256,8 +268,6 @@ class _CartScreenState extends State<CartScreen> {
           ),
         ),
       );
-
-      // Ödeme sayfasını göster
       await displayPaymentPage();
     } catch (e) {
       print('Hata: $e');
@@ -275,12 +285,10 @@ class _CartScreenState extends State<CartScreen> {
     try {
       await Stripe.instance.presentPaymentSheet();
 
-      // Sipariş bilgilerini hazırla
       final FirebaseService _firebaseService = FirebaseService();
       List<Map<String, dynamic>> urunListesi = [];
 
-      // Sepetteki ürünleri listeye ekle
-      for(var urun in controller.cartProducts) {
+      for (var urun in controller.cartProducts) {
         urunListesi.add({
           'urunAdi': urun.name,
           'fiyat': urun.price.toDouble(),
@@ -288,26 +296,18 @@ class _CartScreenState extends State<CartScreen> {
           'resim': urun.images[0],
         });
       }
+      await _firebaseService.saveOrder(
+          urunListesi, controller.totalPrice.value.toDouble());
 
-      // Siparişi kaydet
-      await _firebaseService.saveOrder(urunListesi, controller.totalPrice.value.toDouble());
-
-      // Sepeti temizle
       controller.clearCart();
-      setState(() {}); // UI'ı güncelle
+      setState(() {});
 
-      // Başarılı mesajı göster
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Siparişiniz alındı!'),
-          backgroundColor: Colors.green,
-        ),
-      );
+          backgroundColor: Colors.green,),);}
 
-      // Siparişler sayfasına git
-      Navigator.pushNamed(context, '/orders');
-
-    } catch (e) {
+    catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Hata: $e'),
@@ -318,13 +318,13 @@ class _CartScreenState extends State<CartScreen> {
   }
 
   // Stripe ödeme isteği
+
   Future<Map<String, dynamic>> createPaymentRequest() async {
     try {
       var istek = {
         'amount': (controller.totalPrice.value * 100).toString(),
         'currency': 'TRY',
       };
-
       var cevap = await http.post(
         Uri.parse('https://api.stripe.com/v1/payment_intents'),
         headers: {
@@ -333,11 +333,10 @@ class _CartScreenState extends State<CartScreen> {
         },
         body: istek,
       );
-
       return json.decode(cevap.body);
     } catch (e) {
       print('Hata: $e');
       throw Exception('Ödeme isteği oluşturulamadı');
     }
-    }
+  }
 }

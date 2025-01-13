@@ -42,6 +42,7 @@ class Product {
 // bir ürün oluşturulduğunda otomatik constructor calısıyor ve mu metodu cagırıyoruz
   //bu metot da olusturdugumuz json dosyasındaki verileri çekip about fieldına
   //atıyor
+
   Future<void> loadAbout() async {
     final String response =
         await rootBundle.loadString('assets/data/product_details.json');

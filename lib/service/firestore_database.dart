@@ -153,6 +153,7 @@ class FirebaseService {
   }
 
   //Adresi veritabanından getiren metot.
+
   Future<List<Map<String, dynamic>>?> getAddress() async {
     try {
       User? user = _auth.currentUser;
@@ -170,18 +171,13 @@ class FirebaseService {
             data['documentId'] = doc.id;
             return data;
           }).toList();
-
           return address;
         } else {
-          return null;
-        }
+          return null;}
       } else {
-        return null;
-      }
+        return null;}
     } catch (e) {
-      return null;
-    }
-  }
+      return null;}}
 
   //  adres silen metot
   Future<bool> deleteAddress(String documentId) async {

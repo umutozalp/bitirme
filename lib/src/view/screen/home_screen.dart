@@ -35,8 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
             currentIndex: newIndex,
             onTap: (index) {
               newIndex = index;
-              setState(() {});
-            },
+              setState(() {});},
             items: AppData.bottomNavBarItems
                 .map(
                   (item) => BottomBarItem(
@@ -44,21 +43,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     icon: item.icon,
                     title: Text(
                       item.title,
-                      style: TextStyle(
-                        color: item.activeColor,
-                      ),
-                    ),
-                  ),
-                )
-                .toList(),
+                      style: TextStyle( 
+                        color: item.activeColor,),),),).toList(),
             option: BubbleBarOptions(
-              opacity: 0.3,
+              opacity: 0.4,
               unselectedIconColor: Colors.grey,
               borderRadius: BorderRadius.circular(
-                15.0,
-              ),
-            ),
-          ),
+                15.0,),),),
           body: PageTransitionSwitcherWrapper(
             child: HomeScreen.screens[newIndex],
           ),

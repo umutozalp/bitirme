@@ -39,21 +39,14 @@ class _UserInfoState extends State<UserInfo> {
         _surnameController.text = userData['surname'] ?? '';
         _emailController.text = Auth().currentUser?.email ?? '';
 
-        // veritabanından gelecek telefon numarasının başındaki +90 yazısını kaldıran bölüm.
         String phoneNumber = userData['phone'] ?? '';
         if (phoneNumber.startsWith('+90')) {
-          _phoneController.text = phoneNumber.substring(3); // +90'ı kaldır
+          _phoneController.text = phoneNumber.substring(3);
         } else {
           _phoneController.text = phoneNumber;
         }
         _selectedGender = userData['gender'] ?? '';
-        if (userData['phone'] != null) {
-          _phoneNumber =
-              PhoneNumber(isoCode: 'TR', phoneNumber: userData['phone']);
-        }
-      });
-    }
-  }
+        });}}
 
   Future<void> _saveUserData() async {
     String name = _nameController.text;

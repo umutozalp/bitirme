@@ -35,22 +35,6 @@ class _AddressScreenState extends State<AddressScreen> {
     }
   }
 
-  Future<void> _deleteAddress(String documentId) async {
-    try {
-      if (await _firebaseService.deleteAddress(documentId)) {
-        _loadAddresses();
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Adres başarıyla silindi')));
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Adres silinirken bir hata oluştu')));
-      }
-    } catch (e) {
-      // baska bi hata olursa diye kontrol icin koydum
-      print('Hata: $e');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,11 +58,11 @@ class _AddressScreenState extends State<AddressScreen> {
               child: const Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  Icon(Icons.add, color: Colors.white),
                   Text('Adres Ekle',
                       style: TextStyle(
                           fontSize: 16, color:Colors.white)),
                   SizedBox(width: 4),
-                  Icon(Icons.add, color: Color.fromRGBO(10, 61, 51, 1.0)),
                 ],
               ),
             ),

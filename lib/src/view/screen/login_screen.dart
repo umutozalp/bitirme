@@ -59,16 +59,16 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
     }
   }
 
-  Future<void> signIn() async {
-    if (!EmailValidator.validate(emailController.text)) {
-      setState(() {
-        errorMessage = "Geçerli bir email adresi giriniz.";
-      });
-      Future.delayed(const Duration(seconds: 3), () {
+    Future<void> signIn() async {
+      if (!EmailValidator.validate(emailController.text)) {
         setState(() {
-          errorMessage = null;
+          errorMessage = "Geçerli bir email adresi giriniz.";
         });
-      });
+        Future.delayed(const Duration(seconds: 3), () {
+          setState(() {
+            errorMessage = null;
+          });
+        });
       return;
     }
     try {
@@ -80,16 +80,12 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
         context,
         PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) => HomeScreen(),
-          transitionDuration: Duration.zero,
-          reverseTransitionDuration: Duration.zero,
         ),
       );
     } on FirebaseAuthException catch (e) {
       setState(() {
         errorMessage = e.message;
-      });
-    }
-  }
+      });}}
 
   @override
   Widget build(BuildContext context) {
@@ -131,7 +127,6 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                     ),
                   ),
                   const SizedBox(height: 30),
-
                   // Email Input
                   TextField(
                     inputFormatters: [
@@ -205,6 +200,8 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
 
                   Align(
                     alignment: Alignment.centerRight,
+
+
                     child: GestureDetector(
                       onTap: () {
                         Navigator.push(

@@ -194,8 +194,10 @@ class _AddressInfoState extends State<AddressInfo> {
       appBar: AppBar(
         title: const Text(
           'Adres Güncelle ',
-          style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
         ),
+        iconTheme: IconThemeData(color: Colors.white),
+        backgroundColor: Color.fromRGBO(10, 61, 51, 1.0),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -403,7 +405,7 @@ class _AddressInfoState extends State<AddressInfo> {
               child: ElevatedButton(
                 onPressed: _updateAddress,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blueAccent,
+                  backgroundColor: Color.fromRGBO(10, 61, 51, 1.0),
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -425,7 +427,7 @@ class _AddressInfoState extends State<AddressInfo> {
               child: ElevatedButton(
                 onPressed: _deleteAddress,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red[100],
+                  backgroundColor: Colors.red,
                   foregroundColor: Colors.red[900],
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -436,6 +438,7 @@ class _AddressInfoState extends State<AddressInfo> {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
                 ),
               ),

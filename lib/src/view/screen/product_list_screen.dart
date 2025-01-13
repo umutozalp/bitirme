@@ -19,7 +19,7 @@ class ProductListScreen extends StatelessWidget {
       height: 170,
       decoration: BoxDecoration(
         color: AppData.recommendedProducts[0].cardBackgroundColor,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(20),
       ),
       child: Row(
         children: [
@@ -82,9 +82,7 @@ class ProductListScreen extends StatelessWidget {
                 child: Image.asset(
                   'assets/images/home_modo1.png',
                   height: 60,
-                  fit: BoxFit.contain,
-                ),
-              ),
+                  fit: BoxFit.contain,),),
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: Column(
@@ -99,10 +97,7 @@ class ProductListScreen extends StatelessWidget {
                         likeButtonPressed: (index) =>
                             controller.isFavorite(index),
                         isPriceOff: (product) => controller.isPriceOff(product),
-                      );
-                    }),
-                  ],
-                ),
+                      );}),],),
               ),
             ],
           ),
