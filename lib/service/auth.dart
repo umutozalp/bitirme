@@ -9,7 +9,7 @@ class Auth {
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 
 
-  // Register
+  // firebase auth'a kayıt işlemi
   Future<void> createUser({
     required String email,
     required String password,
@@ -20,7 +20,6 @@ class Auth {
     );
   }
 
-  // Login
   Future<void> signIn({
     required String email,
     required String password,
@@ -31,24 +30,21 @@ class Auth {
     );
   }
 
-  // Google ile Giriş
   Future<User?> signInWithGoogle() async {
     try {
-      // Google giriş işlemi başlatılıyor
+
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
       if (googleUser == null) {
-        return null; // Kullanıcı giriş yapmazsa null döner
+        return null;
       }
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
 
-      // Firebase ile Google giriş bilgilerini doğruluyoruz
       final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
 
-      // Firebase ile oturum açıyoruz
       final UserCredential userCredential =
           await _firebaseAuth.signInWithCredential(credential);
       return userCredential.user;
@@ -58,12 +54,10 @@ class Auth {
     }
   }
 
-  // Sign out
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
   }
 
-  // Password Reset
   Future<void> sendPasswordResetEmail({required String email}) async {
     await _firebaseAuth.sendPasswordResetEmail(email: email);
   }

@@ -13,7 +13,8 @@ final ProductController controller = Get.put(ProductController());
 class ProductListScreen extends StatelessWidget {
   const ProductListScreen({super.key});
 
-  Widget _recommendedProductListView(BuildContext context) {
+  // Ana ekrandaki banner
+  Widget _Banner(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       height: 170,
@@ -44,7 +45,7 @@ class ProductListScreen extends StatelessWidget {
       ),
     );
   }
-
+// Kategoriler yazısı
   Widget _topCategoriesHeader(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 10),
@@ -59,7 +60,7 @@ class ProductListScreen extends StatelessWidget {
       ),
     );
   }
-
+// Filtrelenebilen kategoriler
   Widget _topCategoriesListView() {
     return ListItemSelector(
       categories: controller.categories,
@@ -68,7 +69,7 @@ class ProductListScreen extends StatelessWidget {
       },
     );
   }
-
+// Ekranımızın ana widgetı.
   @override
   Widget build(BuildContext context) {
     controller.getAllItems();
@@ -88,7 +89,7 @@ class ProductListScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _recommendedProductListView(context),
+                    _Banner(context),
                     _topCategoriesHeader(context),
                     _topCategoriesListView(),
                     GetBuilder(builder: (ProductController controller) {

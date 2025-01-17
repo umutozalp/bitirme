@@ -39,7 +39,7 @@ class ProductDetailScreen extends StatelessWidget {
       child: CarouselSlider(items: product.images),
     );
   }
-
+ // Ürünün detaylı ekranındaki değerlendirme barı
   Widget _ratingBar(BuildContext context) {
     return Wrap(
       spacing: 30,

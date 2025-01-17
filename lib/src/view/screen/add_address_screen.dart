@@ -317,7 +317,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
             Row(
               children: [
                 const SizedBox(
-                    width: 42), // Icon + SizedBox genişliği kadar boşluk
+                    width: 42),
                 Expanded(
                   flex: 1,
                   child: Column(

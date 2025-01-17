@@ -20,7 +20,6 @@ class FirebaseService {
         });
       }
     } catch (e) {
-      // Hata durumunda sadece işlemi başarısız olarak işaretle
     }
   }
 
@@ -28,13 +27,12 @@ class FirebaseService {
     try {
       User? user = _auth.currentUser;
       if (user != null) {
-        String userId = user.uid; // Kullanıcının UID'si
+        String userId = user.uid;
 
-        // Firestore'dan belgeyi getir
         DocumentSnapshot doc = await _db.collection("users").doc(userId).get();
 
         if (doc.exists) {
-          // Belge verilerini Map olarak döndür
+
           return doc.data() as Map<String, dynamic>;
         } else {
           return null;
@@ -108,7 +106,6 @@ class FirebaseService {
       if (user != null) {
         String userId = user.uid;
 
-        // Document ID ile doğrudan silme işlemi
         await _db
             .collection("users")
             .doc(userId)
@@ -279,7 +276,7 @@ class FirebaseService {
     }
   }
 
-  Future<List<Map<String, dynamic>>?> getSiparisler() async {
+  Future<List<Map<String, dynamic>>?> getOrders() async {
     try {
       var user = _auth.currentUser;
       if (user != null) {

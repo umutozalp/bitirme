@@ -9,12 +9,12 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Stripe'ı başlat
+// Stripe ödeme sistemini başlatma
   Stripe.publishableKey =
       'pk_test_51Qc0Z5FsTMJbzVuHIS8tZL17mLNFhhUydweQll93uF3Gt46FAIBIAVuwWVrn1jRnEYJVlh9VPlMqfjzSJ6ML5dDY00M8chSssd';
   await Stripe.instance.applySettings();
 
-  // Firebase başlatma
+  // Firebase'i başlatma
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

@@ -72,7 +72,6 @@ class _CartScreenState extends State<CartScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // Ürün resmi
                 Container(
                   width: 80,
                   height: 80,
@@ -120,7 +119,6 @@ class _CartScreenState extends State<CartScreen> {
                   ),
                 ),
 
-                // Adet kontrolleri
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.white,

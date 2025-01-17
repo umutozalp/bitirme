@@ -15,6 +15,21 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  static const primaryColor = Color.fromRGBO(10, 61, 51, 1.0);
+
+  // Sayfa geçiş animasyonları için ortak metot.
+  PageRouteBuilder _createPageRoute(Widget page) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final currentUser = Auth().currentUser;
@@ -29,7 +44,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(10, 61, 51, 1.0),
+        backgroundColor: primaryColor,
         title: Text(
           "Profil",
           style: TextStyle(
@@ -41,7 +56,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Profil fotoğrafı ve kullanıcı adı - Card içine alındı
+
             Card(
               elevation: 5,
               shape: RoundedRectangleBorder(
@@ -53,7 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     CircleAvatar(
                       radius: 40,
-                      backgroundColor: Color.fromRGBO(10, 61, 51, 1.0),
+                      backgroundColor: primaryColor,
                       child: Icon(
                         Icons.person,
                         color: Color.fromRGBO(255, 255, 255, 1.0),
@@ -83,97 +98,62 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Divider(color: Colors.grey[300], thickness: 1),
             SizedBox(height: 5),
 
-            // Kullanıcı bilgileri sekmesi
-
             _buildProfileOption(
-              icon: Icon(Icons.edit, color: Color.fromRGBO(10, 61, 51, 1.0),),
+              icon: Icon(Icons.edit, color: primaryColor),
               context,
               title: "Kullanıcı Bilgilerim",
               onTap: () {
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation, secondaryAnimation) =>
-                        UserInfo(),
-                    transitionsBuilder:
-                        (context, animation, secondaryAnimation, child) {
-                      return FadeTransition(
-                        opacity: animation,
-                        child: child,);},),);},),
+                Navigator.push(context, _createPageRoute(UserInfo()));
+              },
+            ),
 
             _buildProfileOption(
-              icon: Icon(Icons.home, color: Color.fromRGBO(10, 61, 51, 1.0),),
+              icon: Icon(Icons.home, color: primaryColor),
               context,
               title: "Adreslerim",
               onTap: () {
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation, secondaryAnimation) =>
-                        AddressScreen(),
-                    transitionsBuilder:
-                        (context, animation, secondaryAnimation, child) {
-                      // FadeTransition ile ekranın opaklığını değiştirme
-                      return FadeTransition(
-                        opacity: animation, // Opaklık animasyonu
-                        child: child,
-                      );
-                    },
-                  ),
-                );
+                Navigator.push(context, _createPageRoute(AddressScreen()));
               },
             ),
 
-            // Geçmiş Siparişler sekmesi
             _buildProfileOption(
-              icon: Icon(Icons.history, color: Color.fromRGBO(10, 61, 51, 1.0),),
+              icon: Icon(Icons.history, color: primaryColor),
               context,
               title: "Siparişlerim",
               onTap: () {
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation, secondaryAnimation) =>
-                        OrdersScreen(),
-                    transitionsBuilder:
-                        (context, animation, secondaryAnimation, child) {
-                      // FadeTransition ile ekranın opaklığını değiştirme
-                      return FadeTransition(
-                        opacity: animation, // Opaklık animasyonu
-                        child: child,
-                      );},),);},),
-
+                Navigator.push(context, _createPageRoute(OrdersScreen()));
+              },
+            ),
 
             _buildProfileOption(
-              icon: Icon(Icons.credit_card, color: Color.fromRGBO(10, 61, 51, 1.0),),
+              icon: Icon(Icons.credit_card, color: primaryColor),
               context,
               title: "Ödeme Yöntemlerim",
               onTap: () {
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation, secondaryAnimation) =>
-                        PaymentScreen(),
-                    transitionsBuilder:
-                        (context, animation, secondaryAnimation, child) {
-                      return FadeTransition(
-                        opacity: animation, // Opaklık animasyonu
-                        child: child,
-                      );
-                    },
-                  ),
-                );
+                Navigator.push(context, _createPageRoute(PaymentScreen()));
               },
             ),
-            _handleLogout(context),
+            _buildProfileOption(
+                context,
+                title: "Çıkış Yap",
+                onTap: () async {
+                  await Auth().signOut();
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => const HomeScreen()),
+                  );
+                },
+                icon: Icon(
+                  Icons.logout,
+                  color: primaryColor,
+                ),
+              )
           ],
         ),
       ),
     );
   }
 
-
-
+  //
   Widget _buildProfileOption(BuildContext context,
       {required String title, required Function() onTap, required Icon icon}) {
     return GestureDetector(
@@ -198,50 +178,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Text(
                 title,
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),),),
-            Icon(Icons.arrow_forward_ios, size: 18, color: Color.fromRGBO(10, 61, 51, 1.0),),
+            Icon(Icons.arrow_forward_ios, size: 18, color: primaryColor,),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _handleLogout(BuildContext context) {
-    return GestureDetector(
-      onTap: () async {
-        await Auth().signOut();
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const HomeScreen()),
-        );
-      },
-      child: Container(
-        height: 70,
-        padding: EdgeInsets.symmetric(horizontal: 15),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(5),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
-              spreadRadius: 1,
-              blurRadius: 8,
-              offset: Offset(0, 3),
-            ),
-          ],
-        ),
-        child: Row(children: [
-          Icon(
-            Icons.logout,
-            color: Color.fromRGBO(10, 61, 51, 1.0),
-          ),
-          SizedBox(width: 3),
-          Expanded(
-            child: Text(
-              "Çıkış Yap",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-            ),
-          ),
-          Icon(Icons.arrow_forward_ios, size: 18, color: Color.fromRGBO(10, 61, 51, 1.0),),
-        ]),
       ),
     );
   }

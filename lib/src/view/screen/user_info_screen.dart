@@ -12,17 +12,19 @@ class UserInfo extends StatefulWidget {
 }
 
 class _UserInfoState extends State<UserInfo> {
+
+  static const primaryColor = Color.fromRGBO(10, 61, 51, 1.0);
   final FirebaseService _firebaseService = FirebaseService();
 
+  //TextField'lardaki girilen verileri tutacak olan değişkenler.
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _surnameController = TextEditingController();
 
+
   String? _selectedGender;
-
   bool _isButtonEnabled = false;
-
   PhoneNumber? _phoneNumber;
 
   @override
@@ -31,23 +33,23 @@ class _UserInfoState extends State<UserInfo> {
     _loadUserData();
   }
 
+  //Ekran yüklendiğinde varsa verileri veritabanından çekip TextField'lara yazdıran metot.
   Future<void> _loadUserData() async {
     var userData = await _firebaseService.getUserData();
     if (userData != null) {
       setState(() {
-        _nameController.text = userData['name'] ?? '';
-        _surnameController.text = userData['surname'] ?? '';
+        _nameController.text = userData['name'];
+        _surnameController.text = userData['surname'];
         _emailController.text = Auth().currentUser?.email ?? '';
-
-        String phoneNumber = userData['phone'] ?? '';
-        if (phoneNumber.startsWith('+90')) {
-          _phoneController.text = phoneNumber.substring(3);
-        } else {
-          _phoneController.text = phoneNumber;
-        }
-        _selectedGender = userData['gender'] ?? '';
-        });}}
-
+        String phoneNumber = userData['phone'];
+        _phoneController.text = phoneNumber.startsWith('+90') 
+            ? phoneNumber.substring(3) 
+            : phoneNumber;
+        _selectedGender = userData['gender'];
+      });
+    }
+  }
+  // Yeni girilen verilere göre kullanıcı bilgilerini güncelleyen metot.
   Future<void> _saveUserData() async {
     String name = _nameController.text;
     String surname = _surnameController.text;
@@ -55,29 +57,16 @@ class _UserInfoState extends State<UserInfo> {
     String phone = _phoneNumber?.phoneNumber ?? "";
     String gender = _selectedGender ?? "";
 
-    try {
-      // Veritabanına kullanıcı bilgilerini kaydet
-      await _firebaseService.saveUserData(name, surname, email, phone, gender);
-      
-      // Başarılı mesajı göster
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Kullanıcı başarıyla güncellendi'),
-          backgroundColor: Colors.green,
-        ),
-      );
-    } catch (e) {
-      // Hata durumunda kullanıcıya bilgi ver
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Güncelleme sırasında bir hata oluştu: $e'),
-          backgroundColor: Colors.red,
-        ),
-      );
-    }
+    await _firebaseService.saveUserData(name, surname, email, phone, gender);
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Kullanıcı başarıyla güncellendi'),
+        backgroundColor: Colors.green,
+      ),
+    );
   }
-
-  // TextField değişikliklerini kontrol etme
+  //Form alanlarının doluluğunu kontrol eder.
+  // Güncelle butonunun aktif olup olmamasını yönetmek için kullanılır
   void _checkFields() {
     setState(() {
       _isButtonEnabled = _nameController.text.isNotEmpty &&
@@ -91,7 +80,7 @@ class _UserInfoState extends State<UserInfo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(10, 61, 51, 1.0),
+        backgroundColor: primaryColor,
         iconTheme: IconThemeData(color: Colors.white),
         title: Text(
           'Kullanıcı Bilgileri',
@@ -102,14 +91,13 @@ class _UserInfoState extends State<UserInfo> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start, // Bu satır ekleniyor
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            // Ad Soyad TextField with Icon
             Row(
               children: [
                 Icon(
                   Icons.person,
-                  color: Color.fromRGBO(10, 61, 51, 1.0),
+                  color: primaryColor,
                   size: 40,
                 ),
                 SizedBox(width: 8),
@@ -150,13 +138,11 @@ class _UserInfoState extends State<UserInfo> {
               ],
             ),
             SizedBox(height: 16),
-
-            // Mail TextField with Icon
             Row(
               children: [
                 Icon(
                   Icons.email,
-                  color: Color.fromRGBO(10, 61, 51, 1.0),
+                  color: primaryColor,
                   size: 40,
                 ),
                 SizedBox(width: 8),
@@ -176,13 +162,11 @@ class _UserInfoState extends State<UserInfo> {
               ],
             ),
             SizedBox(height: 16),
-
-            // Phone number with intl_phone_number_input
             Row(
               children: [
                 Icon(
                   Icons.phone,
-                  color: Color.fromRGBO(10, 61, 51, 1.0),
+                  color: primaryColor,
                   size: 40,
                 ),
                 SizedBox(width: 8),
@@ -221,21 +205,17 @@ class _UserInfoState extends State<UserInfo> {
               ],
             ),
             SizedBox(height: 16),
-
-            // Cinsiyet Seçimi (Radio Button)
             Text(
               'Cinsiyet',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Color.fromRGBO(10, 61, 51, 1.0),
+                color: primaryColor,
               ),
             ),
             Row(
               children: [
-                SizedBox(
-                  width: 25,
-                ),
+                SizedBox(width: 25),
                 Radio<String>(
                   value: 'Erkek',
                   groupValue: _selectedGender,
@@ -283,7 +263,6 @@ class _UserInfoState extends State<UserInfo> {
               ],
             ),
             SizedBox(height: 20),
-            
             SizedBox(
               width: double.infinity,
               height: 63,
@@ -291,7 +270,7 @@ class _UserInfoState extends State<UserInfo> {
                 onPressed: _isButtonEnabled ? _saveUserData : null,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: _isButtonEnabled
-                      ? Color.fromRGBO(10, 61, 51, 1.0)
+                      ? primaryColor
                       : Colors.grey,
                 ),
                 child: Text(

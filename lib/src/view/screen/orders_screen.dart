@@ -12,92 +12,107 @@ class OrdersScreen extends StatefulWidget {
 class _OrdersScreenState extends State<OrdersScreen> {
   final FirebaseService _firebase = FirebaseService();
 
+  List<Map<String, dynamic>> ordersList = [];
+  bool isLoading = true;
+  String? error;
+
+  @override
+  void initState() {
+    super.initState();
+    getOrders();
+  }
+
+  // Firebase'den siparis verileri ceker
+  void getOrders() async {
+    var result = await _firebase.getOrders();
+    setState(() {
+      ordersList = result ?? [];
+      isLoading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Siparişlerim",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),),
+        title: Text("Siparişlerim", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
         backgroundColor: Color.fromRGBO(10,61,61, 1.0),
-        iconTheme:  IconThemeData(color: Colors.white),
+        iconTheme: IconThemeData(color: Colors.white),
       ),
-      body: FutureBuilder(
-        future: _firebase.getSiparisler(),
-        builder: (context, snapshot) {
-          // Yükleniyor
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          }
+      body: _buildScreen(),
+    );
+  }
 
-          // Hata varsa
-          if (snapshot.hasError) {
-            return Center(child: Text('Hata: ${snapshot.error}'));
-          }
+  Widget _buildScreen() {
+    if (isLoading) {
+      return Center(child: CircularProgressIndicator());
+    }
 
-          // Veri yoksa
-          var siparisler = snapshot.data;
-          if (siparisler == null || siparisler.isEmpty) {
-            return Center(child: Text('Henüz Siparişiniz yok.'));
-          }
+    if (error != null) {
+      return Center(child: Text('Hata: $error'));
+    }
 
-          return ListView.builder(
-            itemCount: siparisler.length,
-            itemBuilder: (context, index) {
-              var siparis = siparisler[index];
-              var tarih = (siparis['siparisTarihi'] as Timestamp).toDate();
-              var urunler = List<Map<String, dynamic>>.from(siparis['urunler']);
+    if (ordersList.isEmpty) {
+      return Center(child: Text('Henüz Siparişiniz yok.'));
+    }
 
-              return Card(
-                color: Colors.grey.shade300,
-                margin: EdgeInsets.all(8),
-                child: Padding(
-                  padding: EdgeInsets.all(12),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Tarih: ${tarih.day}/${tarih.month}/${tarih.year}',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                      ),
-                      Divider(),
-                      // Ürünleri listele
-                      for (var urun in urunler)
-                        Padding(
-                          padding: EdgeInsets.symmetric(vertical: 4),
-                          child: Row(
-                            children: [
-                              Image.asset(
-                                urun['resim'],
-                                width: 60,
-                                height: 60,
-                              ),
-                              SizedBox(width: 10),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(urun['urunAdi'],style: TextStyle(fontSize: 16),),
-                                    Text('${urun['fiyat']} TL  x  ${urun['adet']} adet',style: TextStyle(fontSize: 16),),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      Divider(),
-                      Text(
-                        'Toplam: ${siparis['toplamTutar']} TL',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
-          );
-        },
+    return ListView.builder(
+      itemCount: ordersList.length,
+      itemBuilder: (context, index) {
+        return _buildOrderCard(ordersList[index]);
+      },
+    );
+  }
+
+
+  Widget _buildOrderCard(Map<String, dynamic> order) {
+    final date = (order['siparisTarihi'] as Timestamp).toDate();
+    final products = List<Map<String, dynamic>>.from(order['urunler']);
+
+    //Siparişler ekranındaki siparişlerin yerleştirildiği kartın widgetı.
+    return Card(
+      margin: EdgeInsets.all(10),
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: Column(
+          children: [
+            Text(
+              '${date.day}/${date.month}/${date.year}',
+              style: TextStyle(fontSize: 16),
+            ),
+            Divider(),
+            ...products.map((product) => _buildProductRow(product)).toList(),
+            Divider(),
+            Text(
+              'Toplam: ${order['toplamTutar'] ?? 0} TL',
+              style: TextStyle(fontSize: 16),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Siparişteki her bir ürün için satır widget'ı oluşturur
+  Widget _buildProductRow(Map<String, dynamic> product) {
+    return Padding(
+      padding: EdgeInsets.all(5),
+      child: Row(
+        children: [
+          Image.asset(
+            product['resim'],
+            width: 50,
+            height: 50,
+          ),
+          SizedBox(width: 10),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(product['urunAdi']),
+              Text('${product['fiyat']} TL x ${product['adet']} adet'),
+            ],
+          ),
+        ],
       ),
     );
   }

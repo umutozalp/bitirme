@@ -32,7 +32,7 @@ class _AddressInfoState extends State<AddressInfo> {
   }
 
   Future<void> _initializeData() async {
-    await loadCities(); // Önce şehirleri yükle
+    await loadCities();
 
     if (widget.address != null) {
       _nameController.text = widget.address!['name'];
@@ -144,7 +144,7 @@ class _AddressInfoState extends State<AddressInfo> {
                 style: TextStyle(color: Colors.black),
               ),
               onPressed: () {
-                Navigator.of(context).pop(true); // Dialog'u kapat, true döndür
+                Navigator.of(context).pop(true);
               },
             ),
           ],

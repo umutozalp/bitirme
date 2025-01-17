@@ -17,6 +17,7 @@ class CarouselSlider extends StatefulWidget {
 class _CarouselSliderState extends State<CarouselSlider> {
   int newIndex = 0;
 
+  // Ürün detayları ekranındaki sağa kaydırılabilir olan ürünlerin fotoğraflarının sergilendiği kısım.
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -24,7 +25,7 @@ class _CarouselSliderState extends State<CarouselSlider> {
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.35,
           child: PageView.builder(
-            itemCount: widget.items.length,
+            itemCount: widget.items.length,  // kaç resim olduğunu burdan belirliyoruz
             onPageChanged: (int index) {
               setState(() => newIndex = index);
             },
@@ -51,7 +52,7 @@ class _CarouselSliderState extends State<CarouselSlider> {
             dotColor: Colors.white,
             activeDotColor: AppColor.darkGreen,
           ),
-          count: widget.items.length,
+          count: widget.items.length, // fotoların altındaki nokta sayısı
           activeIndex: newIndex,
         )
       ],

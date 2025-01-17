@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+  import 'package:flutter/material.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 import 'package:bitirme/service/firestore_database.dart';
 
@@ -38,6 +38,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   final nicknameController = TextEditingController();
   bool showErrors = false;
 
+  // Kart numarasını maskeler
   String get maskedCardNo {
     if (cardNo.isEmpty) return '';
     final cleanNumber = cardNo.replaceAll(RegExp(r'[^\d]'), '');
@@ -46,12 +47,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
     return '0000 0000 0000 $lastFour';
   }
 
+  // sayfa yüklendiğinde loadCart metodunu kullanarak kartları yükler
   @override
   void initState() {
     super.initState();
     _loadCardData();
   }
 
+  // Ana ekranın yapısı
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,6 +78,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
     );
   }
 
+  // Yeni kart ekleme formu
   Widget _buildAddCardForm() {
     return SingleChildScrollView(
       child: Padding(
@@ -208,6 +212,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
     );
   }
 
+  // Veritabanındaki kayıtlı kartların listesini oluşturur
   Widget _buildCardsList() {
     return savedCards.isEmpty
         ? const Center(
@@ -247,6 +252,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
           );
   }
 
+  // Form validasyonunu yapar ve geçerliyse kartı kaydeder
   void _onValidate() {
     setState(() => showErrors = true);
     if ((formKey.currentState?.validate() ?? false) &&
@@ -283,7 +289,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
       expiryDate = model.expiryDate;
       cardHolderName = model.cardHolderName;
       cvvCode = model.cvvCode;
-      isCvvFocused = model.isCvvFocused;
     });
   }
 
@@ -293,35 +298,25 @@ class _PaymentScreenState extends State<PaymentScreen> {
     cardHolderName = '';
     cvvCode = '';
     nicknameController.clear();
-    showErrors = false;
+    setState(() {});
   }
 
+  // Firebase'den kayıtlı kart bilgilerini çeker ve listeler
   Future<void> _loadCardData() async {
-    try {
-      List<Map<String, dynamic>>? cards =
-          await _firebaseService.getCreditCard();
-      if (cards != null && cards.isNotEmpty) {
-        setState(() {
-          savedCards.clear();
-          for (var card in cards) {
-            savedCards.add(SavedCard(
-              cardNo: card['cardNo'],
-              expiryDate: card['validThru'],
-              cardHolderName: card['holder'],
-              cardNickname: card['cardName'],
-              documentId: card['documentId'],
-            ));
-          }
-        });
-      }
-    } catch (e) {
-      print('Veri yüklenirken bir hata oluştu: $e');
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-              content: Text('Kart bilgileri yüklenirken hata oluştu')),
-        );
-      }
+    List<Map<String, dynamic>>? cards = await _firebaseService.getCreditCard();
+    if (cards != null && cards.isNotEmpty) {
+      setState(() {
+        savedCards.clear();
+        for (var card in cards) {
+          savedCards.add(SavedCard(
+            cardNo: card['cardNo'],
+            expiryDate: card['validThru'],
+            cardHolderName: card['holder'],
+            cardNickname: card['cardName'],
+            documentId: card['documentId'],
+          ));
+        }
+      });
     }
   }
 }

@@ -21,6 +21,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
   String? errorMessage;
   bool _obscurePassword = true;
 
+  // Google ile giriş metodu
   Future<void> signInWithGoogle() async {
     try {
       final user = await Auth().signInWithGoogle();
@@ -28,8 +29,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
         Navigator.pushReplacement(
           context,
           PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) =>
-                HomeScreen(),
+            pageBuilder: (context, animation, secondaryAnimation) => HomeScreen(),
             transitionDuration: Duration.zero,
             reverseTransitionDuration: Duration.zero,
           ),
@@ -59,18 +59,19 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
     }
   }
 
-    Future<void> signIn() async {
-      if (!EmailValidator.validate(emailController.text)) {
+  Future<void> signIn() async {
+    if (!EmailValidator.validate(emailController.text)) {
+      setState(() {
+        errorMessage = "Geçerli bir email adresi giriniz.";
+      });
+      Future.delayed(const Duration(seconds: 3), () {
         setState(() {
-          errorMessage = "Geçerli bir email adresi giriniz.";
+          errorMessage = null;
         });
-        Future.delayed(const Duration(seconds: 3), () {
-          setState(() {
-            errorMessage = null;
-          });
-        });
+      });
       return;
     }
+
     try {
       await Auth().signIn(
         email: emailController.text,
@@ -85,14 +86,16 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
     } on FirebaseAuthException catch (e) {
       setState(() {
         errorMessage = e.message;
-      });}}
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         width: double.infinity,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -118,7 +121,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                       height: 200,
                     ),
                   ),
-                  const Text(
+                  Text(
                     "Hoşgeldiniz!",
                     style: TextStyle(
                       fontSize: 28,
@@ -126,18 +129,17 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                       color: Colors.white,
                     ),
                   ),
-                  const SizedBox(height: 30),
-                  // Email Input
+                  SizedBox(height: 30),
                   TextField(
                     inputFormatters: [
                       FilteringTextInputFormatter.deny(RegExp(r'\s')),
                     ],
                     controller: emailController,
-                    style: const TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.email, color: Colors.white),
                       hintText: "Email",
-                      hintStyle: const TextStyle(color: Colors.white70),
+                      hintStyle: TextStyle(color: Colors.white70),
                       filled: true,
                       fillColor: Colors.white10,
                       border: OutlineInputBorder(
@@ -146,20 +148,18 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
-
-                  // Password Input
+                  SizedBox(height: 20),
                   TextField(
                     inputFormatters: [
                       FilteringTextInputFormatter.deny(RegExp(r'\s')),
                     ],
                     controller: passwordController,
                     obscureText: _obscurePassword,
-                    style: const TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
                       prefixIcon: Icon(Icons.key, color: Colors.white),
                       hintText: "Şifre",
-                      hintStyle: const TextStyle(color: Colors.white70),
+                      hintStyle: TextStyle(color: Colors.white70),
                       filled: true,
                       fillColor: Colors.white10,
                       border: OutlineInputBorder(
@@ -181,9 +181,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 10),
-
-                  // Hata mesajı
+                  SizedBox(height: 10),
                   if (errorMessage != null)
                     Container(
                       padding: const EdgeInsets.all(8),
@@ -193,15 +191,12 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                       ),
                       child: Text(
                         errorMessage!,
-                        style: const TextStyle(color: Colors.white),
+                        style: TextStyle(color: Colors.white),
                       ),
                     ),
-                  const SizedBox(height: 10),
-
+                  SizedBox(height: 10),
                   Align(
                     alignment: Alignment.centerRight,
-
-
                     child: GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -220,15 +215,14 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
-                  // Login Button
+                  SizedBox(height: 20),
                   SizedBox(
                     width: double.infinity,
                     height: 50,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
-                        foregroundColor: const Color(0xff2575fc),
+                        foregroundColor: Color(0xff2575fc),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -236,33 +230,32 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                       onPressed: () async {
                         await signIn();
                       },
-                      child: const Text(
+                      child: Text(
                         "Giriş Yap",
                         style: TextStyle(fontSize: 18, color: Colors.black),
                       ),
                     ),
                   ),
-
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20),
                   Row(
                     children: <Widget>[
                       Expanded(
                         child: Divider(
-                          color: Colors.white, // Çizgi rengi
-                          thickness: 2, // Çizgi kalınlığı
+                          color: Colors.white,
+                          thickness: 2,
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         child: Text(
-                          'Veya Google ile oturum açın', // Çizgi arasındaki yazı
+                          'Veya Google ile oturum açın',
                           style: TextStyle(fontSize: 16, color: Colors.white),
                         ),
                       ),
                       Expanded(
                         child: Divider(
-                          color: Colors.white, // Çizgi rengi
-                          thickness: 2, // Çizgi kalınlığı
+                          color: Colors.white,
+                          thickness: 2,
                         ),
                       ),
                     ],
@@ -276,10 +269,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                     },
                     child: Image.asset('assets/images/google.png'),
                   ),
-
-                  const SizedBox(height: 20),
-
-                  // Toggle Register Text
+                  SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -296,7 +286,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
                                     RegisterPage()),
                           );
                         },
-                        child: const Text(
+                        child: Text(
                           "Hesap Oluşturun!",
                           style: TextStyle(
                               color: Colors.white,

@@ -158,6 +158,7 @@ class AppData {
     ),
   ];
 
+  //Ana ekrandaki kategoriler
   static List<ProductCategory> categories = [
     ProductCategory(
       type: ProductType.all,

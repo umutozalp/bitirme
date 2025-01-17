@@ -39,9 +39,9 @@ class Product {
     _quantity.value = quantity;
     loadAbout();
   }
-// bir ürün oluşturulduğunda otomatik constructor calısıyor ve mu metodu cagırıyoruz
-  //bu metot da olusturdugumuz json dosyasındaki verileri çekip about fieldına
-  //atıyor
+
+// Constructor çalıştığında otomatik loadAbout metodu çalışarak ürünün id'sine göre
+  // product_details.json dosyasındaki açıklamalar ürüne atanıyor.
 
   Future<void> loadAbout() async {
     final String response =

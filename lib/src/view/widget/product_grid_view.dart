@@ -14,6 +14,7 @@ class ProductGridView extends StatelessWidget {
   final bool Function(Product product) isPriceOff;
   final void Function(int index) likeButtonPressed;
 
+  // Ürün kartlarının üst tarafındaki indirim yazısı ve favori ikonu.
   Widget _gridItemHeader(Product product, int index) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
@@ -49,7 +50,7 @@ class ProductGridView extends StatelessWidget {
       ),
     );
   }
-
+ // Ürün kartlarının arka plan rengi
   Widget _gridItemBody(Product product) {
     return Container(
       padding: const EdgeInsets.all(15),
@@ -61,6 +62,7 @@ class ProductGridView extends StatelessWidget {
     );
   }
 
+ // Ürün kartlarının alt kısmında ürünlerin adının ve fiyatlarının yazdığı bölüm
   Widget _gridItemFooter(Product product, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -117,7 +119,7 @@ class ProductGridView extends StatelessWidget {
       ),
     );
   }
-
+   // Ürün kart widgetlarını toplayıp birleştiren ana widget.
   @override
   Widget build(BuildContext context) {
     return Padding(

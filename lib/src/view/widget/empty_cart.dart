@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class EmptyCart extends StatelessWidget {
   const EmptyCart({super.key});
 
+  //Boş sepet için gerekli yazı ve image.
   @override
   Widget build(BuildContext context) {
     return Column(

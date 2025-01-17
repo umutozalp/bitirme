@@ -14,7 +14,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  // Kontrolcüler
+
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool isPasswordValid = false;
@@ -80,6 +80,7 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             SizedBox(height: 10),
 
+            // Şifre doğrulaması için harici olarak projeye eklenen paket.
             FlutterPwValidator(
               controller: passwordController,
               minLength: 6,
@@ -101,6 +102,8 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
             SizedBox(height: 30),
 
+            //Basıldığında gerekli kontrolleri yapıp duruma göre hata fırlatan
+            //ve veritabanına kayıt oluşturan buton.
             ElevatedButton(
               onPressed: () async {
                 if (!EmailValidator.validate(emailController.text)) {

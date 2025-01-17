@@ -16,7 +16,7 @@ class ListItemSelector extends StatefulWidget {
   @override
   State<ListItemSelector> createState() => _ListItemSelectorState();
 }
-
+ // Ana sayfadaki kategorilerin yönetildiği sınıf.
 class _ListItemSelectorState extends State<ListItemSelector> {
   Widget item(ProductCategory item, int index) {
     return Tooltip(
@@ -41,12 +41,11 @@ class _ListItemSelectorState extends State<ListItemSelector> {
                 : Colors.white,
           ),
           onPressed: () {
-            widget.onItemPressed(index);
-            for (var element in widget.categories) {
+            widget.onItemPressed(index); // Tıklama olayı gerçekleştiğinde
+            for (var element in widget.categories) { // Tüm kategorileri seçilmemiş yapar
               element.isSelected = false;
             }
-
-            item.isSelected = true;
+            item.isSelected = true;  // Seçilen kategoriyi işaretler ve sayfayı günceller.
             setState(() {});
           },
         ),
